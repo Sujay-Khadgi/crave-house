@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crave House Kitchen | Online Ordering</title>
+    <title>Crave House Kitchen | Online Ordering & Secure Checkout</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,24 +11,32 @@
             darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['"Cinzel"', '"Playfair Display"', 'serif'],
+                        editorial: ['"Playfair Display"', 'serif'],
+                    },
                     colors: {
-                        obsidian: '#09090B',
-                        carddark: '#121216',
                         gold: {
-                            400: '#FACC15',
-                            500: '#EAB308',
-                            600: '#CA8A04',
-                            glow: 'rgba(234, 179, 8, 0.15)'
+                            200: '#fef08a',
+                            300: '#fde047',
+                            400: '#F3D06B',
+                            500: '#D4AF37',
+                            600: '#B8860B',
+                            700: '#92400e',
                         },
                         crimson: {
-                            600: '#DC2626',
-                            700: '#B91C1C'
+                            600: '#B91C1C',
+                            700: '#9E1B1B',
+                            800: '#7F1D1D',
+                        },
+                        obsidian: {
+                            950: '#050507',
+                            900: '#09090B',
+                            850: '#0f0f13',
+                            800: '#121216',
+                            700: '#1b1b22',
                         }
-                    },
-                    fontFamily: {
-                        cinzel: ['Cinzel', 'serif'],
-                        playfair: ['Playfair Display', 'serif'],
-                        sans: ['Plus Jakarta Sans', 'sans-serif']
                     }
                 }
             }
@@ -37,525 +45,838 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #09090B; color: #F4F4F5; }
-        .font-heading { font-family: 'Cinzel', serif; }
-        .font-serif-sub { font-family: 'Playfair Display', serif; }
-        .gold-gradient { background: linear-gradient(135deg, #FACC15 0%, #CA8A04 100%); }
-        .gold-text-gradient { background: linear-gradient(135deg, #FEF08A 0%, #EAB308 50%, #CA8A04 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-glow { background: radial-gradient(circle at center, rgba(234,179,8,0.12) 0%, rgba(9,9,11,0.95) 70%); }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #09090B; }
-        ::-webkit-scrollbar-thumb { background: #27272A; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #EAB308; }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09090B;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .gold-text-shimmer {
+            background: linear-gradient(135deg, #F3D06B 0%, #D4AF37 50%, #B8860B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-border-subtle {
+            border-color: rgba(212, 175, 55, 0.22);
+        }
+        .gold-border-hover:hover {
+            border-color: rgba(212, 175, 55, 0.58);
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-receipt, #printable-receipt * {
+                visibility: visible;
+            }
+            #printable-receipt {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: #ffffff !important;
+                color: #000000 !important;
+                padding: 20px;
+            }
+        }
     </style>
 </head>
-<body class="bg-obsidian text-zinc-100 min-h-screen flex flex-col selection:bg-gold-500 selection:text-black">
+<body class="bg-obsidian-900 text-zinc-100 min-h-screen flex flex-col selection:bg-gold-500 selection:text-obsidian-950 font-sans">
 
     <!-- Top Announcement Bar -->
-    <div class="bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-600 text-black text-xs md:text-sm font-bold py-2 px-4 text-center tracking-wider uppercase flex items-center justify-center gap-2 shadow-inner">
-        <i class="fa-solid fa-fire text-black animate-pulse"></i> Freshly Prepared Favourites • Order Online for Pickup or Delivery • Shop 12/108 Dangar St
+    <div class="bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-600 text-obsidian-950 text-xs sm:text-sm font-extrabold py-2 px-4 text-center tracking-wider uppercase flex items-center justify-center gap-2 shadow-inner">
+        <i data-lucide="flame" class="w-4 h-4 text-obsidian-950 fill-obsidian-950 animate-pulse"></i>
+        <span>Shop 12/108 Dangar St, Armidale • Freshly Prepared Favourites • Order Online for Pickup or Delivery</span>
     </div>
 
-    <!-- Navigation Bar -->
-    <header class="sticky top-0 z-40 bg-obsidian/95 backdrop-blur-md border-b border-zinc-800 shadow-xl">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Brand Logo -->
-            <a href="#" class="flex items-center gap-3 group">
-                <div class="w-12 h-12 rounded-full border-2 border-gold-500/80 overflow-hidden bg-white flex items-center justify-center shadow-lg shadow-gold-500/20 group-hover:scale-105 transition-transform">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Ccircle cx='250' cy='250' r='230' fill='%23111' stroke='%23EAB308' stroke-width='10'/%3E%3Cpath d='M150 320 C180 360, 320 360, 350 320' fill='none' stroke='%23EAB308' stroke-width='6'/%3E%3Ctext x='160' y='270' font-family='Cinzel' font-weight='900' font-size='140' fill='%23EAB308'%3ECH%3C/text%3E%3C/svg%3E" alt="Crave House Logo" class="w-full h-full object-cover">
-                </div>
-                <div>
-                    <h1 class="font-heading text-xl md:text-2xl font-bold tracking-wider text-white">CRAVE HOUSE</h1>
-                    <p class="text-[10px] md:text-xs tracking-[0.25em] text-gold-400 font-semibold uppercase">Kitchen • Armidale</p>
-                </div>
-            </a>
+    <!-- Sticky Glassmorphic Top Header -->
+    <header class="sticky top-0 z-40 bg-obsidian-900/90 backdrop-blur-xl border-b gold-border-subtle">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Crave House Kitchen Circular Emblem + Brand Wordmark -->
+                <a href="#" class="flex items-center gap-3.5 group">
+                    <div class="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#F8F6F1] p-0.5 ring-2 ring-gold-500/70 group-hover:ring-gold-400 shadow-[0_0_20px_rgba(212,175,55,0.25)] overflow-hidden shrink-0 transition-transform duration-300 group-hover:scale-105">
+                        <img 
+                            src="WhatsApp Image 2026-11-17 at 11.53.38 AM.jpeg" 
+                            alt="Crave House Kitchen Logo" 
+                            onerror="this.style.display='none'"
+                            class="w-full h-full object-cover rounded-full"
+                        >
+                    </div>
+                    <div class="flex flex-col">
+                        <div class="font-display text-lg sm:text-2xl font-black tracking-[0.12em] leading-none flex items-center gap-1.5">
+                            <span class="text-white">CRAVE</span>
+                            <span class="gold-text-shimmer">HOUSE</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 mt-1">
+                            <span class="w-3 h-[1.5px] bg-crimson-700 rounded-full"></span>
+                            <span class="text-[9px] sm:text-[10px] font-sans font-bold tracking-[0.32em] text-gold-400 uppercase">
+                                Kitchen
+                            </span>
+                            <span class="w-3 h-[1.5px] bg-crimson-700 rounded-full"></span>
+                        </div>
+                    </div>
+                </a>
 
-            <!-- Right Nav Actions -->
-            <div class="flex items-center gap-4">
-                <button onclick="openCart()" class="relative bg-zinc-900 border border-gold-500/50 hover:bg-gold-500 hover:text-black text-zinc-100 px-4 py-2.5 rounded-xl font-medium transition-all flex items-center gap-2.5 shadow-md">
-                    <i class="fa-solid fa-basket-shopping text-gold-400 group-hover:text-black"></i>
-                    <span class="hidden sm:inline">Cart</span>
-                    <span id="cart-badge" class="bg-gold-500 text-black font-bold text-xs px-2 py-0.5 rounded-full hidden">0</span>
-                </button>
+                <!-- Right Status & Glowing Cart Trigger -->
+                <div class="flex items-center gap-3 sm:gap-5">
+                    <div class="hidden md:flex items-center gap-2.5 text-xs text-zinc-300 bg-obsidian-800/90 border gold-border-subtle px-4 py-2 rounded-full">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>Shop 12/108 Dangar St, Armidale • <strong class="text-gold-500 font-semibold">Square Pay & Pickup</strong></span>
+                    </div>
+
+                    <button onclick="toggleCart(true)" class="relative flex items-center gap-2.5 bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:brightness-110 text-obsidian-950 px-4 sm:px-5 py-2.5 rounded-full font-sans font-bold text-xs sm:text-sm uppercase tracking-wider transition shadow-[0_0_25px_rgba(212,175,55,0.28)] active:scale-95">
+                        <i data-lucide="shopping-bag" class="w-4 h-4 stroke-[2.5]"></i>
+                        <span class="hidden sm:inline">My Order</span>
+                        <span id="nav-cart-count" class="bg-obsidian-950 text-gold-500 font-extrabold text-xs px-2 py-0.5 rounded-full">0</span>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Hero Banner Section -->
-    <section class="relative py-16 md:py-24 overflow-hidden border-b border-zinc-800 bg-zinc-950">
-        <div class="absolute inset-0 z-0 opacity-40 mix-blend-luminosity">
-            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1920&q=80" alt="Gourmet Food Spread" class="w-full h-full object-cover">
+    <!-- Cinematic Full-Width Gourmet Hero Section -->
+    <section class="relative bg-obsidian-950 border-b gold-border-subtle overflow-hidden">
+        <div class="absolute inset-0">
+            <img 
+                src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1920&q=85" 
+                alt="CRAVE HOUSE Gourmet Feast" 
+                onerror="this.style.display='none'"
+                class="w-full h-full object-cover object-center opacity-35 scale-105"
+            >
+            <div class="absolute inset-0 bg-gradient-to-r from-obsidian-900 via-obsidian-900/90 to-obsidian-900/65"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900 via-transparent to-obsidian-950/80"></div>
         </div>
-        <div class="absolute inset-0 hero-glow z-0"></div>
-        
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <div class="inline-flex items-center gap-2 bg-gold-500/10 border border-gold-500/30 px-4 py-1.5 rounded-full text-gold-400 text-xs md:text-sm font-semibold mb-6 tracking-wider uppercase">
-                <i class="fa-solid fa-star"></i> Your Cravings, Our Calling
-            </div>
-            <h2 class="font-heading text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-wide mb-6">
-                EXQUISITE <span class="gold-text-gradient">FLAVOURS</span>
-            </h2>
-            <p class="max-w-2xl mx-auto text-zinc-400 text-base md:text-lg mb-10 font-sans">
-                Explore our signature beef & chicken burgers, artisan wood-fire style pizzas, creamy pastas, wood-fired parmigianas, and decadent desserts.
-            </p>
-            
-            <!-- Quick Category Jump Pills -->
-            <div id="quick-pills" class="flex flex-wrap justify-center gap-2 md:gap-3 max-w-4xl mx-auto">
-                <!-- Injected via JS -->
-            </div>
-        </div>
-    </section>
 
-    <!-- Main Menu Container -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
-        <div id="menu-container" class="space-y-16">
-            <!-- Menu categories will load here -->
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-zinc-950 border-t border-zinc-800 text-zinc-400 py-12 mt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center md:text-left">
-            <div>
-                <div class="flex items-center justify-center md:justify-start gap-3 mb-3">
-                    <div class="w-10 h-10 rounded-full border border-gold-500 bg-white flex items-center justify-center overflow-hidden">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Ccircle cx='250' cy='250' r='230' fill='%23111' stroke='%23EAB308' stroke-width='10'/%3E%3Ctext x='160' y='270' font-family='Cinzel' font-weight='900' font-size='140' fill='%23EAB308'%3ECH%3C/text%3E%3C/svg%3E" alt="Logo" class="w-full h-full object-cover">
-                    </div>
-                    <span class="font-heading text-lg font-bold text-white tracking-wider">CRAVE HOUSE KITCHEN</span>
-                </div>
-                <p class="text-xs text-zinc-500">Shop 12/108 Dangar St, Armidale NSW • Freshly Prepared Favourites.</p>
-            </div>
-            <div class="text-center text-xs text-zinc-500">
-                <p>&copy; 2026 Crave House Kitchen. All rights reserved.</p>
-                <p class="mt-1">Powered by Secure Square Online Checkout.</p>
-            </div>
-            <div class="flex justify-center md:justify-end gap-4 text-zinc-400">
-                <a href="#" class="hover:text-gold-400 transition-colors w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#" class="hover:text-gold-400 transition-colors w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" class="hover:text-gold-400 transition-colors w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center"><i class="fa-solid fa-phone"></i></a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Item Customization Modal -->
-    <div id="item-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl relative animate-in fade-in zoom-in duration-200 my-auto">
-            <button onclick="closeModal()" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-zinc-800/80 text-zinc-300 hover:text-white hover:bg-zinc-700 flex items-center justify-center transition-colors">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-            <div id="modal-content" class="p-6 md:p-8 max-h-[85vh] overflow-y-auto">
-                <!-- Modal details injected here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide-out Cart Drawer -->
-    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
-        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity" onclick="closeCart()"></div>
-        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
-            <div class="w-screen max-w-md bg-zinc-900 border-l border-zinc-800 shadow-2xl flex flex-col">
-                <!-- Cart Header -->
-                <div class="p-6 border-b border-zinc-800 flex items-center justify-between bg-zinc-950">
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400">
-                            <i class="fa-solid fa-basket-shopping"></i>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 relative z-10">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-10">
+                <div class="max-w-2xl">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-6 mb-6">
+                        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#F8F6F1] p-1 ring-2 ring-gold-500/80 shadow-[0_12px_40px_rgba(212,175,55,0.28)] overflow-hidden shrink-0">
+                            <img 
+                                src="WhatsApp Image 2026-11-17 at 11.53.38 AM.jpeg" 
+                                alt="Crave House Kitchen Official Crest" 
+                                onerror="this.style.display='none'"
+                                class="w-full h-full object-cover rounded-full"
+                            >
                         </div>
-                        <h3 class="font-heading text-lg font-bold text-white tracking-wide">Your Order</h3>
-                    </div>
-                    <button onclick="closeCart()" class="w-9 h-9 rounded-full bg-zinc-800 text-zinc-400 hover:text-white flex items-center justify-center transition-colors">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
 
-                <!-- Cart Items Body -->
-                <div id="cart-items-list" class="flex-1 overflow-y-auto p-6 space-y-4 divide-y divide-zinc-800/60">
-                    <!-- Cart items injected here -->
-                </div>
+                        <div>
+                            <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-obsidian-800/90 backdrop-blur-md border gold-border-subtle text-gold-400 text-xs font-semibold uppercase tracking-widest mb-3 shadow-lg">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                                <span>Armidale NSW • Pickup & Delivery</span>
+                            </div>
 
-                <!-- Cart Footer / Checkout Area -->
-                <div class="p-6 border-t border-zinc-800 bg-zinc-950 space-y-4">
-                    <div class="space-y-2 text-sm">
-                        <div class="flex justify-between text-zinc-400">
-                            <span>Subtotal</span>
-                            <span id="cart-subtotal" class="font-medium text-white">$0.00</span>
-                        </div>
-                        <div class="flex justify-between text-zinc-400">
-                            <span>Fulfillment</span>
-                            <span id="cart-fulfillment-fee" class="font-medium text-white">Pickup ($0.00)</span>
-                        </div>
-                        <div class="flex justify-between text-base font-bold text-white pt-2 border-t border-zinc-800">
-                            <span>Total Amount</span>
-                            <span id="cart-total" class="text-gold-400 text-lg">$0.00</span>
+                            <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-black tracking-wider text-white uppercase leading-[1.05]">
+                                CRAVE <span class="gold-text-shimmer">HOUSE</span>
+                            </h1>
+                            <div class="flex items-center gap-2.5 mt-2">
+                                <span class="w-6 h-[2px] bg-crimson-700 rounded-full"></span>
+                                <span class="font-sans text-xs sm:text-sm font-bold tracking-[0.38em] text-gold-400 uppercase">Kitchen</span>
+                                <span class="w-6 h-[2px] bg-crimson-700 rounded-full"></span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Checkout Options -->
-                    <div class="space-y-3 pt-2">
-                        <div class="grid grid-cols-2 gap-2 bg-zinc-900 p-1 rounded-xl border border-zinc-800">
-                            <button id="btn-type-pickup" onclick="setFulfillmentType('pickup')" class="py-2 text-xs font-bold rounded-lg bg-gold-500 text-black transition-all">Pickup</button>
-                            <button id="btn-type-delivery" onclick="setFulfillmentType('delivery')" class="py-2 text-xs font-bold rounded-lg text-zinc-400 hover:text-white transition-all">Delivery (+$5)</button>
+                    <p class="font-editorial italic text-lg sm:text-2xl text-gold-400 mb-3">
+                        Your Cravings, Our Calling — Freshly Prepared Favourites
+                    </p>
+                    <p class="text-zinc-300 text-sm sm:text-base leading-relaxed max-w-xl">
+                        Indulge in smashed double-beef burgers, crispy golden chicken, stone-baked pizzas, velvety pastas, loaded fries, and artisanal waffles & crepes crafted fresh to order at Shop 12/108 Dangar St.
+                    </p>
+
+                    <!-- Quick-Jump Category Pills -->
+                    <div class="mt-7 flex flex-wrap items-center gap-2">
+                        <span class="text-[11px] uppercase tracking-widest text-zinc-400 font-semibold mr-1">Explore:</span>
+                        <button onclick="jumpToGroup('BURGERS')" class="px-3.5 py-1.5 rounded-full bg-obsidian-800/90 hover:bg-gold-500 text-zinc-200 hover:text-obsidian-950 border gold-border-subtle text-xs font-semibold transition">Burgers</button>
+                        <button onclick="jumpToGroup('PIZZA')" class="px-3.5 py-1.5 rounded-full bg-obsidian-800/90 hover:bg-gold-500 text-zinc-200 hover:text-obsidian-950 border gold-border-subtle text-xs font-semibold transition">Woodfired Pizza</button>
+                        <button onclick="jumpToGroup('PASTA_RISOTTO')" class="px-3.5 py-1.5 rounded-full bg-obsidian-800/90 hover:bg-gold-500 text-zinc-200 hover:text-obsidian-950 border gold-border-subtle text-xs font-semibold transition">Pasta & Risotto</button>
+                        <button onclick="jumpToGroup('MAINS_SIDES')" class="px-3.5 py-1.5 rounded-full bg-obsidian-800/90 hover:bg-gold-500 text-zinc-200 hover:text-obsidian-950 border gold-border-subtle text-xs font-semibold transition">Mains & Sides</button>
+                        <button onclick="jumpToGroup('DESSERTS')" class="px-3.5 py-1.5 rounded-full bg-obsidian-800/90 hover:bg-gold-500 text-zinc-200 hover:text-obsidian-950 border gold-border-subtle text-xs font-semibold transition">Waffles & Crepes</button>
+                    </div>
+                </div>
+
+                <!-- Featured Luxury Feast Bundle Card -->
+                <div class="lg:w-[400px] bg-obsidian-800/85 backdrop-blur-xl border border-gold-500/35 rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.75)] group">
+                    <div class="relative h-40 overflow-hidden bg-obsidian-950">
+                        <img 
+                            src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80" 
+                            alt="Crave House Special Combo" 
+                            onerror="this.style.display='none'"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        >
+                        <div class="absolute inset-0 bg-gradient-to-t from-obsidian-800 via-obsidian-900/30 to-transparent"></div>
+                        <div class="absolute top-3 left-3 bg-crimson-700/95 backdrop-blur-md border border-gold-500/40 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow">
+                            Signature Feast Deal
                         </div>
-                        <button onclick="proceedToCheckout()" class="w-full gold-gradient text-black font-bold py-3.5 px-4 rounded-xl shadow-lg hover:opacity-95 transition-all flex items-center justify-center gap-2">
-                            <span>Proceed to Checkout</span>
-                            <i class="fa-solid fa-arrow-right"></i>
+                        <div class="absolute bottom-3 right-3 bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 font-display font-black text-sm px-3.5 py-1 rounded-full shadow-lg">
+                            $150.00
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h2 class="font-display font-bold text-white text-lg tracking-wide uppercase">Crave House Special Combo</h2>
+                        <p class="text-xs text-zinc-300 mt-1.5 leading-relaxed">
+                            2 XL Pizzas + 2 Pastas + 2 Burgers + Garlic Bread + 1.5L Drink. Customize every single dish in your bundle!
+                        </p>
+                        <button onclick="openItemModal('special-combo')" class="mt-4 w-full bg-gradient-to-r from-gold-500/20 to-gold-600/20 hover:from-gold-400 hover:to-gold-600 text-gold-400 hover:text-obsidian-950 border border-gold-500/50 font-sans font-bold text-xs uppercase tracking-wider py-3 rounded-xl transition shadow-md">
+                            Customize Combo Bundle
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Checkout Modal -->
-    <div id="checkout-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl relative my-auto p-6 md:p-8">
-            <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-zinc-800 text-zinc-300 hover:text-white flex items-center justify-center transition-colors">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-            <h3 class="font-heading text-xl font-bold text-white mb-2">Complete Your Order</h3>
-            <p class="text-zinc-400 text-xs mb-6">Enter your contact details to finalize your Crave House order.</p>
-            
-            <form id="checkout-form" onsubmit="submitOrder(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">Full Name</label>
-                    <input type="text" id="cust-name" required placeholder="John Smith" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-gold-500 text-sm">
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">Phone Number</label>
-                        <input type="tel" id="cust-phone" required placeholder="0400 000 000" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-gold-500 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">Email Address</label>
-                        <input type="email" id="cust-email" required placeholder="john@example.com" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-gold-500 text-sm">
-                    </div>
-                </div>
-                <div id="delivery-address-group" class="hidden">
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">Delivery Address</label>
-                    <textarea id="cust-address" rows="2" placeholder="Street address, Armidale NSW" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-gold-500 text-sm"></textarea>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">Order Notes (Optional)</label>
-                    <input type="text" id="cust-notes" placeholder="e.g. Extra napkins, doorbell broken" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-gold-500 text-sm">
+    <!-- Sticky Glassmorphic Category Tabs & Search Bar -->
+    <div id="menu-nav-bar" class="sticky top-20 z-30 bg-obsidian-900/90 backdrop-blur-xl border-b gold-border-subtle py-3.5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div id="group-tabs" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 md:pb-0">
+                    <!-- Rendered dynamically -->
                 </div>
 
-                <!-- Payment Method Selection -->
-                <div class="pt-2">
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">Select Payment Method</label>
-                    <div class="grid grid-cols-2 gap-3">
-                        <label class="border border-zinc-800 bg-zinc-950 rounded-xl p-3.5 flex flex-col cursor-pointer hover:border-gold-500 transition-colors has-[:checked]:border-gold-500 has-[:checked]:bg-gold-500/10">
-                            <div class="flex items-center justify-between mb-1">
-                                <span class="font-bold text-white text-sm">Pay Online</span>
-                                <input type="radio" name="payment_method" value="online" checked class="accent-yellow-500">
-                            </div>
-                            <span class="text-[11px] text-zinc-400">Secure Card / Apple Pay via Square</span>
-                        </label>
-                        <label class="border border-zinc-800 bg-zinc-950 rounded-xl p-3.5 flex flex-col cursor-pointer hover:border-gold-500 transition-colors has-[:checked]:border-gold-500 has-[:checked]:bg-gold-500/10">
-                            <div class="flex items-center justify-between mb-1">
-                                <span class="font-bold text-white text-sm">Pay at Counter</span>
-                                <input type="radio" name="payment_method" value="counter" class="accent-yellow-500">
-                            </div>
-                            <span class="text-[11px] text-zinc-400">EFTPOS, Tap & Go, or Cash</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="pt-4">
-                    <button type="submit" id="submit-order-btn" class="w-full gold-gradient text-black font-bold py-4 px-4 rounded-xl shadow-lg hover:opacity-95 transition-all flex items-center justify-center gap-2 text-base">
-                        <i class="fa-solid fa-lock text-sm"></i>
-                        <span id="submit-btn-text">Place & Pay Order</span>
+                <div class="relative w-full md:w-72 shrink-0">
+                    <i data-lucide="search" class="w-4 h-4 text-gold-500/70 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        placeholder="Search burgers, pizza, waffles..." 
+                        class="w-full pl-10 pr-8 py-2 bg-obsidian-800/95 border gold-border-subtle focus:border-gold-500 rounded-xl text-sm text-white placeholder-zinc-500 outline-none transition"
+                    >
+                    <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white">
+                        <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Order Success Receipt Modal -->
-    <div id="receipt-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-zinc-900 border border-gold-500/40 rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl relative my-auto p-6 md:p-8 text-center">
-            <div class="w-16 h-16 rounded-full bg-gold-500/20 border border-gold-500 flex items-center justify-center mx-auto mb-4 text-gold-400 text-2xl animate-bounce">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <h3 class="font-heading text-2xl font-bold text-white mb-1">Order Placed Successfully!</h3>
-            <p id="receipt-subtitle" class="text-xs text-gold-400 font-semibold uppercase tracking-wider mb-6">Crave House Kitchen • Armidale</p>
-            
-            <div id="receipt-details" class="bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-left text-xs text-zinc-300 space-y-2 mb-6 font-mono">
-                <!-- Receipt details injected here -->
-            </div>
-
-            <div class="flex flex-col sm:flex-row gap-3">
-                <button onclick="window.print()" class="flex-1 bg-zinc-800 hover:bg-zinc-700 text-white font-bold py-3 px-4 rounded-xl transition-all text-xs flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-print"></i> Print Receipt
-                </button>
-                <button onclick="closeReceiptModal()" class="flex-1 gold-gradient text-black font-bold py-3 px-4 rounded-xl transition-all text-xs flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-house"></i> Back to Menu
-                </button>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript Application Logic -->
+    <!-- Main Menu Sections Container -->
+    <main id="menu-container" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-14">
+        <!-- Menu sections rendered here -->
+    </main>
+
+    <!-- Empty Search State -->
+    <div id="empty-state" class="hidden max-w-lg mx-auto px-4 py-16 text-center">
+        <div class="w-16 h-16 rounded-2xl bg-obsidian-800 border gold-border-subtle text-gold-500 flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="search-x" class="w-8 h-8"></i>
+        </div>
+        <h3 class="font-display text-xl font-bold text-white uppercase">No Cravings Matched</h3>
+        <p class="text-zinc-400 text-sm mt-1 mb-6">We couldn't find any menu items matching your search.</p>
+        <button onclick="resetAllFilters()" class="bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 font-sans font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition">
+            Show Full Menu
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-obsidian-950 border-t gold-border-subtle py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-full bg-[#F8F6F1] p-0.5 ring-2 ring-gold-500/60 overflow-hidden shrink-0 shadow-lg">
+                    <img 
+                        src="WhatsApp Image 2026-11-17 at 11.53.38 AM.jpeg" 
+                        alt="Crave House Kitchen Logo" 
+                        onerror="this.style.display='none'"
+                        class="w-full h-full object-cover rounded-full"
+                    >
+                </div>
+                <div>
+                    <div class="font-display text-xl font-black tracking-[0.12em]">
+                        <span class="text-white">CRAVE</span> <span class="gold-text-shimmer">HOUSE</span>
+                    </div>
+                    <p class="text-[10px] font-bold tracking-[0.28em] text-crimson-600 uppercase mt-0.5">Kitchen</p>
+                    <p class="font-editorial italic text-sm text-gold-500/80 mt-1">Shop 12/108 Dangar St, Armidale NSW</p>
+                </div>
+            </div>
+            <div class="text-xs text-zinc-400 text-center sm:text-right space-y-1">
+                <p class="text-zinc-200 font-semibold">Open 7 Days • Pickup & Local Delivery</p>
+                <p class="text-zinc-500">All prices in AUD • GST Included • Powered by Square</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Mobile Bottom Cart Bar -->
+    <div id="mobile-cart-bar" class="fixed bottom-4 left-4 right-4 z-30 md:hidden hidden">
+        <button onclick="toggleCart(true)" class="w-full bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 text-obsidian-950 p-4 rounded-2xl shadow-[0_10px_30px_rgba(245,197,24,0.35)] flex items-center justify-between font-sans font-extrabold">
+            <div class="flex items-center gap-3">
+                <span id="mobile-bar-count" class="bg-obsidian-950 text-gold-500 text-xs w-6 h-6 rounded-full flex items-center justify-center">0</span>
+                <span class="text-sm uppercase tracking-wider">View Order</span>
+            </div>
+            <span id="mobile-bar-total" class="text-base">$0.00</span>
+        </button>
+    </div>
+
+    <!-- ITEM CUSTOMIZATION MODAL -->
+    <div id="item-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md">
+        <div class="bg-obsidian-800 border border-gold-500/30 rounded-3xl max-w-xl w-full max-h-[92vh] overflow-hidden flex flex-col shadow-2xl">
+            <div class="relative h-48 sm:h-56 bg-obsidian-950 shrink-0 overflow-hidden">
+                <img 
+                    id="modal-item-img" 
+                    src="" 
+                    alt="" 
+                    onerror="this.style.opacity='0'"
+                    class="w-full h-full object-cover"
+                >
+                <div class="absolute inset-0 bg-gradient-to-t from-obsidian-800 via-obsidian-900/45 to-black/30"></div>
+                <button onclick="closeItemModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-obsidian-950/80 hover:bg-gold-500 text-white hover:text-obsidian-950 border gold-border-subtle flex items-center justify-center transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+                <div class="absolute bottom-4 left-5 right-5">
+                    <span id="modal-category-badge" class="inline-block px-2.5 py-0.5 rounded-full bg-obsidian-950/85 border gold-border-subtle text-[10px] font-bold uppercase tracking-widest text-gold-400 mb-1.5"></span>
+                    <h3 id="modal-item-name" class="font-display text-xl sm:text-2xl font-extrabold text-white leading-tight drop-shadow"></h3>
+                </div>
+            </div>
+
+            <div class="p-5 sm:p-6 overflow-y-auto space-y-5 flex-1">
+                <p id="modal-item-desc" class="text-zinc-300 text-xs sm:text-sm leading-relaxed"></p>
+                <div id="modal-dessert-banner" class="hidden bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 px-4 py-2.5 rounded-xl font-sans font-extrabold text-xs uppercase tracking-wider text-center shadow-md">
+                    Side Ice Cream Included With Every Waffle & Crepe — No Extra Charge
+                </div>
+                <div id="modal-options-container" class="space-y-4"></div>
+                <div>
+                    <label for="modal-instructions" class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">
+                        Special Kitchen Notes <span class="text-zinc-500 font-normal lowercase">(optional)</span>
+                    </label>
+                    <textarea 
+                        id="modal-instructions" 
+                        rows="2" 
+                        placeholder="E.g., no onions, extra crispy, sauce on the side..." 
+                        class="w-full rounded-xl bg-obsidian-900 border gold-border-subtle p-3 text-sm text-white placeholder-zinc-500 focus:border-gold-500 outline-none transition"
+                    ></textarea>
+                </div>
+            </div>
+
+            <div class="p-4 sm:p-5 bg-obsidian-900 border-t gold-border-subtle flex items-center gap-3 sm:gap-4 shrink-0">
+                <div class="flex items-center bg-obsidian-800 border gold-border-subtle rounded-xl p-1">
+                    <button type="button" onclick="adjustModalQty(-1)" class="w-9 h-9 rounded-lg hover:bg-obsidian-700 flex items-center justify-center text-white transition">
+                        <i data-lucide="minus" class="w-4 h-4"></i>
+                    </button>
+                    <span id="modal-qty" class="w-9 text-center font-bold text-sm text-white">1</span>
+                    <button type="button" onclick="adjustModalQty(1)" class="w-9 h-9 rounded-lg hover:bg-obsidian-700 flex items-center justify-center text-white transition">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+                <button onclick="confirmAddToCart()" class="flex-1 bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:brightness-110 text-obsidian-950 font-sans font-extrabold text-xs sm:text-sm uppercase tracking-wider py-3.5 px-5 rounded-xl shadow-[0_0_20px_rgba(245,197,24,0.25)] transition flex items-center justify-between active:scale-[0.99]">
+                    <span>Add to Order</span>
+                    <span id="modal-total-btn">$0.00</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE-OUT SHOPPING CART DRAWER -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 hidden">
+        <div onclick="toggleCart(false)" class="absolute inset-0 bg-black/80 backdrop-blur-xs"></div>
+        <div class="absolute inset-y-0 right-0 max-w-md w-full bg-obsidian-900 border-l gold-border-subtle shadow-2xl flex flex-col">
+            <div class="p-6 border-b gold-border-subtle flex items-center justify-between bg-obsidian-950">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="shopping-bag" class="w-5 h-5 text-gold-500"></i>
+                    <h2 class="font-display text-lg font-extrabold uppercase tracking-wider text-white">Your Order</h2>
+                </div>
+                <button onclick="toggleCart(false)" class="w-9 h-9 rounded-full bg-obsidian-800 hover:bg-obsidian-700 border gold-border-subtle flex items-center justify-center text-zinc-400 hover:text-white transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div id="cart-items-container" class="flex-1 overflow-y-auto p-5 space-y-3.5"></div>
+            <div id="cart-footer" class="p-6 bg-obsidian-950 border-t gold-border-subtle space-y-4 hidden">
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between text-zinc-400">
+                        <span>Subtotal</span>
+                        <span id="cart-subtotal" class="font-semibold text-white">$0.00</span>
+                    </div>
+                    <div class="flex justify-between text-zinc-400 text-xs">
+                        <span>GST (Included)</span>
+                        <span id="cart-gst">$0.00</span>
+                    </div>
+                    <div class="flex justify-between text-base font-display font-extrabold text-white pt-2.5 border-t border-zinc-800">
+                        <span>Total</span>
+                        <span id="cart-total" class="text-gold-500">$0.00</span>
+                    </div>
+                </div>
+                <button onclick="openCheckoutModal()" class="w-full bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:brightness-110 text-obsidian-950 font-sans font-extrabold text-sm uppercase tracking-wider py-4 px-6 rounded-xl shadow-[0_0_25px_rgba(245,197,24,0.25)] transition flex items-center justify-center gap-2">
+                    <span>Proceed to Checkout</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHECKOUT & SQUARE PAYMENT MODAL -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md">
+        <div class="bg-obsidian-800 border border-gold-500/30 rounded-3xl max-w-xl w-full max-h-[92vh] overflow-hidden flex flex-col shadow-2xl">
+            <div id="checkout-form-view" class="flex flex-col max-h-[92vh]">
+                <div class="p-6 border-b gold-border-subtle bg-obsidian-900 flex items-center justify-between shrink-0">
+                    <div>
+                        <h2 class="font-display text-xl font-extrabold uppercase tracking-wide text-white">Checkout</h2>
+                        <p class="text-xs text-gold-400 mt-0.5">Shop 12/108 Dangar St, Armidale NSW</p>
+                    </div>
+                    <button onclick="closeCheckoutModal()" class="w-9 h-9 rounded-full bg-obsidian-800 hover:bg-obsidian-700 border gold-border-subtle flex items-center justify-center text-zinc-400 hover:text-white transition">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+                <form id="checkout-form" onsubmit="submitOrder(event)" class="p-6 overflow-y-auto space-y-5 flex-1">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-gold-500 mb-2">Order Type</label>
+                        <div class="grid grid-cols-2 gap-2.5 p-1.5 bg-obsidian-900 border gold-border-subtle rounded-xl">
+                            <button type="button" id="btn-pickup" onclick="setOrderMethod('Pickup')" class="py-2.5 px-4 rounded-lg text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 transition">
+                                <i data-lucide="store" class="w-4 h-4"></i> Pickup
+                            </button>
+                            <button type="button" id="btn-delivery" onclick="setOrderMethod('Delivery')" class="py-2.5 px-4 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 text-zinc-400 hover:text-white transition">
+                                <i data-lucide="bike" class="w-4 h-4"></i> Delivery (+$5.00)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Your Name *</label>
+                            <input type="text" id="cust-name" required placeholder="Full Name" class="w-full rounded-xl bg-obsidian-900 border gold-border-subtle px-3.5 py-2.5 text-sm text-white focus:border-gold-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Mobile Number *</label>
+                            <input type="tel" id="cust-phone" required placeholder="04XX XXX XXX" class="w-full rounded-xl bg-obsidian-900 border gold-border-subtle px-3.5 py-2.5 text-sm text-white focus:border-gold-500 outline-none">
+                        </div>
+                    </div>
+
+                    <div id="delivery-address-group" class="hidden space-y-2">
+                        <label class="block text-xs font-semibold text-zinc-300">Delivery Address *</label>
+                        <input type="text" id="cust-address" placeholder="Armidale Street Address" class="w-full rounded-xl bg-obsidian-900 border gold-border-subtle px-3.5 py-2.5 text-sm text-white focus:border-gold-500 outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Order Notes <span class="text-zinc-500 font-normal">(optional)</span></label>
+                        <input type="text" id="cust-notes" placeholder="Pickup time, cutlery..." class="w-full rounded-xl bg-obsidian-900 border gold-border-subtle px-3.5 py-2.5 text-sm text-white focus:border-gold-500 outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-gold-500 mb-2">Payment Option</label>
+                        <div class="space-y-2.5">
+                            <label id="pay-opt-online" onclick="selectPaymentOption('online')" class="flex items-start gap-3.5 p-3.5 rounded-2xl border-2 border-gold-500 bg-gold-500/10 cursor-pointer transition">
+                                <input type="radio" name="payment" value="Pay Online via Square" checked class="accent-gold-500 w-4 h-4 mt-1">
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between gap-2">
+                                        <span class="text-sm font-bold text-white">Pay Online Now (Square Checkout)</span>
+                                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-gold-500 text-obsidian-950">Locked Total</span>
+                                    </div>
+                                    <p class="text-xs text-zinc-400 mt-1">Secure card, Apple Pay, or Google Pay via Square with your exact cart total locked in.</p>
+                                </div>
+                            </label>
+
+                            <label id="pay-opt-counter" onclick="selectPaymentOption('counter')" class="flex items-start gap-3.5 p-3.5 rounded-2xl border gold-border-subtle bg-obsidian-900 cursor-pointer transition">
+                                <input type="radio" name="payment" value="Pay at Counter / On Delivery" class="accent-gold-500 w-4 h-4 mt-1">
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between gap-2">
+                                        <span class="text-sm font-bold text-zinc-200">Pay at Counter / On Delivery</span>
+                                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-obsidian-800 text-zinc-300 border border-zinc-700">EFTPOS / Cash</span>
+                                    </div>
+                                    <p class="text-xs text-zinc-400 mt-1">Tap & Go via Square terminal or pay cash when collecting from Shop 12/108 Dangar St.</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="bg-obsidian-900 p-4 rounded-2xl border gold-border-subtle space-y-2 text-sm">
+                        <div class="flex justify-between text-zinc-400">
+                            <span>Items Subtotal</span>
+                            <span id="checkout-subtotal" class="text-white">$0.00</span>
+                        </div>
+                        <div id="checkout-delivery-row" class="hidden flex justify-between text-zinc-400">
+                            <span>Delivery Fee</span>
+                            <span class="text-white">$5.00</span>
+                        </div>
+                        <div class="flex justify-between font-display font-extrabold text-base text-white pt-2 border-t border-zinc-800">
+                            <span>Total Due</span>
+                            <span id="checkout-total" class="text-gold-500">$0.00</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="checkout-submit-btn" class="w-full bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:brightness-110 text-obsidian-950 font-sans font-extrabold text-sm uppercase tracking-wider py-4 px-6 rounded-xl shadow-[0_0_25px_rgba(245,197,24,0.25)] transition flex items-center justify-center gap-2">
+                        <i data-lucide="lock" class="w-4 h-4"></i>
+                        <span id="checkout-submit-label">Confirm Order & Pay via Square</span>
+                    </button>
+                </form>
+            </div>
+
+            <div id="order-confirmation-view" class="hidden flex flex-col p-6 sm:p-8 overflow-y-auto space-y-6 text-center">
+                <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/50 flex items-center justify-center mx-auto">
+                    <i data-lucide="check" class="w-8 h-8"></i>
+                </div>
+                <div>
+                    <h3 class="font-display text-2xl font-black uppercase text-white">Order Received!</h3>
+                    <p id="receipt-subtitle" class="text-xs text-gold-400 mt-1 uppercase tracking-wider font-semibold">CRAVE HOUSE Kitchen • Armidale</p>
+                </div>
+                <div id="printable-receipt" class="bg-obsidian-900 border gold-border-subtle rounded-2xl p-5 text-left text-xs font-mono text-zinc-300 space-y-3">
+                    <!-- Receipt details rendered here -->
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="window.print()" class="flex-1 bg-obsidian-900 hover:bg-obsidian-800 text-white border gold-border-subtle font-sans font-bold text-xs uppercase tracking-wider py-3 rounded-xl transition">
+                        Print Receipt
+                    </button>
+                    <button onclick="closeAllModals()" class="flex-1 bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 font-sans font-bold text-xs uppercase tracking-wider py-3 rounded-xl transition">
+                        Back to Menu
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT APP LOGIC & SQUARE CHECKOUT -->
     <script>
-        // Menu Data Structure
+        // Full Menu Data with aesthetic high-res imagery across all categories
         const menuData = [
             {
-                category: "Beef Burgers",
-                image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",
+                group: "BURGERS",
+                categoryName: "Beef Burgers",
+                categoryDesc: "Smoky, smashed, and crafted with 100% Australian beef patties and melted American cheese.",
+                bgImage: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=80",
                 items: [
-                    { id: 'b1', name: 'The Crave Classic', desc: '2 beef patties, 2 American cheese, diced onions, pickles and burger sauce.', price: 22.90, options: true, buns: true, combos: true },
-                    { id: 'b2', name: 'Golden Cheese Smeash', desc: '2 beef patties, American cheese, lettuce, red onion, tomato and mayo.', price: 19.90, options: true, buns: true, combos: true },
-                    { id: 'b3', name: 'The Big Boss', desc: '3 beef patties, 2 crispy bacon rashers, 2 American cheese, lettuce, tomato, caramelised onion, smokey BBQ sauce and mayo.', price: 26.90, options: true, buns: true, combos: true },
-                    { id: 'b4', name: 'Jalapeño Chipotle Beef', desc: 'Beef patty, Swiss cheese, jalapeños, lettuce, tomato, red onion and chipotle mayo.', price: 18.90, options: true, buns: true, combos: true },
-                    { id: 'b5', name: 'Truffle Mushroom Royale', desc: 'Beef patty, Swiss cheese, rocket, sautéed mushroom, caramelised onion, rocket and truffle aioli.', price: 21.90, options: true, buns: true, combos: true },
-                    { id: 'b6', name: 'Swiss Rocket Smash', desc: 'Smashed beef patty, Swiss cheese, rocket, tomato, red onion and mayo.', price: 18.90, options: true, buns: true, combos: true },
-                    { id: 'b7', name: 'Little Craver', desc: 'Smashed beef patty, American cheese, lettuce and tomato sauce.', price: 16.90, options: true, buns: true, combos: true }
+                    { id: 'b1', name: 'The Crave Classic', desc: '2 beef patties, 2 American cheese, diced onions, pickles and burger sauce.', price: 22.90, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
+                    { id: 'b2', name: 'Golden Cheese Smash', desc: '2 beef patties, American cheese, lettuce, red onion, tomato and mayo.', price: 19.90, image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
+                    { id: 'b3', name: 'The Big Boss', desc: '3 beef patties, 2 crispy bacon rashers, 2 American cheese, lettuce, tomato, caramelised onion, smokey BBQ sauce and mayo.', price: 26.90, image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
+                    { id: 'b4', name: 'Jalapeño Chipotle Beef', desc: 'Beef patty, Swiss cheese, jalapeños, lettuce, tomato, red onion and chipotle mayo.', price: 18.90, image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
+                    { id: 'b5', name: 'Truffle Mushroom Royale', desc: 'Beef patty, Swiss cheese, rocket, sautéed mushroom, caramelised onion and truffle aioli.', price: 21.90, image: 'https://images.unsplash.com/photo-1583542225758-7d453c518065?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
+                    { id: 'b6', name: 'Swiss Rocket Smash', desc: 'Smashed beef patty, Swiss cheese, rocket, tomato, red onion and mayo.', price: 18.90, image: 'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
+                    { id: 'b7', name: 'Little Craver', desc: 'Smashed beef patty, American cheese, lettuce and tomato sauce.', price: 16.90, image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true }
                 ]
             },
             {
-                category: "Fried Chicken Burgers",
-                image: "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=800&q=80",
+                group: "BURGERS",
+                categoryName: "Fried Chicken Burgers",
+                categoryDesc: "Crispy, golden-fried chicken fillets with signature house sauces and fresh crunch.",
+                bgImage: "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=1200&q=80",
                 items: [
-                    { id: 'fc1', name: 'Golden Crunch', desc: 'Crispy chicken fillet, American cheese, lettuce, tomato and garlic aioli.', price: 19.90, options: true, buns: true, combos: true },
-                    { id: 'fc2', name: 'Truffle Chicken Deluxe', desc: 'Crispy chicken fillet, Swiss cheese, rocket, caramelised onion and truffle aioli.', price: 19.90, options: true, buns: true, combos: true },
-                    { id: 'fc3', name: 'Southern Slaw Crunch', desc: 'Southern-style crispy chicken, creamy cabbage and carrot slaw, pickles and garlic aioli.', price: 18.90, options: true, buns: true, combos: true },
-                    { id: 'fc4', name: 'BBQ Bacon Crunch', desc: 'Crispy chicken fillet, bacon, American cheese, lettuce, tomato and smoky BBQ mayo.', price: 20.90, options: true, buns: true, combos: true }
+                    { id: 'fc1', name: 'Golden Crunch', desc: 'Crispy chicken fillet, American cheese, lettuce, tomato and garlic aioli.', price: 19.90, image: 'https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
+                    { id: 'fc2', name: 'Truffle Chicken Deluxe', desc: 'Crispy chicken fillet, Swiss cheese, rocket, caramelised onion and truffle aioli.', price: 19.90, image: 'https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
+                    { id: 'fc3', name: 'Southern Slaw Crunch', desc: 'Southern-style crispy chicken, creamy cabbage and carrot slaw, pickles and garlic aioli.', price: 18.90, image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
+                    { id: 'fc4', name: 'BBQ Bacon Crunch', desc: 'Crispy chicken fillet, bacon, American cheese, lettuce, tomato and smoky BBQ mayo.', price: 20.90, image: 'https://images.unsplash.com/photo-1625813507185-17c385966373?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true }
                 ]
             },
             {
-                category: "Grilled Chicken Burgers",
-                image: "https://images.unsplash.com/photo-1521305916504-4a1121188589?auto=format&fit=crop&w=800&q=80",
+                group: "BURGERS",
+                categoryName: "Grilled Chicken Burgers",
+                categoryDesc: "Tender grilled chicken breasts loaded with avocado, peri-peri, or smoky seasonings.",
+                bgImage: "https://images.unsplash.com/photo-1521305916504-4a1121188589?auto=format&fit=crop&w=1200&q=80",
                 items: [
-                    { id: 'gc1', name: 'Avocado Chicken Supreme', desc: 'Grilled chicken breast, bacon, avocado, American cheese, lettuce, tomato and garlic aioli.', price: 20.90, options: true, buns: true, combos: true },
-                    { id: 'gc2', name: 'Flame Peri-Peri', desc: 'Peri-peri grilled chicken, American cheese, lettuce, tomato, red onion, peri-peri sauce and mayo.', price: 15.90, options: true, buns: true, combos: true },
-                    { id: 'gc3', name: 'Chipotle Avocado Slaw', desc: 'Grilled chicken breast, avocado, crunchy cabbage and carrot slaw, pickled jalapeños and chipotle mayo.', price: 16.90, options: true, buns: true, combos: true },
-                    { id: 'gc4', name: 'Crispy Onion Chicken', desc: 'Grilled chicken breast, American cheese, crispy onion pieces, lettuce, tomato and garlic aioli.', price: 20.90, options: true, buns: true, combos: true }
+                    { id: 'gc1', name: 'Avocado Chicken Supreme', desc: 'Grilled chicken breast, bacon, avocado, American cheese, lettuce, tomato and garlic aioli.', price: 20.90, image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
+                    { id: 'gc2', name: 'Flame Peri-Peri', desc: 'Peri-peri grilled chicken, American cheese, lettuce, tomato, red onion, peri-peri sauce and mayo.', price: 15.90, image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
+                    { id: 'gc3', name: 'Chipotle Avocado Slaw', desc: 'Grilled chicken breast, avocado, crunchy cabbage and carrot slaw, pickled jalapeños and chipotle mayo.', price: 16.90, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
+                    { id: 'gc4', name: 'Crispy Onion Chicken', desc: 'Grilled chicken breast, American cheese, crispy onion pieces, lettuce, tomato and garlic aioli.', price: 20.90, image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true }
                 ]
             },
             {
-                category: "Vegetarian Burgers",
-                image: "https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=800&q=80",
+                group: "BURGERS",
+                categoryName: "Vegetarian & Vegan Burgers",
+                categoryDesc: "Plant-powered excellence featuring crispy halloumi, chickpea patties, and vegan cheese.",
+                bgImage: "https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=1200&q=80",
                 items: [
-                    { id: 'vg1', name: 'Golden Garden Crunch', desc: 'Chickpea and vegetable patty, American cheese, lettuce, tomato, pickles and garlic aioli.', price: 17.90, options: true, buns: true, combos: true },
-                    { id: 'vg2', name: 'The Halloumi Royale', desc: 'Grilled halloumi, avocado, lettuce, tomato, red onion and garlic aioli.', price: 17.90, options: true, buns: true, combos: true }
+                    { id: 'vg1', name: 'Golden Garden Crunch', desc: 'Chickpea and vegetable patty, American cheese, lettuce, tomato, pickles and garlic aioli.', price: 17.90, image: 'https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
+                    { id: 'vg2', name: 'The Halloumi Royale', desc: 'Grilled halloumi, avocado, lettuce, tomato, red onion and garlic aioli.', price: 17.90, image: 'https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
+                    { id: 'vn1', name: 'Smoky Plant Deluxe (Vegan)', desc: 'Plant-based patty, vegan cheese, caramelised onion, pickles, lettuce, tomato and smoky BBQ sauce.', price: 17.90, image: 'https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
+                    { id: 'vn2', name: 'The Vegan Rebel', desc: 'Plant-based patty, vegan cheese, lettuce, tomato, pickles, red onion and vegan aioli.', price: 16.90, image: 'https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true }
                 ]
             },
             {
-                category: "Vegan Burgers",
-                image: "https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?auto=format&fit=crop&w=800&q=80",
-                items: [
-                    { id: 'vn1', name: 'Smoky Plant Deluxe', desc: 'Plant-based patty, vegan cheese, caramelised onion, pickles, lettuce, tomato and smoky BBQ sauce.', price: 17.90, options: true, buns: true, combos: true },
-                    { id: 'vn2', name: 'The Vegan Rebel', desc: 'Plant-based patty, vegan cheese, lettuce, tomato, pickles, red onion and vegan aioli.', price: 16.90, options: true, buns: true, combos: true }
-                ]
-            },
-            {
-                category: "Pizza — Small / Large / XL",
-                image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80",
+                group: "PIZZA",
+                categoryName: "Wood-Fired Style Pizzas (Small / Large / XL)",
+                categoryDesc: "Stone-baked crusts loaded with premium fior di latte mozzarella and rich artisanal toppings.",
+                bgImage: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80",
                 isPizza: true,
                 items: [
-                    { id: 'p1', name: 'Margherita', desc: 'Tomato base and cheese', prices: { Small: 15, Large: 19, XL: 26 } },
-                    { id: 'p2', name: 'Hawaiian', desc: 'Tomato base, cheese, ham and pineapple', prices: { Small: 15, Large: 19, XL: 26 } },
-                    { id: 'p3', name: 'Pepperoni', desc: 'Tomato base, cheese and pepperoni', prices: { Small: 15, Large: 19, XL: 26 } },
-                    { id: 'p4', name: 'BBQ Chicken', desc: 'BBQ base, chicken, onion and mushrooms', prices: { Small: 15, Large: 19, XL: 26 } },
-                    { id: 'p5', name: 'Garlic Pizza', desc: 'Garlic base and cheese', prices: { Small: 15, Large: 19, XL: 26 } },
-                    { id: 'p6', name: 'Garlic Prawn', desc: 'Garlic base, baby spinach, capsicum, onion and prawns', prices: { Small: 17, Large: 22, XL: 28 } },
-                    { id: 'p7', name: 'Veggie Pizza', desc: 'Tomato base, mushrooms, onion, capsicum, olives and pineapple', prices: { Small: 17, Large: 22, XL: 28 } },
-                    { id: 'p8', name: 'Mediterranean', desc: 'Tomato base, baby spinach, onion, capsicum and lamb', prices: { Small: 17, Large: 22, XL: 28 } },
-                    { id: 'p9', name: 'Meat Pizza', desc: 'BBQ base, pepperoni, ham and bacon', prices: { Small: 17, Large: 22, XL: 28 } },
-                    { id: 'p10', name: 'Supreme', desc: 'Tomato base, mushrooms, onion, spinach, capsicum, olives and ham', prices: { Small: 15, Large: 19, XL: 26 } },
-                    { id: 'p11', name: 'Aussie Pizza', desc: 'Tomato base, ham, bacon and egg', prices: { Small: 15, Large: 19, XL: 26 } },
-                    { id: 'p12', name: 'Capricciosa', desc: 'Tomato base, pepperoni, spinach, onion, olives and mushrooms', prices: { Small: 15, Large: 19, XL: 26 } },
-                    { id: 'p13', name: 'Crave House Special Pizza', desc: 'Tomato base, cheese, baby spinach, onion, roasted capsicum, chorizo and prawns', prices: { Small: 17, Large: 22, XL: 28 } }
+                    { id: 'p1', name: 'Margherita', desc: 'Tomato base and fior di latte cheese', image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80', prices: { Small: 15, Large: 19, XL: 26 } },
+                    { id: 'p2', name: 'Hawaiian', desc: 'Tomato base, cheese, smoked ham and juicy pineapple', image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80', prices: { Small: 15, Large: 19, XL: 26 } },
+                    { id: 'p3', name: 'Pepperoni', desc: 'Tomato base, cheese and double pepperoni', image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=800&q=80', prices: { Small: 15, Large: 19, XL: 26 } },
+                    { id: 'p4', name: 'BBQ Chicken', desc: 'BBQ base, seasoned chicken, onion and mushrooms', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80', prices: { Small: 15, Large: 19, XL: 26 } },
+                    { id: 'p5', name: 'Garlic Pizza', desc: 'Rich garlic butter base and melted cheese', image: 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=800&q=80', prices: { Small: 15, Large: 19, XL: 26 } },
+                    { id: 'p6', name: 'Garlic Prawn', desc: 'Garlic base, baby spinach, capsicum, onion and succulent prawns', image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80', prices: { Small: 17, Large: 22, XL: 28 } },
+                    { id: 'p7', name: 'Veggie Pizza', desc: 'Tomato base, mushrooms, onion, capsicum, olives and pineapple', image: 'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=800&q=80', prices: { Small: 17, Large: 22, XL: 28 } },
+                    { id: 'p8', name: 'Mediterranean Lamb', desc: 'Tomato base, baby spinach, onion, capsicum and tender spiced lamb', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80', prices: { Small: 17, Large: 22, XL: 28 } },
+                    { id: 'p9', name: 'Meat Lovers', desc: 'BBQ base, pepperoni, ham, bacon and spicy sausage', image: 'https://images.unsplash.com/photo-1544982503-9f984c14501a?auto=format&fit=crop&w=800&q=80', prices: { Small: 17, Large: 22, XL: 28 } },
+                    { id: 'p10', name: 'Supreme', desc: 'Tomato base, mushrooms, onion, spinach, capsicum, olives and ham', image: 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=800&q=80', prices: { Small: 15, Large: 19, XL: 26 } },
+                    { id: 'p11', name: 'Aussie', desc: 'Tomato base, smoked ham, bacon and fresh free-range egg', image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80', prices: { Small: 15, Large: 19, XL: 26 } },
+                    { id: 'p12', name: 'Capricciosa', desc: 'Tomato base, pepperoni, spinach, onion, olives and mushrooms', image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80', prices: { Small: 15, Large: 19, XL: 26 } },
+                    { id: 'p13', name: 'Crave House Special Pizza', desc: 'Tomato base, cheese, baby spinach, onion, roasted capsicum, spicy chorizo and prawns', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80', prices: { Small: 17, Large: 22, XL: 28 } }
                 ]
             },
             {
-                category: "Pasta",
-                image: "https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=800&q=80",
+                group: "PASTA_RISOTTO",
+                categoryName: "Pasta",
+                categoryDesc: "Rich, slow-simmered Italian pasta dishes tossed with creamy sauces and grated Parmesan.",
+                bgImage: "https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=1200&q=80",
                 items: [
-                    { id: 'pas1', name: 'Bolognese', desc: 'Minced beef, onions, garlic, herbs, tomato and Parmesan.', price: 23.00, pastaOptions: true },
-                    { id: 'pas2', name: 'Carbonara', desc: 'Creamy sauce, bacon and Parmesan.', price: 25.00, pastaOptions: true },
-                    { id: 'pas3', name: 'Veggie', desc: 'Mushroom, onion, capsicum, baby spinach, Napoli sauce, beans, peas, cauliflower and broccoli.', price: 25.00, pastaOptions: true },
-                    { id: 'pas4', name: 'Chicken & Mushroom Pasta', desc: 'Chicken and sautéed mushrooms in a rich creamy sauce with Parmesan.', price: 25.00, pastaOptions: true },
-                    { id: 'pas5', name: 'Creamy Prawn', desc: 'Creamy sauce, prawns and cheese.', price: 26.00, pastaOptions: true },
-                    { id: 'pas6', name: 'Crave House Special Pasta', desc: 'Creamy sauce, mushrooms, prawns and chorizo.', price: 26.00, pastaOptions: true }
+                    { id: 'pas1', name: 'Bolognese', desc: 'Minced beef, onions, garlic, herbs, rich napoli and Parmesan.', price: 23.00, image: 'https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=800&q=80', pastaOptions: true },
+                    { id: 'pas2', name: 'Carbonara', desc: 'Creamy garlic sauce, smoked bacon and Parmesan.', price: 25.00, image: 'https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&w=800&q=80', pastaOptions: true },
+                    { id: 'pas3', name: 'Veggie Pasta', desc: 'Mushroom, onion, capsicum, baby spinach, Napoli sauce, beans, peas, cauliflower and broccoli.', price: 25.00, image: 'https://images.unsplash.com/photo-1556761223-4c4282c73f77?auto=format&fit=crop&w=800&q=80', pastaOptions: true },
+                    { id: 'pas4', name: 'Chicken & Mushroom Pasta', desc: 'Tender chicken and sautéed mushrooms in a rich creamy sauce with Parmesan.', price: 25.00, image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80', pastaOptions: true },
+                    { id: 'pas5', name: 'Creamy Prawn Pasta', desc: 'Creamy garlic sauce, succulent prawns and melted cheese.', price: 26.00, image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80', pastaOptions: true },
+                    { id: 'pas6', name: 'Crave House Special Pasta', desc: 'Creamy sauce, mushrooms, prawns and spicy chorizo.', price: 26.00, image: 'https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=800&q=80', pastaOptions: true }
                 ]
             },
             {
-                category: "Risotto",
-                image: "https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?auto=format&fit=crop&w=800&q=80",
+                group: "PASTA_RISOTTO",
+                categoryName: "Risotto",
+                categoryDesc: "Creamy Italian arborio rice slow-cooked to perfection with premium ingredients.",
+                bgImage: "https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?auto=format&fit=crop&w=1200&q=80",
                 items: [
-                    { id: 'ris1', name: 'Chicken & Mushroom Risotto', desc: 'Creamy Italian-style risotto with chicken, sautéed mushrooms and Parmesan.', price: 26.00 },
-                    { id: 'ris2', name: 'Veggie Risotto', desc: 'Mushroom, onion, capsicum, baby spinach, beans, peas, cauliflower and broccoli.', price: 26.00 }
+                    { id: 'ris1', name: 'Chicken & Mushroom Risotto', desc: 'Creamy Italian-style risotto with chicken, sautéed mushrooms and Parmesan.', price: 26.00, image: 'https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'ris2', name: 'Veggie Risotto', desc: 'Mushroom, onion, capsicum, baby spinach, beans, peas, cauliflower and broccoli.', price: 26.00, image: 'https://images.unsplash.com/photo-1546549032-9571cd6b27df?auto=format&fit=crop&w=800&q=80' }
                 ]
             },
             {
-                category: "Parmigiana & Mains",
-                image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80",
+                group: "MAINS_SIDES",
+                categoryName: "Parmigiana & Mains",
+                categoryDesc: "Golden crispy schnitzels and loaded parmigianas served with chips and fresh salad.",
+                bgImage: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=1200&q=80",
                 items: [
-                    { id: 'pm1', name: 'Chicken Schnitzel', desc: 'Served with chips, salad and lemon.', price: 24.00 },
-                    { id: 'pm2', name: 'Chicken Parmigiana', desc: 'Napoli sauce and cheese, served with chips and salad.', price: 26.00 },
-                    { id: 'pm3', name: 'Hawaiian Parmigiana', desc: 'Napoli sauce, ham and pineapple, served with chips and salad.', price: 27.00 },
-                    { id: 'pm4', name: 'The Lot Parmigiana', desc: 'Napoli sauce, ham, salami and bacon, served with chips and salad.', price: 27.00 },
-                    { id: 'pm5', name: 'Aussie Parmigiana', desc: 'Napoli sauce, ham, bacon and egg, served with chips and salad.', price: 28.00 },
-                    { id: 'pm6', name: 'Fish & Chips', desc: 'Served with chips, salad and lemon.', price: 25.00 }
+                    { id: 'pm1', name: 'Chicken Schnitzel', desc: 'Golden crumbed chicken breast served with chips, salad and lemon.', price: 24.00, image: 'https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'pm2', name: 'Chicken Parmigiana', desc: 'Napoli sauce and melted cheese, served with chips and salad.', price: 26.00, image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'pm3', name: 'Hawaiian Parmigiana', desc: 'Napoli sauce, smoked ham and pineapple, served with chips and salad.', price: 27.00, image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'pm4', name: 'The Lot Parmigiana', desc: 'Napoli sauce, ham, salami and bacon, served with chips and salad.', price: 27.00, image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'pm5', name: 'Aussie Parmigiana', desc: 'Napoli sauce, ham, bacon and free-range egg, served with chips and salad.', price: 28.00, image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'pm6', name: 'Fish & Chips', desc: 'Crispy battered fish fillets served with chips, salad and tartare sauce.', price: 25.00, image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80' }
                 ]
             },
             {
-                category: "Garlic Bread",
-                image: "https://images.unsplash.com/photo-1619531003657-31034f598007?auto=format&fit=crop&w=800&q=80",
+                group: "MAINS_SIDES",
+                categoryName: "Garlic Bread & Snacks",
+                categoryDesc: "Crispy garlic breads, chicken nuggets, tender wings, and seasoned potato chips.",
+                bgImage: "https://images.unsplash.com/photo-1619531003657-31034f598007?auto=format&fit=crop&w=1200&q=80",
                 items: [
-                    { id: 'gb1', name: 'Garlic Bread', desc: 'Traditional crispy garlic bread.', price: 5.90 },
-                    { id: 'gb2', name: 'Cheesy Garlic Bread', desc: 'Garlic bread loaded with melted mozzarella cheese.', price: 7.90 }
+                    { id: 'gb1', name: 'Garlic Bread', desc: 'Traditional crispy oven-baked garlic bread.', price: 5.90, image: 'https://images.unsplash.com/photo-1619531003657-31034f598007?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'gb2', name: 'Cheesy Garlic Bread', desc: 'Garlic bread loaded with melted mozzarella cheese.', price: 7.90, image: 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'cs1', name: 'Chicken Nuggets (6 pcs)', desc: 'Crispy golden chicken breast nuggets with dipping sauce.', price: 9.90, image: 'https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'cs2', name: 'Chicken Nuggets (12 pcs)', desc: 'Large portion of crispy golden chicken nuggets.', price: 16.90, image: 'https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'cs3', name: 'Chicken Wings (6 pcs)', desc: 'Juicy spiced chicken wings with smoky BBQ or buffalo sauce.', price: 12.90, image: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'cs4', name: 'Chicken Wings (12 pcs)', desc: 'Generous serving of crispy wings.', price: 21.90, image: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'ch1', name: 'Golden Chips (Small)', desc: 'Crispy seasoned potato chips.', price: 6.90, image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'ch2', name: 'Golden Chips (Large)', desc: 'Large portion of crispy seasoned potato chips.', price: 9.90, image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'ch3', name: 'Loaded Bacon & Cheese Chips', desc: 'Chips loaded with melted cheese and crispy bacon bits.', price: 14.90, image: 'https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'ch4', name: 'Loaded Gravy & Cheese Chips', desc: 'Chips smothered in rich savory gravy and melted cheese.', price: 13.90, image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80' }
                 ]
             },
             {
-                category: "Chicken Snacks",
-                image: "https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=800&q=80",
+                group: "DESSERTS",
+                categoryName: "Waffles & Crepes (Includes Side Ice Cream)",
+                categoryDesc: "Decadent golden waffles and delicate crepes served with a complimentary side of creamy ice cream.",
+                bgImage: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=1200&q=80",
+                isDessert: true,
                 items: [
-                    { id: 'cs1', name: 'Golden Chicken Tenders — 3 pieces', desc: 'Crispy chicken breast tenders with dipping sauce.', price: 9.90 },
-                    { id: 'cs2', name: 'Golden Chicken Tenders — 5 pieces', desc: 'Crispy chicken breast tenders with dipping sauce.', price: 14.90 },
-                    { id: 'cs3', name: 'Crave Chicken Wings — 6 pieces', desc: 'Choice of smoky BBQ, buffalo or peri-peri sauce.', price: 11.90 },
-                    { id: 'cs4', name: 'Crave Chicken Wings — 12 pieces', desc: 'Choice of smoky BBQ, buffalo or peri-peri sauce.', price: 20.90 }
+                    { id: 'd1', name: 'Nutella Supreme Waffle', desc: 'Warm golden waffle drenched in Belgian Nutella, strawberries and crushed hazelnuts.', price: 18.90, image: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80', dessertOptions: true },
+                    { id: 'd2', name: 'Berry White Chocolate Waffle', desc: 'Waffle loaded with white chocolate drizzle, mixed berries and icing sugar.', price: 18.90, image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80', dessertOptions: true },
+                    { id: 'd3', name: 'Banana Caramel Waffle', desc: 'Waffle topped with fresh banana slices, sticky butterscotch caramel and pecans.', price: 17.90, image: 'https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=800&q=80', dessertOptions: true },
+                    { id: 'd4', name: 'Classic Maple Waffle', desc: 'Traditional golden waffle with butter and pure Canadian maple syrup.', price: 14.90, image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80', dessertOptions: true },
+                    { id: 'd5', name: 'Nutella Crepe', desc: 'Delicate folded crepe filled and drizzled with warm Nutella.', price: 17.90, image: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80', dessertOptions: true },
+                    { id: 'd6', name: 'Strawberry & Chocolate Crepe', desc: 'Crepe loaded with fresh strawberries, milk chocolate and cream.', price: 18.90, image: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80', dessertOptions: true },
+                    { id: 'd7', name: 'Banana & Toffee Crepe', desc: 'Crepe with sliced bananas and rich toffee sauce.', price: 17.90, image: 'https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=800&q=80', dessertOptions: true },
+                    { id: 'd8', name: 'Lemon Sugar Crepe', desc: 'Classic French crepe with fresh lemon juice and caster sugar.', price: 13.90, image: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80', dessertOptions: true }
                 ]
             },
             {
-                category: "Salads",
-                image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80",
+                group: "DRINKS",
+                categoryName: "Milkshakes & Drinks",
+                categoryDesc: "Thick, creamy gourmet milkshakes and refreshing chilled beverages.",
+                bgImage: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=1200&q=80",
                 items: [
-                    { id: 'sl1', name: 'Caesar Salad', desc: 'Cos lettuce, crispy bacon, croutons, Parmesan cheese and Caesar dressing.', price: 19.00 },
-                    { id: 'sl2', name: 'Crave House Prawn Salad', desc: 'Mixed lettuce, red onion, cucumber, tomato, juicy prawns and dressing.', price: 21.00 }
-                ]
-            },
-            {
-                category: "Fries & Sides",
-                image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80",
-                items: [
-                    { id: 'fs1', name: 'Classic Fries — Regular', desc: 'Golden crispy fries seasoned with salt.', price: 7.00 },
-                    { id: 'fs2', name: 'Classic Fries — Large', desc: 'Golden crispy fries seasoned with salt.', price: 10.00 },
-                    { id: 'fs3', name: 'Sweet Potato Fries — Regular', desc: 'Crispy sweet potato fries.', price: 10.00 },
-                    { id: 'fs4', name: 'Sweet Potato Fries — Large', desc: 'Crispy sweet potato fries.', price: 13.00 },
-                    { id: 'fs5', name: 'Crispy Cauliflower Bites', desc: 'Golden battered cauliflower bites.', price: 10.00 },
-                    { id: 'fs6', name: 'Crispy Onion Rings', desc: 'Crunchy golden onion rings.', price: 10.00 }
-                ]
-            },
-            {
-                category: "Loaded Fries",
-                image: "https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=800&q=80",
-                items: [
-                    { id: 'lf1', name: 'Smoky Bacon Crunch Fries', desc: 'Golden crispy chips with crunchy bacon, creamy cheese sauce, crispy fried onions, smoky chipotle mayo, ranch dressing and spring onions.', price: 15.90 },
-                    { id: 'lf2', name: 'Peri Peri Chicken Fries', desc: 'Golden crispy chips with crispy chicken, creamy cheese sauce, fiery peri-peri sauce and fresh spring onions.', price: 17.90 }
-                ]
-            },
-            {
-                category: "Desserts (Waffles & Crepes)",
-                image: "https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=800&q=80",
-                items: [
-                    { id: 'd1', name: 'Banana Bliss Waffle', desc: 'Fresh banana with chocolate drizzle. Side ice cream included!', price: 20.00 },
-                    { id: 'd2', name: 'Strawberry Kiss Waffle', desc: 'Fresh strawberries with a sweet chocolate finish. Side ice cream included!', price: 20.00 },
-                    { id: 'd3', name: 'Oreo Dream Waffle', desc: 'Crushed Oreo cookies with creamy chocolate sauce. Side ice cream included!', price: 20.00 },
-                    { id: 'd4', name: 'Biscoff Gold Waffle', desc: 'Biscoff biscuit crumble and smooth Biscoff spread. Side ice cream included!', price: 20.00 },
-                    { id: 'd5', name: 'M&M Rainbow Waffle', desc: 'Colourful M&M chocolates with chocolate drizzle. Side ice cream included!', price: 20.00 },
-                    { id: 'd6', name: 'Banana Velvet Crepe', desc: 'Crepe with banana and chocolate drizzle. Side ice cream included!', price: 20.00 },
-                    { id: 'd7', name: 'Strawberry Silk Crepe', desc: 'Crepe with fresh strawberries and chocolate. Side ice cream included!', price: 20.00 },
-                    { id: 'd8', name: 'Oreo Cloud Crepe', desc: 'Crepe with crushed Oreo and chocolate sauce. Side ice cream included!', price: 20.00 },
-                    { id: 'd9', name: 'Biscoff Bliss Crepe', desc: 'Crepe with Biscoff crumble and spread. Side ice cream included!', price: 20.00 },
-                    { id: 'd10', name: 'M&M Magic Crepe', desc: 'Crepe with M&M chocolates and chocolate. Side ice cream included!', price: 20.00 }
-                ]
-            },
-            {
-                category: "Gelato & Sweet Specialities",
-                image: "https://images.unsplash.com/photo-1560008511-11c63416e52d?auto=format&fit=crop&w=800&q=80",
-                items: [
-                    { id: 'g1', name: 'Italian Gelato — 280 mL', desc: 'Choice of Chocolate / Peppermint Fudge / Vanilla Bean / Strawberry / Blood Orange.', price: 12.90 },
-                    { id: 'g2', name: 'Italian Gelato — 500 mL', desc: 'Choice of Chocolate / Peppermint Fudge / Vanilla Bean / Strawberry / Blood Orange.', price: 19.90 },
-                    { id: 'g3', name: 'Nutella Strawberry Calzone', desc: 'Golden-baked calzone filled with Nutella and fresh strawberries.', price: 15.90 },
-                    { id: 'g4', name: 'Golden Donut Bliss Balls', desc: 'Golden donut balls with choice of Nutella or Lotus Biscoff.', price: 14.90 }
-                ]
-            },
-            {
-                category: "Drinks & Dipping Sauces",
-                image: "https://images.unsplash.com/photo-1437418747299-a5931ef11326?auto=format&fit=crop&w=800&q=80",
-                items: [
-                    { id: 'dr1', name: '375 mL Soft Drink Can', desc: 'Coca-Cola / Sunkist / Solo / Lemonade / Lemon, Lime & Bitters.', price: 4.50 },
-                    { id: 'dr2', name: '600 mL Soft Drink Bottle', desc: 'Coca-Cola / Sunkist / Solo / Lemonade.', price: 5.50 },
-                    { id: 'dr3', name: 'Powerade', desc: 'Electrolyte sports drink.', price: 5.50 },
-                    { id: 'dr4', name: 'Bottled Water', desc: 'Pure spring water.', price: 4.00 },
-                    { id: 'sc1', name: 'Tomato / Burger / Buffalo / Mayonnaise / Garlic Aioli', desc: 'Extra dipping sauce.', price: 2.00 },
-                    { id: 'sc2', name: 'Chipotle Mayo / Smoky BBQ / Peri-Peri Mayo / Ranch / Mushroom Sauce', desc: 'Gourmet dipping sauce.', price: 2.00 }
+                    { id: 'dr1', name: 'Classic Chocolate Thickshake', desc: 'Rich Belgian chocolate thickshake topped with whipped cream.', price: 9.50, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'dr2', name: 'Vanilla Bean Thickshake', desc: 'Smooth vanilla bean thickshake with whipped cream.', price: 9.50, image: 'https://images.unsplash.com/photo-1541658016709-82535e94bc69?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'dr3', name: 'Strawberry Thickshake', desc: 'Sweet strawberry thickshake with whipped cream.', price: 9.50, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'dr4', name: 'Caramel Fudge Thickshake', desc: 'Golden caramel fudge thickshake.', price: 9.50, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'dr5', name: 'Nutella Shake', desc: 'Thickshake blended with genuine Nutella and chocolate drizzle.', price: 10.90, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'dr6', name: 'Coca-Cola (375ml Can)', desc: 'Chilled can of classic Coca-Cola.', price: 4.50, image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'dr7', name: 'Diet Coke (375ml Can)', desc: 'Chilled can of Diet Coke.', price: 4.50, image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'dr8', name: 'Sprite (375ml Can)', desc: 'Chilled lemon-lime Sprite.', price: 4.50, image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'dr9', name: 'Lift Hard Lemon (375ml Can)', desc: 'Refreshing lemon soft drink.', price: 4.50, image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=800&q=80' },
+                    { id: 'dr10', name: 'Mount Franklin Spring Water (600ml)', desc: 'Pure Australian spring water.', price: 4.50, image: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=800&q=80' }
                 ]
             }
         ];
 
         let cart = [];
-        let fulfillmentType = 'pickup'; // 'pickup' or 'delivery'
-        let currentCustomizingItem = null;
+        let orderMethod = 'Pickup';
+        let paymentOption = 'online';
+        let activeGroup = 'ALL';
+        let activeModalItem = null;
+        let activeModalQty = 1;
 
         // Initialize App
         document.addEventListener('DOMContentLoaded', () => {
-            renderQuickPills();
+            renderGroupTabs();
             renderMenu();
             updateCartUI();
+            lucide.createIcons();
+
+            document.getElementById('search-input').addEventListener('input', (e) => {
+                const query = e.target.value.trim();
+                const clearBtn = document.getElementById('clear-search-btn');
+                if (query.length > 0) {
+                    clearBtn.classList.remove('hidden');
+                } else {
+                    clearBtn.classList.add('hidden');
+                }
+                renderMenu(query);
+            });
         });
 
-        function renderQuickPills() {
-            const container = document.getElementById('quick-pills');
-            container.innerHTML = menuData.map((cat, idx) => `
-                <a href="#cat-${idx}" class="bg-zinc-900 border border-zinc-800 hover:border-gold-500/80 text-zinc-300 hover:text-gold-400 text-xs font-semibold px-4 py-2 rounded-xl transition-all shadow-md">
-                    ${cat.category}
-                </a>
+        function renderGroupTabs() {
+            const groups = [
+                { id: 'ALL', label: 'Full Menu' },
+                { id: 'BURGERS', label: 'Burgers' },
+                { id: 'PIZZA', label: 'Woodfired Pizza' },
+                { id: 'PASTA_RISOTTO', label: 'Pasta & Risotto' },
+                { id: 'MAINS_SIDES', label: 'Mains & Sides' },
+                { id: 'DESSERTS', label: 'Waffles & Crepes' },
+                { id: 'DRINKS', label: 'Drinks & Shakes' }
+            ];
+
+            const container = document.getElementById('group-tabs');
+            container.innerHTML = groups.map(g => `
+                <button onclick="filterGroup('${g.id}')" class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider shrink-0 transition ${activeGroup === g.id ? 'bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 shadow-md' : 'bg-obsidian-800 text-zinc-300 hover:text-white border gold-border-subtle'}">
+                    ${g.label}
+                </button>
             `).join('');
         }
 
-        function renderMenu() {
+        function filterGroup(groupId) {
+            activeGroup = groupId;
+            renderGroupTabs();
+            document.getElementById('search-input').value = '';
+            document.getElementById('clear-search-btn').classList.add('hidden');
+            renderMenu();
+            window.scrollTo({ top: 400, behavior: 'smooth' });
+        }
+
+        function jumpToGroup(groupId) {
+            filterGroup(groupId);
+        }
+
+        function clearSearch() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('clear-search-btn').classList.add('hidden');
+            renderMenu();
+        }
+
+        function resetAllFilters() {
+            activeGroup = 'ALL';
+            renderGroupTabs();
+            clearSearch();
+        }
+
+        function renderMenu(searchQuery = '') {
             const container = document.getElementById('menu-container');
-            container.innerHTML = menuData.map((cat, catIdx) => `
-                <div id="cat-${catIdx}" class="scroll-mt-28">
-                    <!-- Category Header Banner -->
-                    <div class="relative rounded-2xl overflow-hidden mb-6 border border-zinc-800 shadow-xl">
-                        <div class="absolute inset-0 z-0">
-                            <img src="${cat.image}" alt="${cat.category}" class="w-full h-full object-cover filter brightness-50">
+            const emptyState = document.getElementById('empty-state');
+            
+            let filteredCategories = menuData;
+            if (activeGroup !== 'ALL') {
+                filteredCategories = menuData.filter(cat => cat.group === activeGroup);
+            }
+
+            if (searchQuery) {
+                const q = searchQuery.toLowerCase();
+                filteredCategories = filteredCategories.map(cat => {
+                    const matchedItems = cat.items.filter(item => 
+                        item.name.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q)
+                    );
+                    return { ...cat, items: matchedItems };
+                }).filter(cat => cat.items.length > 0);
+            }
+
+            if (filteredCategories.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            container.innerHTML = filteredCategories.map((cat, catIdx) => `
+                <section id="cat-${catIdx}" class="space-y-6">
+                    <!-- Category Banner Header -->
+                    <div class="relative rounded-3xl overflow-hidden border gold-border-subtle bg-obsidian-800 shadow-xl">
+                        <div class="absolute inset-0">
+                            <img src="${cat.bgImage}" alt="${cat.categoryName}" onerror="this.style.opacity='0'" class="w-full h-full object-cover opacity-25">
+                            <div class="absolute inset-0 bg-gradient-to-r from-obsidian-900 via-obsidian-900/90 to-obsidian-900/40"></div>
                         </div>
-                        <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent z-10"></div>
-                        <div class="relative z-20 p-6 md:p-8 flex items-center justify-between">
+                        <div class="relative p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             <div>
-                                <h3 class="font-heading text-2xl md:text-3xl font-bold text-white tracking-wide mb-1">${cat.category}</h3>
-                                <p class="text-xs text-gold-400 font-medium uppercase tracking-wider">Freshly Prepared • Made to Order</p>
+                                <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-gold-400">Crave House Selection</span>
+                                <h2 class="font-display text-2xl sm:text-3xl font-black text-white uppercase tracking-wide mt-1">${cat.categoryName}</h2>
+                                <p class="text-xs sm:text-sm text-zinc-300 mt-1 max-w-xl leading-relaxed">${cat.categoryDesc}</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Items Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                         ${cat.items.map(item => {
-                            let priceDisplay = item.price ? `$${item.price.toFixed(2)}` : `From $${Math.min(...Object.values(item.prices)).toFixed(2)}`;
+                            let displayPrice = '';
+                            if (item.prices) {
+                                displayPrice = `From $${item.prices.Small.toFixed(2)}`;
+                            } else {
+                                displayPrice = `$${item.price.toFixed(2)}`;
+                            }
+
                             return `
-                                <div class="bg-zinc-900/90 border border-zinc-800/80 rounded-2xl p-5 flex flex-col justify-between hover:border-gold-500/50 transition-all group shadow-lg">
+                                <div class="bg-obsidian-800/90 border gold-border-subtle rounded-3xl overflow-hidden flex flex-col justify-between group hover:border-gold-500/50 transition duration-300 shadow-lg">
                                     <div>
-                                        <div class="flex justify-between items-start gap-3 mb-2">
-                                            <h4 class="font-heading font-bold text-white text-base group-hover:text-gold-400 transition-colors">${item.name}</h4>
-                                            <span class="bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-bold px-2.5 py-1 rounded-lg shrink-0">${priceDisplay}</span>
+                                        <div class="relative h-48 overflow-hidden bg-obsidian-950">
+                                            <img src="${item.image}" alt="${item.name}" onerror="this.style.opacity='0'" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900 via-transparent to-transparent"></div>
+                                            <div class="absolute bottom-3 right-3 bg-obsidian-950/90 backdrop-blur-md border gold-border-subtle px-3 py-1 rounded-full text-gold-400 font-display font-black text-xs shadow">
+                                                ${displayPrice}
+                                            </div>
                                         </div>
-                                        <p class="text-zinc-400 text-xs leading-relaxed mb-4">${item.desc}</p>
+                                        <div class="p-5">
+                                            <h3 class="font-display font-bold text-white text-base sm:text-lg group-hover:text-gold-400 transition">${item.name}</h3>
+                                            <p class="text-xs text-zinc-400 mt-1.5 leading-relaxed line-clamp-2">${item.desc}</p>
+                                        </div>
                                     </div>
-                                    <button onclick="openItemModal('${item.id}')" class="w-full bg-zinc-800 hover:bg-gold-500 hover:text-black text-zinc-200 font-semibold py-2.5 px-4 rounded-xl text-xs transition-all flex items-center justify-center gap-2">
-                                        <i class="fa-solid fa-plus"></i> Add to Order
-                                    </button>
+                                    <div class="p-5 pt-0">
+                                        <button onclick="openItemModal('${item.id}')" class="w-full bg-obsidian-900 hover:bg-gradient-to-r hover:from-gold-400 hover:to-gold-600 text-zinc-200 hover:text-obsidian-950 border gold-border-subtle font-sans font-extrabold text-xs uppercase tracking-wider py-3 px-4 rounded-xl transition flex items-center justify-between shadow">
+                                            <span>Customize & Add</span>
+                                            <i data-lucide="plus" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             `;
                         }).join('')}
                     </div>
-                </div>
+                </section>
             `).join('');
+
+            lucide.createIcons();
         }
 
         function findItemById(id) {
-            for (let cat of menuData) {
-                for (let item of cat.items) {
-                    if (item.id === id) return { ...item, isPizza: cat.isPizza };
-                }
+            if (id === 'special-combo') {
+                return {
+                    id: 'special-combo',
+                    name: 'Crave House Special Combo',
+                    desc: '2 XL Pizzas + 2 Pastas + 2 Burgers + Garlic Bread + 1.5L Drink',
+                    price: 150.00,
+                    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80',
+                    isSpecialCombo: true
+                };
+            }
+            for (const cat of menuData) {
+                const found = cat.items.find(i => i.id === id);
+                if (found) return found;
             }
             return null;
         }
@@ -563,240 +884,353 @@
         function openItemModal(itemId) {
             const item = findItemById(itemId);
             if (!item) return;
-            currentCustomizingItem = item;
 
-            const modalContent = document.getElementById('modal-content');
-            let html = `
-                <h3 class="font-heading text-xl font-bold text-white mb-1">${item.name}</h3>
-                <p class="text-zinc-400 text-xs mb-4">${item.desc}</p>
-            `;
+            activeModalItem = item;
+            activeModalQty = 1;
+            document.getElementById('modal-qty').innerText = '1';
+            document.getElementById('modal-item-name').innerText = item.name;
+            document.getElementById('modal-item-desc').innerText = item.desc;
+            document.getElementById('modal-item-img').src = item.image;
+            document.getElementById('modal-instructions').value = '';
 
-            if (item.isPizza) {
-                html += `
-                    <div class="space-y-4 mb-6">
-                        <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">Select Size</label>
-                            <div class="grid grid-cols-3 gap-2">
-                                ${Object.entries(item.prices).map(([size, price], idx) => `
-                                    <label class="border border-zinc-800 bg-zinc-950 rounded-xl p-3 flex flex-col items-center cursor-pointer hover:border-gold-500 transition-colors has-[:checked]:border-gold-500 has-[:checked]:bg-gold-500/10">
-                                        <input type="radio" name="pizza_size" value="${size}" data-price="${price}" ${idx===0 ? 'checked' : ''} class="accent-yellow-500 mb-1">
-                                        <span class="font-bold text-white text-xs">${size}</span>
-                                        <span class="text-gold-400 text-xs font-semibold">$${price.toFixed(2)}</span>
-                                    </label>
-                                `).join('')}
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">Pizza Crust Options</label>
-                            <select id="modal-pizza-crust" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-gold-500">
-                                <option value="Standard Base">Standard Base</option>
-                                <option value="Gluten-free pizza (+ $4.00)">Gluten-free pizza (+ $4.00)</option>
-                            </select>
-                        </div>
+            const badge = document.getElementById('modal-category-badge');
+            const dessertBanner = document.getElementById('modal-dessert-banner');
+            const optionsContainer = document.getElementById('modal-options-container');
+
+            dessertBanner.classList.add('hidden');
+            badge.innerText = item.isSpecialCombo ? 'Signature Feast Deal' : 'Customize Item';
+            optionsContainer.innerHTML = '';
+
+            if (item.isSpecialCombo) {
+                optionsContainer.innerHTML = `
+                    <div class="space-y-3">
+                        <label class="block text-xs font-bold uppercase text-gold-400">Combo Customization</label>
+                        <p class="text-xs text-zinc-300">Our team will call or include standard favourites (2x Margherita/Pepperoni, 2x Bolognese/Carbonara, 2x Crave Classic Burgers, Garlic Bread, 1.5L Coke). You can also type specific flavor requests below!</p>
                     </div>
                 `;
-            } else if (item.buns) {
-                html += `
-                    <div class="space-y-4 mb-6">
-                        <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">Bun Option</label>
-                            <select id="modal-bun" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-gold-500">
-                                <option value="Standard Bun">Standard Bun</option>
-                                <option value="Gluten-free bun (+ $2.50)">Gluten-free bun (+ $2.50)</option>
-                                <option value="Vegan bun (+ $2.50)">Vegan bun (+ $2.50)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">Combo Upgrade (Optional)</label>
-                            <select id="modal-combo" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-gold-500">
-                                <option value="None">No Combo Upgrade</option>
-                                <option value="Regular classic fries + 375ml drink (+ $7.00)">Regular classic fries + 375ml drink (+ $7.00)</option>
-                                <option value="Regular sweet potato fries + 375ml drink (+ $11.00)">Regular sweet potato fries + 375ml drink (+ $11.00)</option>
-                                <option value="Onion rings + 375ml drink (+ $12.00)">Onion rings + 375ml drink (+ $12.00)</option>
-                            </select>
+            } else if (item.prices) {
+                // Pizza sizes
+                optionsContainer.innerHTML = `
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold uppercase text-gold-400">Select Pizza Size *</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <label class="p-3 rounded-xl bg-obsidian-900 border-2 border-gold-500 flex flex-col items-center justify-center cursor-pointer text-center" onclick="selectPizzaSize('Small', 15)">
+                                <span class="font-bold text-white text-xs">Small</span>
+                                <span class="text-gold-400 text-xs mt-1">$${(item.prices.Small || 15).toFixed(2)}</span>
+                                <input type="radio" name="pizza-size" value="Small" checked class="hidden">
+                            </label>
+                            <label class="p-3 rounded-xl bg-obsidian-900 border gold-border-subtle flex flex-col items-center justify-center cursor-pointer text-center" onclick="selectPizzaSize('Large', 19)">
+                                <span class="font-bold text-white text-xs">Large</span>
+                                <span class="text-gold-400 text-xs mt-1">$${(item.prices.Large || 19).toFixed(2)}</span>
+                                <input type="radio" name="pizza-size" value="Large" class="hidden">
+                            </label>
+                            <label class="p-3 rounded-xl bg-obsidian-900 border gold-border-subtle flex flex-col items-center justify-center cursor-pointer text-center" onclick="selectPizzaSize('XL', 26)">
+                                <span class="font-bold text-white text-xs">XL (Family)</span>
+                                <span class="text-gold-400 text-xs mt-1">$${(item.prices.XL || 26).toFixed(2)}</span>
+                                <input type="radio" name="pizza-size" value="XL" class="hidden">
+                            </label>
                         </div>
                     </div>
                 `;
             } else if (item.pastaOptions) {
-                html += `
-                    <div class="space-y-4 mb-6">
-                        <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">Pasta Choice</label>
-                            <select id="modal-pasta-option" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-gold-500">
-                                <option value="Standard Pasta">Standard Pasta</option>
-                                <option value="Gluten-free pasta (+ $4.00)">Gluten-free pasta (+ $4.00)</option>
-                            </select>
+                optionsContainer.innerHTML = `
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold uppercase text-gold-400">Select Pasta Type *</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <label class="p-3 rounded-xl bg-obsidian-900 border-2 border-gold-500 flex items-center justify-between cursor-pointer" onclick="selectPastaType('Spaghetti')">
+                                <span class="font-bold text-white text-xs">Spaghetti</span>
+                                <input type="radio" name="pasta-type" value="Spaghetti" checked class="accent-gold-500">
+                            </label>
+                            <label class="p-3 rounded-xl bg-obsidian-900 border gold-border-subtle flex items-center justify-between cursor-pointer" onclick="selectPastaType('Penne')">
+                                <span class="font-bold text-white text-xs">Penne</span>
+                                <input type="radio" name="pasta-type" value="Penne" class="accent-gold-500">
+                            </label>
+                        </div>
+                    </div>
+                `;
+            } else if (item.dessertOptions) {
+                dessertBanner.classList.remove('hidden');
+                optionsContainer.innerHTML = `
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold uppercase text-gold-400">Choose Complimentary Ice Cream Flavor *</label>
+                        <select id="modal-icecream-flavor" class="w-full rounded-xl bg-obsidian-900 border gold-border-subtle p-3 text-sm text-white focus:border-gold-500 outline-none">
+                            <option value="Vanilla Bean Ice Cream">Vanilla Bean Ice Cream</option>
+                            <option value="Chocolate Ice Cream">Chocolate Ice Cream</option>
+                            <option value="Strawberry Ice Cream">Strawberry Ice Cream</option>
+                            <option value="Cookies & Cream Ice Cream">Cookies & Cream Ice Cream</option>
+                            <option value="No Ice Cream">No Ice Cream</option>
+                        </select>
+                    </div>
+                `;
+            } else if (item.options) {
+                optionsContainer.innerHTML = `
+                    <div class="space-y-3">
+                        <label class="block text-xs font-bold uppercase text-gold-400">Customizations & Upgrades</label>
+                        <div class="space-y-2 text-xs">
+                            <label class="flex items-center justify-between p-3 rounded-xl bg-obsidian-900 border gold-border-subtle cursor-pointer">
+                                <span class="font-medium text-white">Add Extra Cheese</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-gold-400">+$2.00</span>
+                                    <input type="checkbox" value="Extra Cheese" data-price="2.00" class="modal-addon accent-gold-500 w-4 h-4" onchange="updateModalTotal()">
+                                </div>
+                            </label>
+                            <label class="flex items-center justify-between p-3 rounded-xl bg-obsidian-900 border gold-border-subtle cursor-pointer">
+                                <span class="font-medium text-white">Add Crispy Bacon Rasher</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-gold-400">+$3.50</span>
+                                    <input type="checkbox" value="Extra Bacon" data-price="3.50" class="modal-addon accent-gold-500 w-4 h-4" onchange="updateModalTotal()">
+                                </div>
+                            </label>
+                            <label class="flex items-center justify-between p-3 rounded-xl bg-obsidian-900 border gold-border-subtle cursor-pointer">
+                                <span class="font-medium text-white">Add Avocado</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-gold-400">+$3.00</span>
+                                    <input type="checkbox" value="Avocado" data-price="3.00" class="modal-addon accent-gold-500 w-4 h-4" onchange="updateModalTotal()">
+                                </div>
+                            </label>
                         </div>
                     </div>
                 `;
             }
 
-            html += `
-                <div class="mb-6">
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1.5">Special Instructions</label>
-                    <input type="text" id="modal-notes" placeholder="e.g. No onions, extra sauce" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2.5 text-white text-xs placeholder-zinc-600 focus:outline-none focus:border-gold-500">
-                </div>
-                <button onclick="addToCartFromModal()" class="w-full gold-gradient text-black font-bold py-3.5 px-4 rounded-xl shadow-lg hover:opacity-95 transition-all flex items-center justify-center gap-2 text-sm">
-                    <i class="fa-solid fa-cart-plus"></i> Add to Cart
-                </button>
-            `;
-
-            modalContent.innerHTML = html;
+            updateModalTotal();
             document.getElementById('item-modal').classList.remove('hidden');
             document.getElementById('item-modal').classList.add('flex');
         }
 
-        function closeModal() {
-            document.getElementById('item-modal').classList.add('hidden');
-            document.getElementById('item-modal').classList.remove('flex');
+        let selectedPizzaSize = 'Small';
+        let selectedPizzaPrice = 15;
+        function selectPizzaSize(size, price) {
+            selectedPizzaSize = size;
+            selectedPizzaPrice = price;
+            updateModalTotal();
         }
 
-        function addToCartFromModal() {
-            if (!currentCustomizingItem) return;
-            const item = currentCustomizingItem;
-            let finalPrice = item.price || 0;
-            let variantName = '';
-            let notes = document.getElementById('modal-notes')?.value || '';
-            let extrasCost = 0;
+        let selectedPastaType = 'Spaghetti';
+        function selectPastaType(type) {
+            selectedPastaType = type;
+        }
 
-            if (item.isPizza) {
-                const selectedSizeInput = document.querySelector('input[name="pizza_size"]:checked');
-                if (selectedSizeInput) {
-                    variantName = selectedSizeInput.value;
-                    finalPrice = parseFloat(selectedSizeInput.dataset.price);
-                }
-                const crust = document.getElementById('modal-pizza-crust').value;
-                if (crust.includes('Gluten-free')) {
-                    extrasCost += 4.00;
-                    variantName += ` / ${crust}`;
-                }
-            } else if (item.buns) {
-                const bun = document.getElementById('modal-bun').value;
-                if (bun.includes('2.50')) extrasCost += 2.50;
-                variantName = bun;
+        function adjustModalQty(change) {
+            activeModalQty = Math.max(1, activeModalQty + change);
+            document.getElementById('modal-qty').innerText = activeModalQty;
+            updateModalTotal();
+        }
 
-                const combo = document.getElementById('modal-combo').value;
-                if (combo !== 'None') {
-                    if (combo.includes('$7.00')) extrasCost += 7.00;
-                    if (combo.includes('$11.00')) extrasCost += 11.00;
-                    if (combo.includes('$12.00')) extrasCost += 12.00;
-                    variantName += ` + ${combo}`;
-                }
-            } else if (item.pastaOptions) {
-                const pastaOpt = document.getElementById('modal-pasta-option').value;
-                if (pastaOpt.includes('$4.00')) extrasCost += 4.00;
-                variantName = pastaOpt;
+        function updateModalTotal() {
+            if (!activeModalItem) return;
+            let unitPrice = activeModalItem.price || 0;
+            if (activeModalItem.prices) {
+                unitPrice = selectedPizzaPrice;
             }
 
-            finalPrice += extrasCost;
+            const addons = document.querySelectorAll('.modal-addon:checked');
+            addons.forEach(addon => {
+                unitPrice += parseFloat(addon.getAttribute('data-price') || 0);
+            });
+
+            const total = unitPrice * activeModalQty;
+            document.getElementById('modal-total-btn').innerText = `$${total.toFixed(2)}`;
+        }
+
+        function closeItemModal() {
+            document.getElementById('item-modal').classList.add('hidden');
+            document.getElementById('item-modal').classList.remove('flex');
+            activeModalItem = null;
+        }
+
+        function confirmAddToCart() {
+            if (!activeModalItem) return;
+
+            let unitPrice = activeModalItem.price || 0;
+            let variantName = '';
+
+            if (activeModalItem.prices) {
+                unitPrice = selectedPizzaPrice;
+                variantName = `Size: ${selectedPizzaSize}`;
+            } else if (activeModalItem.pastaOptions) {
+                variantName = `Pasta: ${selectedPastaType}`;
+            } else if (activeModalItem.dessertOptions) {
+                const iceCreamSelect = document.getElementById('modal-icecream-flavor');
+                variantName = `Side: ${iceCreamSelect ? iceCreamSelect.value : 'Vanilla'}`;
+            }
+
+            const selectedAddons = [];
+            const addons = document.querySelectorAll('.modal-addon:checked');
+            addons.forEach(addon => {
+                unitPrice += parseFloat(addon.getAttribute('data-price') || 0);
+                selectedAddons.push(addon.value);
+            });
+
+            const instructions = document.getElementById('modal-instructions').value.trim();
 
             cart.push({
                 cartId: Date.now() + Math.random(),
-                itemId: item.id,
-                name: item.name,
+                itemId: activeModalItem.id,
+                name: activeModalItem.name,
                 variant: variantName,
-                basePrice: finalPrice,
-                notes: notes,
-                qty: 1
+                addons: selectedAddons,
+                instructions: instructions,
+                unitPrice: unitPrice,
+                qty: activeModalQty,
+                image: activeModalItem.image
             });
 
-            closeModal();
+            closeItemModal();
             updateCartUI();
-            openCart();
+            toggleCart(true);
+        }
+
+        function removeFromCart(cartId) {
+            cart = cart.filter(item => item.cartId !== cartId);
+            updateCartUI();
         }
 
         function updateCartUI() {
-            const badge = document.getElementById('cart-badge');
-            const totalQty = cart.reduce((sum, i) => sum + i.qty, 0);
-            if (totalQty > 0) {
-                badge.innerText = totalQty;
-                badge.classList.remove('hidden');
+            const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+            const subtotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
+            const gst = subtotal / 11; // Australian GST approx
+
+            document.getElementById('nav-cart-count').innerText = totalCount;
+            
+            const mobileBar = document.getElementById('mobile-cart-bar');
+            if (totalCount > 0) {
+                mobileBar.classList.remove('hidden');
+                document.getElementById('mobile-bar-count').innerText = totalCount;
+                document.getElementById('mobile-bar-total').innerText = `$${subtotal.toFixed(2)}`;
             } else {
-                badge.classList.add('hidden');
+                mobileBar.classList.add('hidden');
             }
 
-            const listContainer = document.getElementById('cart-items-list');
+            const container = document.getElementById('cart-items-container');
+            const footer = document.getElementById('cart-footer');
+
             if (cart.length === 0) {
-                listContainer.innerHTML = `
-                    <div class="text-center py-12 text-zinc-500">
-                        <i class="fa-solid fa-basket-shopping text-4xl mb-3 text-zinc-700"></i>
-                        <p class="text-sm font-medium">Your cart is empty</p>
-                        <p class="text-xs text-zinc-600 mt-1">Add some delicious dishes from the menu!</p>
+                container.innerHTML = `
+                    <div class="text-center py-16 space-y-3">
+                        <div class="w-16 h-16 rounded-2xl bg-obsidian-800 border gold-border-subtle text-gold-500 flex items-center justify-center mx-auto">
+                            <i data-lucide="shopping-bag" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-white text-lg">Your cart is empty</h3>
+                        <p class="text-xs text-zinc-400">Add delicious burgers, wood-fired pizzas, or pastas to start your order.</p>
                     </div>
                 `;
-            } else {
-                listContainer.innerHTML = cart.map((item, idx) => `
-                    <div class="py-4 flex items-center justify-between gap-3">
-                        <div class="flex-1">
-                            <h4 class="font-heading font-bold text-white text-sm">${item.name}</h4>
-                            ${item.variant ? `<p class="text-[11px] text-gold-400 font-medium">${item.variant}</p>` : ''}
-                            ${item.notes ? `<p class="text-[11px] text-zinc-500 italic">Note: ${item.notes}</p>` : ''}
-                            <span class="text-xs font-bold text-zinc-300 mt-1 inline-block">$${(item.basePrice * item.qty).toFixed(2)}</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="updateQty(${idx}, -1)" class="w-7 h-7 rounded-lg bg-zinc-800 text-zinc-300 hover:text-white flex items-center justify-center text-xs"><i class="fa-solid fa-minus"></i></button>
-                            <span class="text-xs font-bold w-5 text-center text-white">${item.qty}</span>
-                            <button onclick="updateQty(${idx}, 1)" class="w-7 h-7 rounded-lg bg-zinc-800 text-zinc-300 hover:text-white flex items-center justify-center text-xs"><i class="fa-solid fa-plus"></i></button>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            const subtotal = cart.reduce((sum, i) => sum + (i.basePrice * i.qty), 0);
-            const deliveryFee = fulfillmentType === 'delivery' ? 5.00 : 0.00;
-            const grandTotal = subtotal + deliveryFee;
-
-            document.getElementById('cart-subtotal').innerText = `$${subtotal.toFixed(2)}`;
-            document.getElementById('cart-fulfillment-fee').innerText = fulfillmentType === 'delivery' ? 'Delivery ($5.00)' : 'Pickup ($0.00)';
-            document.getElementById('cart-total').innerText = `$${grandTotal.toFixed(2)}`;
-        }
-
-        function updateQty(idx, change) {
-            cart[idx].qty += change;
-            if (cart[idx].qty <= 0) {
-                cart.splice(idx, 1);
-            }
-            updateCartUI();
-        }
-
-        function setFulfillmentType(type) {
-            fulfillmentType = type;
-            const btnPickup = document.getElementById('btn-type-pickup');
-            const btnDelivery = document.getElementById('btn-type-delivery');
-            if (type === 'pickup') {
-                btnPickup.className = "py-2 text-xs font-bold rounded-lg bg-gold-500 text-black transition-all";
-                btnDelivery.className = "py-2 text-xs font-bold rounded-lg text-zinc-400 hover:text-white transition-all";
-            } else {
-                btnDelivery.className = "py-2 text-xs font-bold rounded-lg bg-gold-500 text-black transition-all";
-                btnPickup.className = "py-2 text-xs font-bold rounded-lg text-zinc-400 hover:text-white transition-all";
-            }
-            updateCartUI();
-        }
-
-        function openCart() {
-            document.getElementById('cart-drawer').classList.remove('hidden');
-        }
-
-        function closeCart() {
-            document.getElementById('cart-drawer').classList.add('hidden');
-        }
-
-        function proceedToCheckout() {
-            if (cart.length === 0) {
-                alert('Your cart is empty!');
+                footer.classList.add('hidden');
+                lucide.createIcons();
                 return;
             }
-            closeCart();
-            const addressGroup = document.getElementById('delivery-address-group');
-            if (fulfillmentType === 'delivery') {
-                addressGroup.classList.remove('hidden');
-                document.getElementById('cust-address').required = true;
+
+            footer.classList.remove('hidden');
+            document.getElementById('cart-subtotal').innerText = `$${subtotal.toFixed(2)}`;
+            document.getElementById('cart-gst').innerText = `$${gst.toFixed(2)}`;
+            document.getElementById('cart-total').innerText = `$${subtotal.toFixed(2)}`;
+
+            container.innerHTML = cart.map(item => `
+                <div class="bg-obsidian-800 border gold-border-subtle rounded-2xl p-4 flex gap-3.5 items-center">
+                    <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded-xl object-cover shrink-0 bg-obsidian-950">
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-display font-bold text-white text-sm truncate">${item.name}</h4>
+                        ${item.variant ? `<p class="text-[11px] text-gold-400">${item.variant}</p>` : ''}
+                        ${item.addons.length > 0 ? `<p class="text-[10px] text-zinc-400">+ ${item.addons.join(', ')}</p>` : ''}
+                        ${item.instructions ? `<p class="text-[10px] italic text-zinc-500">Note: "${item.instructions}"</p>` : ''}
+                        <div class="flex items-center justify-between mt-2">
+                            <span class="font-bold text-gold-400 text-xs">$${(item.unitPrice * item.qty).toFixed(2)}</span>
+                            <div class="flex items-center gap-2 bg-obsidian-900 border gold-border-subtle rounded-lg px-2 py-1">
+                                <button onclick="adjustCartQty(${item.cartId}, -1)" class="text-zinc-400 hover:text-white">-</button>
+                                <span class="text-xs font-bold text-white">${item.qty}</span>
+                                <button onclick="adjustCartQty(${item.cartId}, 1)" class="text-zinc-400 hover:text-white">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="removeFromCart(${item.cartId})" class="text-zinc-500 hover:text-red-400 p-1 transition">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        function adjustCartQty(cartId, change) {
+            const found = cart.find(i => i.cartId === cartId);
+            if (!found) return;
+            found.qty += change;
+            if (found.qty <= 0) {
+                removeFromCart(cartId);
             } else {
-                addressGroup.classList.add('hidden');
-                document.getElementById('cust-address').required = false;
+                updateCartUI();
             }
+        }
+
+        function toggleCart(open) {
+            const drawer = document.getElementById('cart-drawer');
+            if (open) {
+                drawer.classList.remove('hidden');
+            } else {
+                drawer.classList.add('hidden');
+            }
+        }
+
+        function setOrderMethod(method) {
+            orderMethod = method;
+            const btnPickup = document.getElementById('btn-pickup');
+            const btnDelivery = document.getElementById('btn-delivery');
+            const addressGroup = document.getElementById('delivery-address-group');
+            const deliveryRow = document.getElementById('checkout-delivery-row');
+
+            if (method === 'Pickup') {
+                btnPickup.className = "py-2.5 px-4 rounded-lg text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 transition";
+                btnDelivery.className = "py-2.5 px-4 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 text-zinc-400 hover:text-white transition";
+                addressGroup.classList.add('hidden');
+                deliveryRow.classList.add('hidden');
+                document.getElementById('cust-address').required = false;
+            } else {
+                btnDelivery.className = "py-2.5 px-4 rounded-lg text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 transition";
+                btnPickup.className = "py-2.5 px-4 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 text-zinc-400 hover:text-white transition";
+                addressGroup.classList.remove('hidden');
+                deliveryRow.classList.remove('hidden');
+                document.getElementById('cust-address').required = true;
+            }
+            updateCheckoutTotals();
+        }
+
+        function selectPaymentOption(option) {
+            paymentOption = option;
+            const optOnline = document.getElementById('pay-opt-online');
+            const optCounter = document.getElementById('pay-opt-counter');
+            const submitLabel = document.getElementById('checkout-submit-label');
+
+            if (option === 'online') {
+                optOnline.className = "flex items-start gap-3.5 p-3.5 rounded-2xl border-2 border-gold-500 bg-gold-500/10 cursor-pointer transition";
+                optCounter.className = "flex items-start gap-3.5 p-3.5 rounded-2xl border gold-border-subtle bg-obsidian-900 cursor-pointer transition";
+                optOnline.querySelector('input').checked = true;
+                submitLabel.innerText = "Confirm Order & Pay via Square";
+            } else {
+                optCounter.className = "flex items-start gap-3.5 p-3.5 rounded-2xl border-2 border-gold-500 bg-gold-500/10 cursor-pointer transition";
+                optOnline.className = "flex items-start gap-3.5 p-3.5 rounded-2xl border gold-border-subtle bg-obsidian-900 cursor-pointer transition";
+                optCounter.querySelector('input').checked = true;
+                submitLabel.innerText = "Place Order (Pay at Counter)";
+            }
+        }
+
+        function updateCheckoutTotals() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
+            const deliveryFee = orderMethod === 'Delivery' ? 5.00 : 0.00;
+            const total = subtotal + deliveryFee;
+
+            document.getElementById('checkout-subtotal').innerText = `$${subtotal.toFixed(2)}`;
+            document.getElementById('checkout-total').innerText = `$${total.toFixed(2)}`;
+        }
+
+        function openCheckoutModal() {
+            if (cart.length === 0) return;
+            toggleCart(false);
+            updateCheckoutTotals();
+            document.getElementById('checkout-form-view').classList.remove('hidden');
+            document.getElementById('order-confirmation-view').classList.add('hidden');
             document.getElementById('checkout-modal').classList.remove('hidden');
             document.getElementById('checkout-modal').classList.add('flex');
+            lucide.createIcons();
         }
 
         function closeCheckoutModal() {
@@ -804,84 +1238,81 @@
             document.getElementById('checkout-modal').classList.remove('flex');
         }
 
+        function closeAllModals() {
+            closeCheckoutModal();
+            closeItemModal();
+        }
+
         async function submitOrder(e) {
             e.preventDefault();
-            const name = document.getElementById('cust-name').value;
-            const phone = document.getElementById('cust-phone').value;
-            const email = document.getElementById('cust-email').value;
-            const address = document.getElementById('cust-address').value || 'Pickup at Shop 12/108 Dangar St';
-            const notes = document.getElementById('cust-notes').value;
-            const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+            const name = document.getElementById('cust-name').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
+            const email = "customer@cravehouse.local"; // Can add email input if needed
+            const address = document.getElementById('cust-address').value.trim();
+            const notes = document.getElementById('cust-notes').value.trim();
 
-            const subtotal = cart.reduce((sum, i) => sum + (i.basePrice * i.qty), 0);
-            const fee = fulfillmentType === 'delivery' ? 5.00 : 0.00;
-            const total = subtotal + fee;
+            const subtotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
+            const deliveryFee = orderMethod === 'Delivery' ? 5.00 : 0.00;
+            const totalAmount = subtotal + deliveryFee;
 
-            const orderData = {
-                customer: { name, phone, email, address, notes },
-                fulfillment: fulfillmentType,
-                items: cart,
-                subtotal,
-                fee,
-                total
-            };
+            const submitBtn = document.getElementById('checkout-submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i><span>Processing Secure Checkout...</span>`;
+            lucide.createIcons();
 
-            if (paymentMethod === 'online') {
-                const btnText = document.getElementById('submit-btn-text');
-                btnText.innerText = 'Generating Secure Checkout...';
+            if (paymentOption === 'online') {
                 try {
-                    const res = await fetch('/create-square-checkout', {
+                    const response = await fetch('/create-square-checkout', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(orderData)
+                        body: JSON.stringify({
+                            customerName: name,
+                            customerPhone: phone,
+                            customerAddress: address,
+                            orderType: orderMethod,
+                            totalAmount: totalAmount,
+                            items: cart
+                        })
                     });
-                    const data = await res.json();
-                    if (data.url) {
+
+                    const data = await response.json();
+                    if (response.ok && data.url) {
                         window.location.href = data.url;
                         return;
                     } else {
-                        throw new Error(data.error || 'Failed to create payment link');
+                        throw new Error(data.error || 'Failed to initialize Square checkout.');
                     }
                 } catch (err) {
-                    console.error(err);
+                    console.warn('Square gateway fallback:', err);
                     alert('Could not connect to online payment gateway. Falling back to counter payment confirmation.');
                 }
             }
 
-            // Fallback / Counter Payment Success
-            showReceipt(orderData);
-        }
+            // Fallback / Counter Payment Confirmation Success View
+            setTimeout(() => {
+                submitBtn.disabled = false;
+                document.getElementById('checkout-form-view').classList.add('hidden');
+                document.getElementById('order-confirmation-view').classList.remove('hidden');
 
-        function showReceipt(order) {
-            closeCheckoutModal();
-            const receiptModal = document.getElementById('receipt-modal');
-            const receiptDetails = document.getElementById('receipt-details');
-            const orderId = 'CH-' + Math.floor(100000 + Math.random() * 900000);
+                const receiptHTML = `
+                    <p><strong>Order #CH-${Math.floor(1000 + Math.random() * 9000)}</strong></p>
+                    <p><strong>Customer:</strong> ${name} (${phone})</p>
+                    <p><strong>Type:</strong> ${orderMethod} ${orderMethod === 'Delivery' ? 'to ' + address : ''}</p>
+                    <p><strong>Payment:</strong> ${paymentOption === 'online' ? 'Paid via Square Online' : 'Pay at Counter / On Delivery'}</p>
+                    <div style="border-top: 1px dashed #444; margin: 8px 0; padding-top: 8px;">
+                        ${cart.map(i => `<div>• ${i.qty}x ${i.name} ${i.variant ? '(' + i.variant + ')' : ''} — $${(i.unitPrice * i.qty).toFixed(2)}</div>`).join('')}
+                    </div>
+                    <div style="border-top: 1px dashed #444; margin: 8px 0; padding-top: 8px; font-weight: bold;">
+                        Total Paid: $${totalAmount.toFixed(2)} (Incl. GST)
+                    </div>
+                    <p class="text-[10px] text-zinc-400 mt-2">CRAVE HOUSE Kitchen • Shop 12/108 Dangar St, Armidale NSW</p>
+                `;
 
-            receiptDetails.innerHTML = `
-                <p><strong>Order Ref:</strong> ${orderId}</p>
-                <p><strong>Customer:</strong> ${order.customer.name} (${order.customer.phone})</p>
-                <p><strong>Fulfillment:</strong> ${order.fulfillment.toUpperCase()}</p>
-                <p><strong>Address:</strong> ${order.customer.address}</p>
-                <div class="border-t border-zinc-800 my-2 pt-2">
-                    <p class="font-bold text-white mb-1">Items:</p>
-                    ${order.items.map(i => `<div>- ${i.qty}x ${i.name} ${i.variant ? '('+i.variant+')' : ''} ($${(i.basePrice*i.qty).toFixed(2)})</div>`).join('')}
-                </div>
-                <div class="border-t border-zinc-800 my-2 pt-2 flex justify-between font-bold text-white text-sm">
-                    <span>Total Paid:</span>
-                    <span class="text-gold-400">$${order.total.toFixed(2)}</span>
-                </div>
-            `;
-
-            receiptModal.classList.remove('hidden');
-            receiptModal.classList.add('flex');
-            cart = [];
-            updateCartUI();
-        }
-
-        function closeReceiptModal() {
-            document.getElementById('receipt-modal').classList.add('hidden');
-            document.getElementById('receipt-modal').classList.remove('flex');
+                document.getElementById('printable-receipt').innerHTML = receiptHTML;
+                cart = [];
+                updateCartUI();
+                lucide.createIcons();
+            }, 800);
         }
     </script>
 </body>
