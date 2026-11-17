@@ -13,7 +13,7 @@ export async function onRequestPost(context) {
       body: JSON.stringify({
         idempotency_key: crypto.randomUUID(),
         quick_pay: {
-          name: `Crave House Order - ${body.customerName || 'Online Guest'}`,
+          name: `Crave House Order - ${body.customerName || 'Online Guest'} (${body.orderType})`,
           price_money: {
             amount: Math.round(body.totalAmount * 100),
             currency: 'AUD'
