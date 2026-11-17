@@ -830,7 +830,7 @@
                 const btnText = document.getElementById('submit-btn-text');
                 btnText.innerText = 'Generating Secure Checkout...';
                 try {
-                    const res = await fetch('/.netlify/functions/create-square-checkout', {
+                    const res = await fetch('/create-square-checkout', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(orderData)
