@@ -705,6 +705,8 @@
         let activeGroup = 'ALL';
         let activeModalItem = null;
         let activeModalQty = 1;
+        let selectedPizzaSize = 'Small';
+        let selectedPizzaPrice = 15;
 
         // Initialize App
         document.addEventListener('DOMContentLoaded', () => {
@@ -899,7 +901,6 @@
                     </div>
                 `;
             } else if (item.prices) {
-                // Initialize default selection to Small
                 selectedPizzaSize = 'Small';
                 selectedPizzaPrice = item.prices.Small;
 
@@ -988,13 +989,10 @@
             document.getElementById('item-modal').classList.add('flex');
         }
 
-        let selectedPizzaSize = 'Small';
-        let selectedPizzaPrice = 15;
         function selectPizzaSize(size, price, btnElement) {
             selectedPizzaSize = size;
             selectedPizzaPrice = price;
 
-            // Remove highlight from all size buttons and add to clicked button
             const buttons = document.querySelectorAll('.pizza-size-btn');
             buttons.forEach(b => {
                 b.className = "pizza-size-btn p-3 rounded-xl bg-obsidian-900 border gold-border-subtle flex flex-col items-center justify-center cursor-pointer text-center transition";
