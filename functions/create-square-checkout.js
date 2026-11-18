@@ -3,12 +3,13 @@ export async function onRequestPost(context) {
     const { request, env } = context;
     const body = await request.json();
 
-    // 1. Map frontend cart items into Square's line_items format
+    // 1. Map frontend cart items into Square's strict order line_items format
     const lineItems = (body.items || []).map(item => ({
       name: `${item.name}${item.variant ? ' (' + item.variant + ')' : ''}`,
       quantity: String(item.qty || 1),
+      item_type: 'ITEM',
       base_price_money: {
-        amount: Math.round(item.unitPrice * 100), // Convert dollars to cents
+        amount: Math.round(item.unitPrice * 100), // Convert to cents integer
         currency: 'AUD'
       },
       note: item.addons && item.addons.length > 0 ? `Addons: ${item.addons.join(', ')}` : (item.instructions || undefined)
@@ -19,6 +20,7 @@ export async function onRequestPost(context) {
       lineItems.push({
         name: 'Delivery Fee',
         quantity: '1',
+        item_type: 'ITEM',
         base_price_money: {
           amount: 500, // $5.00 in cents
           currency: 'AUD'
@@ -26,7 +28,7 @@ export async function onRequestPost(context) {
       });
     }
 
-    // 3. Send request to Square using `order` instead of `quick_pay`
+    // 3. Send the complete order structure to Square
     const response = await fetch('https://connect.squareup.com/v2/online-checkout/payment-links', {
       method: 'POST',
       headers: {
@@ -53,21 +55,23 @@ export async function onRequestPost(context) {
     });
 
     const data = await response.json();
+    
     if (!response.ok) {
-      console.error("Square API Error Response:", JSON.stringify(data));
+      console.error("Square API Error Response:", JSON.stringify(data, null, 2));
       return new Response(JSON.stringify({ error: data }), { status: 500 });
     }
 
     return new Response(JSON.stringify({ url: data.payment_link.url }), {
       headers: { 'Content-Type': 'application/json' }
     });
+
   } catch (err) {
+    console.error("Worker Exception:", err.message);
     return new Response(JSON.stringify({ error: err.message }), { status: 500 });
   }
 }
-```[file-tag: code-generated-file-357ae181-e234-4a46-81c4-123456789abc]
+```[file-tag: code-generated-file-e2b3c4d5-6f7a-8b9c-0d1e-2f3a4b5c6d7e]
 
-### What this code does differently:
-1. **Maps Cart Array**: It loops through `body.items` (your burgers, pizzas with selected sizes, drinks, etc.) and converts them into Square's `line_items` schema.
-2. **Attaches Notes/Addons**: If a customer selects add-ons or types kitchen instructions, they are included as notes attached to that specific line item.
-3. **Pulls Itemized Summary**: Because it sends an `order` block with multiple `line_items`, Square's hosted checkout page will now dynamically list every individual product under the **Order summary** dropdown section instead of condensing everything into a single lump sum.
+### What was fixed:
+* Added **`item_type: 'ITEM'`** to every entry in the `line_items` array (which prevents Square from throwing a validation error on ad-hoc cart submissions).
+* Maintained proper integer casting for money amounts in cents and string casting for quantities.
