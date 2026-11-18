@@ -3,7 +3,7 @@ export async function onRequestPost(context) {
     const { request, env } = context;
     const body = await request.json();
 
-    // 1. Map your frontend cart items into Square's line_items format
+    // Map frontend cart items into Square's line_items format
     const lineItems = (body.items || []).map(item => ({
       name: `${item.name}${item.variant ? ' (' + item.variant + ')' : ''}`,
       quantity: String(item.qty || 1),
@@ -14,7 +14,7 @@ export async function onRequestPost(context) {
       note: item.addons && item.addons.length > 0 ? `Addons: ${item.addons.join(', ')}` : (item.instructions || undefined)
     }));
 
-    // 2. Add delivery fee as a separate line item if selected
+    // Add delivery fee as a separate line item if selected
     if (body.orderType === 'Delivery') {
       lineItems.push({
         name: 'Delivery Fee',
@@ -26,7 +26,6 @@ export async function onRequestPost(context) {
       });
     }
 
-    // 3. Send request to Square using full order line items instead of quick_pay
     const response = await fetch('https://connect.squareup.com/v2/online-checkout/payment-links', {
       method: 'POST',
       headers: {
@@ -54,6 +53,7 @@ export async function onRequestPost(context) {
 
     const data = await response.json();
     if (!response.ok) {
+      console.error("Square API Error Response:", JSON.stringify(data));
       return new Response(JSON.stringify({ error: data }), { status: 500 });
     }
 
