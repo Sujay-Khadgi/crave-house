@@ -457,31 +457,9 @@
                         <input type="text" id="cust-notes" placeholder="Pickup time, cutlery..." class="w-full rounded-xl bg-obsidian-900 border gold-border-subtle px-3.5 py-2.5 text-sm text-white focus:border-gold-500 outline-none">
                     </div>
 
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-gold-500 mb-2">Payment Option</label>
-                        <div class="space-y-2.5">
-                            <label id="pay-opt-online" onclick="selectPaymentOption('online')" class="flex items-start gap-3.5 p-3.5 rounded-2xl border-2 border-gold-500 bg-gold-500/10 cursor-pointer transition">
-                                <input type="radio" name="payment" value="Pay Online via Square" checked class="accent-gold-500 w-4 h-4 mt-1">
-                                <div class="flex-1">
-                                    <div class="flex items-center justify-between gap-2">
-                                        <span class="text-sm font-bold text-white">Pay Online Now (Square Checkout)</span>
-                                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-gold-500 text-obsidian-950">Locked Total</span>
-                                    </div>
-                                    <p class="text-xs text-zinc-400 mt-1">Secure card, Apple Pay, or Google Pay via Square with your exact cart total locked in.</p>
-                                </div>
-                            </label>
-
-                            <label id="pay-opt-counter" onclick="selectPaymentOption('counter')" class="flex items-start gap-3.5 p-3.5 rounded-2xl border gold-border-subtle bg-obsidian-900 cursor-pointer transition">
-                                <input type="radio" name="payment" value="Pay at Counter / On Delivery" class="accent-gold-500 w-4 h-4 mt-1">
-                                <div class="flex-1">
-                                    <div class="flex items-center justify-between gap-2">
-                                        <span class="text-sm font-bold text-zinc-200">Pay at Counter / On Delivery</span>
-                                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-obsidian-800 text-zinc-300 border border-zinc-700">EFTPOS / Cash</span>
-                                    </div>
-                                    <p class="text-xs text-zinc-400 mt-1">Tap & Go via Square terminal or pay cash when collecting from Shop 12/108 Dangar St.</p>
-                                </div>
-                            </label>
-                        </div>
+                    <div class="rounded-2xl border border-gold-500 bg-gold-500/10 p-4">
+                        <div class="flex items-center gap-2 text-sm font-bold text-white">Secure Online Payment via Square</div>
+                        <p class="text-xs text-zinc-400 mt-1">Pay securely online before your pickup or delivery order is placed.</p>
                     </div>
 
                     <div class="bg-obsidian-900 p-4 rounded-2xl border gold-border-subtle space-y-2 text-sm">
@@ -701,7 +679,6 @@
 
         let cart = [];
         let orderMethod = 'Pickup';
-        let paymentOption = 'online';
         let activeGroup = 'ALL';
         let activeModalItem = null;
         let activeModalQty = 1;
@@ -1192,25 +1169,6 @@
             updateCheckoutTotals();
         }
 
-        function selectPaymentOption(option) {
-            paymentOption = option;
-            const optOnline = document.getElementById('pay-opt-online');
-            const optCounter = document.getElementById('pay-opt-counter');
-            const submitLabel = document.getElementById('checkout-submit-label');
-
-            if (option === 'online') {
-                optOnline.className = "flex items-start gap-3.5 p-3.5 rounded-2xl border-2 border-gold-500 bg-gold-500/10 cursor-pointer transition";
-                optCounter.className = "flex items-start gap-3.5 p-3.5 rounded-2xl border gold-border-subtle bg-obsidian-900 cursor-pointer transition";
-                optOnline.querySelector('input').checked = true;
-                submitLabel.innerText = "Confirm Order & Pay via Square";
-            } else {
-                optCounter.className = "flex items-start gap-3.5 p-3.5 rounded-2xl border-2 border-gold-500 bg-gold-500/10 cursor-pointer transition";
-                optOnline.className = "flex items-start gap-3.5 p-3.5 rounded-2xl border gold-border-subtle bg-obsidian-900 cursor-pointer transition";
-                optCounter.querySelector('input').checked = true;
-                submitLabel.innerText = "Place Order (Pay at Counter)";
-            }
-        }
-
         function updateCheckoutTotals() {
             const subtotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
             const deliveryFee = orderMethod === 'Delivery' ? 5.00 : 0.00;
@@ -1257,7 +1215,6 @@
             submitBtn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i><span>Processing Secure Checkout...</span>`;
             lucide.createIcons();
 
-            if (paymentOption === 'online') {
                 try {
                     const response = await fetch('/create-square-checkout', {
                         method: 'POST',
@@ -1282,39 +1239,12 @@
                     }
                 } catch (err) {
                     console.error('Square checkout failed:', err);
-                    alert('Online payment could not be started. No payment has been taken. Please try again or select Pay at Counter.');
+                    alert('Online payment could not be started. No payment has been taken. Please try again.');
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = `<i data-lucide="lock" class="w-4 h-4"></i><span>Confirm Order & Pay via Square</span>`;
                     lucide.createIcons();
                     return;
                 }
-            }
-
-            // Fallback / Counter Payment Confirmation Success View
-            setTimeout(() => {
-                submitBtn.disabled = false;
-                document.getElementById('checkout-form-view').classList.add('hidden');
-                document.getElementById('order-confirmation-view').classList.remove('hidden');
-
-                const receiptHTML = `
-                    <p><strong>Order #CH-${Math.floor(1000 + Math.random() * 9000)}</strong></p>
-                    <p><strong>Customer:</strong> ${name} (${phone})</p>
-                    <p><strong>Type:</strong> ${orderMethod} ${orderMethod === 'Delivery' ? 'to ' + address : ''}</p>
-                    <p><strong>Payment:</strong> Pay at Counter / On Delivery (not yet paid)</p>
-                    <div style="border-top: 1px dashed #444; margin: 8px 0; padding-top: 8px;">
-                        ${cart.map(i => `<div>• ${i.qty}x ${i.name} ${i.variant ? '(' + i.variant + ')' : ''} — $${(i.unitPrice * i.qty).toFixed(2)}</div>`).join('')}
-                    </div>
-                    <div style="border-top: 1px dashed #444; margin: 8px 0; padding-top: 8px; font-weight: bold;">
-                        Total Due: $${totalAmount.toFixed(2)} (Incl. GST)
-                    </div>
-                    <p class="text-[10px] text-zinc-400 mt-2">CRAVE HOUSE Kitchen • Shop 12/108 Dangar St, Armidale NSW</p>
-                `;
-
-                document.getElementById('printable-receipt').innerHTML = receiptHTML;
-                cart = [];
-                updateCartUI();
-                lucide.createIcons();
-            }, 800);
         }
     </script>
 </body>
