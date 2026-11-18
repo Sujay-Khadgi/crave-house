@@ -1,162 +1,103 @@
-
-export async function onRequestPost(context) {
-  const json = (data, status = 200) =>
-    new Response(JSON.stringify(data), {
-      status,
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
+export async function onRequestPost({ request, env }) {
+  const reply = (payload, status = 200) => new Response(JSON.stringify(payload), {
+    status,
+    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
+  });
 
   try {
-    const { request, env } = context;
+    if (!env.SQUARE_ACCESS_TOKEN || !env.SQUARE_LOCATION_ID) {
+      console.error('Missing Square environment variables');
+      return reply({ error: 'Payment service is not configured.' }, 500);
+    }
+
     const body = await request.json();
-
-    if (!env.SQUARE_ACCESS_TOKEN ||
-        !env.SQUARE_LOCATION_ID) {
-      return json({
-        error: "Square environment variables missing"
-      }, 500);
+    if (!Array.isArray(body.items) || !body.items.length || body.items.length > 100) {
+      return reply({ error: 'Invalid or empty cart.' }, 400);
+    }
+    if (!['Pickup', 'Delivery'].includes(body.orderType)) {
+      return reply({ error: 'Invalid order type.' }, 400);
     }
 
-    if (!Array.isArray(body.items) ||
-        body.items.length === 0) {
-      return json({ error: "Cart is empty" }, 400);
-    }
-
-    const lineItems = body.items.map(item => {
-      const qty = Number(item.qty);
-      const price = Number(item.unitPrice);
-
-      if (!item.name ||
-          !Number.isInteger(qty) ||
-          qty < 1 ||
-          !Number.isFinite(price) ||
-          price < 0) {
-        throw new Error("Invalid cart item");
+    const line_items = body.items.map(item => {
+      const quantity = Number(item.qty);
+      const unitPrice = Number(item.unitPrice);
+      if (typeof item.name !== 'string' || !item.name.trim() ||
+          !Number.isInteger(quantity) || quantity < 1 || quantity > 100 ||
+          !Number.isFinite(unitPrice) || unitPrice < 0 || unitPrice > 10000) {
+        throw new Error('Invalid cart item.');
       }
-
       const details = [
-        item.variant,
-        ...(Array.isArray(item.addons)
-          ? item.addons
-          : []),
-        item.instructions
-          ? `Kitchen: ${item.instructions}`
-          : null
-      ].filter(Boolean).join(" | ");
-
+        item.variant ? `Option: ${String(item.variant)}` : '',
+        ...(Array.isArray(item.addons) ? item.addons.map(a => `Extra: ${String(a)}`) : []),
+        item.instructions ? `Kitchen: ${String(item.instructions)}` : ''
+      ].filter(Boolean).join(' | ');
       return {
-        name: String(item.name).slice(0, 512),
-        quantity: String(qty),
-        base_price_money: {
-          amount: Math.round(price * 100),
-          currency: "AUD"
-        },
-        ...(details
-          ? { note: details.slice(0, 500) }
-          : {})
+        name: item.name.trim().slice(0, 512),
+        quantity: String(quantity),
+        base_price_money: { amount: Math.round(unitPrice * 100), currency: 'AUD' },
+        ...(details ? { note: details.slice(0, 500) } : {})
       };
     });
 
-    const deliveryFee =
-      body.orderType === "Delivery" ? 500 : 0;
-
-    if (deliveryFee > 0) {
-      lineItems.push({
-        name: "Delivery Fee",
-        quantity: "1",
-        base_price_money: {
-          amount: deliveryFee,
-          currency: "AUD"
-        }
+    if (body.orderType === 'Delivery') {
+      if (!String(body.customerAddress || '').trim()) {
+        return reply({ error: 'Delivery address is required.' }, 400);
+      }
+      line_items.push({
+        name: 'Delivery Fee',
+        quantity: '1',
+        base_price_money: { amount: 500, currency: 'AUD' }
       });
     }
 
-    const totalCents = lineItems.reduce(
-      (sum, item) =>
-        sum +
-        item.base_price_money.amount *
-        Number(item.quantity),
-      0
-    );
-
-    if (
-      !Number.isFinite(Number(body.totalAmount)) ||
-      totalCents !==
-        Math.round(Number(body.totalAmount) * 100)
-    ) {
-      return json({
-        error: "Cart total mismatch",
-        calculatedTotal: totalCents / 100
-      }, 400);
+    const expectedCents = line_items.reduce((sum, item) =>
+      sum + item.base_price_money.amount * Number(item.quantity), 0);
+    const claimedTotal = Number(body.totalAmount);
+    if (!Number.isFinite(claimedTotal) || Math.round(claimedTotal * 100) !== expectedCents) {
+      return reply({ error: 'Cart total mismatch. Please refresh and try again.' }, 400);
     }
 
-    const orderNotes = [
-      `Customer: ${body.customerName || "Guest"}`,
-      `Phone: ${body.customerPhone || "Not provided"}`,
-      `Type: ${body.orderType || "Pickup"}`,
-      body.orderType === "Delivery"
-        ? `Address: ${body.customerAddress || ""}`
-        : null,
-      body.orderNotes
-        ? `Notes: ${body.orderNotes}`
-        : null
-    ].filter(Boolean).join(" | ");
+    const paymentNote = [
+      `Customer: ${String(body.customerName || 'Guest')}`,
+      `Phone: ${String(body.customerPhone || '')}`,
+      `Type: ${body.orderType}`,
+      body.orderType === 'Delivery' ? `Address: ${String(body.customerAddress)}` : '',
+      body.orderNotes ? `Notes: ${String(body.orderNotes)}` : ''
+    ].filter(Boolean).join(' | ').slice(0, 500);
 
-    const response = await fetch(
-      "https://connect.squareup.com/v2/online-checkout/payment-links",
-      {
-        method: "POST",
-        headers: {
-          "Square-Version": "2024-01-18",
-          "Authorization":
-            `Bearer ${env.SQUARE_ACCESS_TOKEN}`,
-          "Content-Type": "application/json"
+    const squareResponse = await fetch('https://connect.squareup.com/v2/online-checkout/payment-links', {
+      method: 'POST',
+      headers: {
+        'Square-Version': '2024-01-18',
+        Authorization: `Bearer ${env.SQUARE_ACCESS_TOKEN}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        idempotency_key: crypto.randomUUID(),
+        order: {
+          location_id: env.SQUARE_LOCATION_ID,
+          reference_id: crypto.randomUUID(),
+          line_items
         },
-        body: JSON.stringify({
-          idempotency_key: crypto.randomUUID(),
-          order: {
-            location_id: env.SQUARE_LOCATION_ID,
-            reference_id: crypto.randomUUID(),
-            line_items: lineItems,
-            metadata: {
-              order_type: String(
-                body.orderType || "Pickup"
-              ),
-              customer_name: String(
-                body.customerName || "Guest"
-              ).slice(0, 255)
-            }
-          },
-          payment_note: orderNotes.slice(0, 500)
-        })
-      }
-    );
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      console.error(
-        "Square checkout error:",
-        JSON.stringify(data)
-      );
-
-      return json({
-        error: "Square checkout failed",
-        details: data.errors || data
-      }, response.status);
-    }
-
-    return json({
-      url: data.payment_link.url,
-      orderId: data.payment_link.order_id
+        payment_note: paymentNote
+      })
     });
 
-  } catch (err) {
-    console.error("Checkout error:", err);
-    return json({
-      error: err.message
-    }, 500);
+    const squareData = await squareResponse.json();
+    if (!squareResponse.ok || !squareData.payment_link?.url) {
+      console.error('Square payment link error', JSON.stringify(squareData));
+      return reply({
+        error: 'Square could not create the payment link.',
+        details: squareData.errors || []
+      }, 502);
+    }
+
+    return reply({
+      url: squareData.payment_link.url,
+      orderId: squareData.payment_link.order_id
+    });
+  } catch (error) {
+    console.error('Checkout function failed:', error);
+    return reply({ error: error.message || 'Unexpected checkout error.' }, 500);
   }
 }
