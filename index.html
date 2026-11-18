@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crave House Kitchen | Online Ordering & Secure Checkout</title>
+    <title>Crave House Kitchen | Burgers, Woodfired Pizza & Pasta in Armidale</title>
+    <meta name="description" content="Order fresh gourmet burgers, woodfired pizzas, pastas, and waffles online for pickup or delivery from Crave House Kitchen at Shop 12/108 Dangar St, Armidale NSW." />
+    <meta name="keywords" content="Crave House Armidale, restaurants Dangar Street Armidale, burger delivery Armidale, woodfired pizza Armidale" />
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -480,571 +482,543 @@
                                     <p class="text-xs text-zinc-400 mt-1">Secure card, Apple Pay, or Google Pay via Square with your exact cart total locked in.</p>
                                 </div>
                             </label>
-
-                            <label id="pay-opt-counter" onclick="selectPaymentOption('counter')" class="flex items-start gap-3.5 p-3.5 rounded-2xl border gold-border-subtle bg-obsidian-900 cursor-pointer transition">
-                                <input type="radio" name="payment" value="Pay at Counter / On Delivery" class="accent-gold-500 w-4 h-4 mt-1">
-                                <div class="flex-1">
-                                    <div class="flex items-center justify-between gap-2">
-                                        <span class="text-sm font-bold text-zinc-200">Pay at Counter / On Delivery</span>
-                                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-obsidian-800 text-zinc-300 border border-zinc-700">EFTPOS / Cash</span>
-                                    </div>
-                                    <p class="text-xs text-zinc-400 mt-1">Tap & Go via Square terminal or pay cash when collecting from Shop 12/108 Dangar St.</p>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="bg-obsidian-900 p-4 rounded-2xl border gold-border-subtle space-y-2 text-sm">
-                        <div class="flex justify-between text-zinc-400">
-                            <span>Items Subtotal</span>
-                            <span id="checkout-subtotal" class="text-white">$0.00</span>
-                        </div>
-                        <div id="checkout-delivery-row" class="hidden flex justify-between text-zinc-400">
-                            <span>Delivery Fee</span>
-                            <span class="text-white">$5.00</span>
-                        </div>
-                        <div class="flex justify-between font-display font-extrabold text-base text-white pt-2 border-t border-zinc-800">
-                            <span>Total Due</span>
-                            <span id="checkout-total" class="text-gold-500">$0.00</span>
                         </div>
                     </div>
 
                     <button type="submit" id="checkout-submit-btn" class="w-full bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:brightness-110 text-obsidian-950 font-sans font-extrabold text-sm uppercase tracking-wider py-4 px-6 rounded-xl shadow-[0_0_25px_rgba(245,197,24,0.25)] transition flex items-center justify-center gap-2">
+                        <span>Proceed to Secure Payment</span>
                         <i data-lucide="lock" class="w-4 h-4"></i>
-                        <span id="checkout-submit-label">Confirm Order & Pay via Square</span>
                     </button>
                 </form>
-            </div>
-
-            <div id="order-confirmation-view" class="hidden flex flex-col p-6 sm:p-8 overflow-y-auto space-y-6 text-center">
-                <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/50 flex items-center justify-center mx-auto">
-                    <i data-lucide="check" class="w-8 h-8"></i>
-                </div>
-                <div>
-                    <h3 class="font-display text-2xl font-black uppercase text-white">Order Received!</h3>
-                    <p id="receipt-subtitle" class="text-xs text-gold-400 mt-1 uppercase tracking-wider font-semibold">CRAVE HOUSE Kitchen • Armidale</p>
-                </div>
-                <div id="printable-receipt" class="bg-obsidian-900 border gold-border-subtle rounded-2xl p-5 text-left text-xs font-mono text-zinc-300 space-y-3">
-                    <!-- Receipt details rendered here -->
-                </div>
-                <div class="flex gap-3">
-                    <button onclick="window.print()" class="flex-1 bg-obsidian-900 hover:bg-obsidian-800 text-white border gold-border-subtle font-sans font-bold text-xs uppercase tracking-wider py-3 rounded-xl transition">
-                        Print Receipt
-                    </button>
-                    <button onclick="closeAllModals()" class="flex-1 bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 font-sans font-bold text-xs uppercase tracking-wider py-3 rounded-xl transition">
-                        Back to Menu
-                    </button>
-                </div>
             </div>
         </div>
     </div>
 
-    <!-- JAVASCRIPT APP LOGIC & SQUARE CHECKOUT -->
-   <script>
-    // Menu Data with fully customizable sizes and options
-    const menuData = [
-        {
-            groupId: 'BURGERS',
-            groupName: 'Gourmet Burgers',
-            items: [
-                { id: 'b1', name: 'Crave House Signature Smashed Burger', price: 18.50, category: 'Burgers', desc: 'Double smashed beef patties, melted American cheddar, crispy bacon, caramelized onions, house truffle aioli on a toasted brioche bun.', image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80', options: [
-                    { title: 'Patty Options', type: 'choice', choices: [{name: 'Double Beef (Standard)', price: 0}, {name: 'Triple Beef', price: 5.00}, {name: 'Grilled Chicken Breast', price: 0}, {name: 'Plant-Based Veggie Patty', price: 0}] },
-                    { title: 'Extras & Add-ons', type: 'choice', choices: [{name: 'Extra Cheddar Cheese', price: 2.00}, {name: 'Crispy Bacon Rashers', price: 3.50}, {name: 'Jalapeños', price: 1.50}, {name: 'Gluten-Free Bun', price: 2.50}] }
-                ]},
-                { id: 'b2', name: 'The Truffle Melt Burger', price: 19.50, category: 'Burgers', desc: 'Smashed beef patty, Swiss cheese, sauteed wild mushrooms, truffle butter spread, rocket leaves.', image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=800&q=80', options: [
-                    { title: 'Extras', type: 'choice', choices: [{name: 'Extra Swiss Cheese', price: 2.00}, {name: 'Extra Wild Mushrooms', price: 3.00}, {name: 'Gluten-Free Bun', price: 2.50}] }
-                ]}
-            ]
-        },
-        {
-            groupId: 'PIZZA',
-            groupName: 'Woodfired Pizzas',
-            items: [
-                { id: 'p1', name: 'Supreme Woodfired Pizza', price: 24.00, category: 'Woodfired Pizza', desc: 'San Marzano tomato base, fior di latte mozzarella, pepperoni, Italian sausage, capsicum, olives, red onion.', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80', options: [
-                    { title: 'Select Pizza Size', type: 'choice', choices: [{name: 'Small (11")', price: 0}, {name: 'Large (13")', price: 5.00}, {name: 'XL (Family)', price: 9.00}] },
-                    { title: 'Crust Preference', type: 'choice', choices: [{name: 'Traditional Hand-Stretched', price: 0}, {name: 'Garlic Herb Crust', price: 2.00}, {name: 'Gluten-Free Base', price: 4.00}] }
-                ]},
-                { id: 'p2', name: 'BBQ Chicken Pizza', price: 23.50, category: 'Woodfired Pizza', desc: 'BBQ base, seasoned chicken, onion and mushrooms.', image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80', options: [
-                    { title: 'Select Pizza Size', type: 'choice', choices: [{name: 'Small (11")', price: 0}, {name: 'Large (13")', price: 5.00}, {name: 'XL (Family)', price: 9.00}] },
-                    { title: 'Crust Preference', type: 'choice', choices: [{name: 'Traditional Hand-Stretched', price: 0}, {name: 'Garlic Herb Crust', price: 2.00}, {name: 'Gluten-Free Base', price: 4.00}] }
-                ]}
-            ]
-        },
-        {
-            groupId: 'PASTA_RISOTTO',
-            groupName: 'Pasta & Risotto',
-            items: [
-                { id: 'pa1', name: 'Creamy Truffle Carbonara', price: 23.00, category: 'Pasta & Risotto', desc: 'Fettuccine tossed with crispy pancetta, garlic, free-range egg yolk, pecorino cheese, and black truffle cream.', image: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=800&q=80', options: [
-                    { title: 'Pasta Type', type: 'choice', choices: [{name: 'Fettuccine (Standard)', price: 0}, {name: 'Penne', price: 0}, {name: 'Gluten-Free Penne', price: 3.00}] },
-                    { title: 'Add-ons', type: 'choice', choices: [{name: 'Grilled Chicken Breast', price: 5.00}, {name: 'Tiger Prawns (4pcs)', price: 7.00}] }
-                ]}
-            ]
-        },
-        {
-            groupId: 'DESSERTS',
-            groupName: 'Waffles & Crepes',
-            items: [
-                { id: 'd1', name: 'Belgian Chocolate Luxury Waffle', price: 16.00, category: 'Waffles & Crepes', desc: 'Golden crispy Belgian waffle drenched in warm Belgian milk chocolate, fresh strawberries, and vanilla bean gelato.', image: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80', isDessert: true, options: [
-                    { title: 'Gelato Flavor', type: 'choice', choices: [{name: 'Vanilla Bean Gelato', price: 0}, {name: 'Belgian Chocolate Gelato', price: 0}, {name: 'Salted Caramel Gelato', price: 0}] }
-                ]}
-            ]
-        }
-    ];
-
-    let cart = [];
-    let currentModalItem = null;
-    let modalQuantity = 1;
-    let selectedOrderMethod = 'Pickup';
-    let selectedPaymentOption = 'online';
-
-    document.addEventListener('DOMContentLoaded', () => {
-        renderMenu();
-        renderGroupTabs();
-        updateCartUI();
-        lucide.createIcons();
-
-        document.getElementById('search-input').addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase().trim();
-            const clearBtn = document.getElementById('clear-search-btn');
-            if (query.length > 0) {
-                clearBtn.classList.remove('hidden');
-                filterMenu(query);
-            } else {
-                clearBtn.classList.add('hidden');
-                renderMenu();
-            }
-        });
-    });
-
-    function renderGroupTabs() {
-        const container = document.getElementById('group-tabs');
-        if(!container) return;
-        container.innerHTML = menuData.map(group => `
-            <button onclick="jumpToGroup('${group.groupId}')" class="px-4 py-2 rounded-full bg-obsidian-800 hover:bg-gold-500 text-zinc-300 hover:text-obsidian-950 border gold-border-subtle text-xs font-bold uppercase tracking-wider transition shrink-0">
-                ${group.groupName}
-            </button>
-        `).join('');
-    }
-
-    function jumpToGroup(groupId) {
-        const el = document.getElementById(`section-${groupId}`);
-        if (el) {
-            const offset = 140;
-            const bodyRect = document.body.getBoundingClientRect().top;
-            const elementRect = el.getBoundingClientRect().top;
-            const elementPosition = elementRect - bodyRect;
-            const offsetPosition = elementPosition - offset;
-            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-        }
-    }
-
-    function renderMenu() {
-        const container = document.getElementById('menu-container');
-        if(!container) return;
-        document.getElementById('empty-state').classList.add('hidden');
-        container.classList.remove('hidden');
-
-        container.innerHTML = menuData.map(group => `
-            <section id="section-${group.groupId}" class="space-y-6">
-                <div class="flex items-center gap-4">
-                    <h2 class="font-display text-2xl sm:text-3xl font-black text-white uppercase tracking-wider">${group.groupName}</h2>
-                    <div class="flex-1 h-[1px] bg-gradient-to-r from-gold-500/50 to-transparent"></div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    ${group.items.map(item => `
-                        <div onclick="openItemModal('${item.id}')" class="group bg-obsidian-800/80 hover:bg-obsidian-800 border gold-border-subtle hover:border-gold-500/60 rounded-3xl p-4 sm:p-5 flex gap-4 sm:gap-6 cursor-pointer transition shadow-lg relative overflow-hidden">
-                            <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-obsidian-950 overflow-hidden shrink-0 relative">
-                                <img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                            </div>
-                            <div class="flex-1 flex flex-col justify-between">
-                                <div>
-                                    <span class="text-[10px] font-bold uppercase tracking-widest text-gold-400 mb-1 block">${item.category}</span>
-                                    <h3 class="font-display font-bold text-white text-base sm:text-lg group-hover:text-gold-400 transition line-clamp-1">${item.name}</h3>
-                                    <p class="text-zinc-400 text-xs mt-1 line-clamp-2">${item.desc}</p>
-                                </div>
-                                <div class="flex items-center justify-between mt-3">
-                                    <span class="font-display font-black text-gold-500 text-base">$${item.price.toFixed(2)}</span>
-                                    <span class="bg-gold-500/10 text-gold-400 border gold-border-subtle text-[11px] font-bold px-3 py-1 rounded-full group-hover:bg-gold-500 group-hover:text-obsidian-950 transition">
-                                        Customize & Order
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            </section>
-        `).join('');
-        lucide.createIcons();
-    }
-
-    function filterMenu(query) {
-        const container = document.getElementById('menu-container');
-        if(!container) return;
-        let hasMatches = false;
-        let html = '';
-
-        menuData.forEach(group => {
-            const matchedItems = group.items.filter(item => 
-                item.name.toLowerCase().includes(query) || 
-                item.desc.toLowerCase().includes(query) ||
-                item.category.toLowerCase().includes(query)
-            );
-
-            if (matchedItems.length > 0) {
-                hasMatches = true;
-                html += `
-                    <section class="space-y-6">
-                        <div class="flex items-center gap-4">
-                            <h2 class="font-display text-2xl font-black text-white uppercase tracking-wider">${group.groupName}</h2>
-                            <div class="flex-1 h-[1px] bg-gradient-to-r from-gold-500/50 to-transparent"></div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            ${matchedItems.map(item => `
-                                <div onclick="openItemModal('${item.id}')" class="group bg-obsidian-800/80 hover:bg-obsidian-800 border gold-border-subtle hover:border-gold-500/60 rounded-3xl p-4 sm:p-5 flex gap-4 sm:gap-6 cursor-pointer transition shadow-lg relative overflow-hidden">
-                                    <div class="w-24 h-24 rounded-2xl bg-obsidian-950 overflow-hidden shrink-0">
-                                        <img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                                    </div>
-                                    <div class="flex-1 flex flex-col justify-between">
-                                        <div>
-                                            <span class="text-[10px] font-bold uppercase tracking-widest text-gold-400 mb-1 block">${item.category}</span>
-                                            <h3 class="font-display font-bold text-white text-base group-hover:text-gold-400 transition">${item.name}</h3>
-                                            <p class="text-zinc-400 text-xs mt-1 line-clamp-2">${item.desc}</p>
-                                        </div>
-                                        <div class="flex items-center justify-between mt-3">
-                                            <span class="font-display font-black text-gold-500 text-base">$${item.price.toFixed(2)}</span>
-                                            <span class="bg-gold-500/10 text-gold-400 border gold-border-subtle text-[11px] font-bold px-3 py-1 rounded-full group-hover:bg-gold-500 group-hover:text-obsidian-950 transition">Select</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </section>
-                `;
-            }
-        });
-
-        if (hasMatches) {
-            container.innerHTML = html;
-            container.classList.remove('hidden');
-            document.getElementById('empty-state').classList.add('hidden');
-        } else {
-            container.classList.add('hidden');
-            document.getElementById('empty-state').classList.remove('hidden');
-        }
-        lucide.createIcons();
-    }
-
-    function clearSearch() {
-        document.getElementById('search-input').value = '';
-        document.getElementById('clear-search-btn').classList.add('hidden');
-        renderMenu();
-    }
-
-    function findItemById(id) {
-        if (id === 'special-combo') {
-            return {
-                id: 'special-combo',
-                name: 'Crave House Special Combo',
-                price: 150.00,
-                category: 'Signature Feast',
-                desc: '2 XL Pizzas + 2 Pastas + 2 Burgers + Garlic Bread + 1.5L Drink.',
-                image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80',
-                options: [
-                    { title: 'Combo Drink Choice', type: 'choice', choices: [{name: '1.5L Coca-Cola Classic', price: 0}, {name: '1.5L Coke No Sugar', price: 0}] }
+    <!-- JAVASCRIPT: Full Menu Data & Size Selection Logic -->
+    <script>
+        const menuData = [
+            {
+                groupId: 'BURGERS',
+                groupName: 'Gourmet Burgers',
+                items: [
+                    { id: 'b1', name: 'Crave House Signature Smashed Burger', price: 18.50, category: 'Burgers', desc: 'Double smashed beef patties, melted American cheddar, crispy bacon, caramelized onions, house truffle aioli on a toasted brioche bun.', image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80', options: [
+                        { title: 'Patty Options', type: 'choice', choices: [{name: 'Double Beef (Standard)', price: 0}, {name: 'Triple Beef', price: 5.00}, {name: 'Grilled Chicken Breast', price: 0}, {name: 'Plant-Based Veggie Patty', price: 0}] },
+                        { title: 'Extras & Add-ons', type: 'choice', choices: [{name: 'Extra Cheddar Cheese', price: 2.00}, {name: 'Crispy Bacon Rashers', price: 3.50}, {name: 'Jalapeños', price: 1.50}, {name: 'Gluten-Free Bun', price: 2.50}] }
+                    ]},
+                    { id: 'b2', name: 'The Truffle Melt Burger', price: 19.50, category: 'Burgers', desc: 'Smashed beef patty, Swiss cheese, sauteed wild mushrooms, truffle butter spread, rocket leaves.', image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=800&q=80', options: [
+                        { title: 'Extras', type: 'choice', choices: [{name: 'Extra Swiss Cheese', price: 2.00}, {name: 'Extra Wild Mushrooms', price: 3.00}, {name: 'Gluten-Free Bun', price: 2.50}] }
+                    ]}
                 ]
-            };
-        }
-        for (let group of menuData) {
-            const found = group.items.find(i => i.id === id);
-            if (found) return found;
-        }
-        return null;
-    }
+            },
+            {
+                groupId: 'PIZZA',
+                groupName: 'Woodfired Pizzas',
+                items: [
+                    { id: 'p1', name: 'Supreme Woodfired Pizza', price: 24.00, category: 'Woodfired Pizza', desc: 'San Marzano tomato base, fior di latte mozzarella, pepperoni, Italian sausage, capsicum, olives, red onion.', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80', options: [
+                        { title: 'Select Pizza Size', type: 'choice', choices: [{name: 'Small (11")', price: 0}, {name: 'Large (13")', price: 5.00}, {name: 'XL (Family)', price: 9.00}] },
+                        { title: 'Crust Preference', type: 'choice', choices: [{name: 'Traditional Hand-Stretched', price: 0}, {name: 'Garlic Herb Crust', price: 2.00}, {name: 'Gluten-Free Base', price: 4.00}] }
+                    ]},
+                    { id: 'p2', name: 'BBQ Chicken Pizza', price: 23.50, category: 'Woodfired Pizza', desc: 'BBQ base, seasoned chicken, onion and mushrooms.', image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80', options: [
+                        { title: 'Select Pizza Size', type: 'choice', choices: [{name: 'Small (11")', price: 0}, {name: 'Large (13")', price: 5.00}, {name: 'XL (Family)', price: 9.00}] },
+                        { title: 'Crust Preference', type: 'choice', choices: [{name: 'Traditional Hand-Stretched', price: 0}, {name: 'Garlic Herb Crust', price: 2.00}, {name: 'Gluten-Free Base', price: 4.00}] }
+                    ]},
+                    { id: 'p3', name: 'Margherita D.O.P.', price: 21.00, category: 'Woodfired Pizza', desc: 'San Marzano D.O.P. tomatoes, fresh buffalo mozzarella, basil leaves, extra virgin olive oil.', image: 'https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=800&q=80', options: [
+                        { title: 'Select Pizza Size', type: 'choice', choices: [{name: 'Small (11")', price: 0}, {name: 'Large (13")', price: 5.00}, {name: 'XL (Family)', price: 9.00}] },
+                        { title: 'Crust Preference', type: 'choice', choices: [{name: 'Traditional Hand-Stretched', price: 0}, {name: 'Gluten-Free Base', price: 4.00}] }
+                    ]}
+                ]
+            },
+            {
+                groupId: 'PASTA_RISOTTO',
+                groupName: 'Pasta & Risotto',
+                items: [
+                    { id: 'pa1', name: 'Creamy Truffle Carbonara', price: 23.00, category: 'Pasta & Risotto', desc: 'Fettuccine tossed with crispy pancetta, garlic, free-range egg yolk, pecorino cheese, and black truffle cream.', image: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=800&q=80', options: [
+                        { title: 'Pasta Type', type: 'choice', choices: [{name: 'Fettuccine (Standard)', price: 0}, {name: 'Penne', price: 0}, {name: 'Gluten-Free Penne', price: 3.00}] },
+                        { title: 'Add-ons', type: 'choice', choices: [{name: 'Grilled Chicken Breast', price: 5.00}, {name: 'Tiger Prawns (4pcs)', price: 7.00}] }
+                    ]}
+                ]
+            },
+            {
+                groupId: 'MAINS_SIDES',
+                groupName: 'Mains & Sides',
+                items: [
+                    { id: 'm1', name: 'Crispy Golden Chicken Wings (10pcs)', price: 17.00, category: 'Mains & Sides', desc: 'Tossed in your choice of spicy buffalo or sticky honey soy glaze, served with ranch dipping sauce.', image: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=800&q=80', options: [
+                        { title: 'Wing Sauce', type: 'choice', choices: [{name: 'Spicy Buffalo Glaze', price: 0}, {name: 'Sticky Honey Soy', price: 0}, {name: 'Smoky BBQ', price: 0}] }
+                    ]},
+                    { id: 'm2', name: 'Loaded Truffle Fries', price: 13.50, category: 'Mains & Sides', desc: 'Hand-cut golden fries tossed in truffle oil, grated parmesan cheese, and fresh parsley.', image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80', options: [
+                        { title: 'Add-ons', type: 'choice', choices: [{name: 'Crispy Bacon Bits', price: 3.00}, {name: 'Melted Cheddar Cheese Sauce', price: 3.00}] }
+                    ]}
+                ]
+            },
+            {
+                groupId: 'DESSERTS',
+                groupName: 'Waffles & Crepes',
+                items: [
+                    { id: 'd1', name: 'Belgian Chocolate Luxury Waffle', price: 16.00, category: 'Waffles & Crepes', desc: 'Golden crispy Belgian waffle drenched in warm Belgian milk chocolate, fresh strawberries, and vanilla bean gelato.', image: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80', isDessert: true, options: [
+                        { title: 'Gelato Flavor', type: 'choice', choices: [{name: 'Vanilla Bean Gelato', price: 0}, {name: 'Belgian Chocolate Gelato', price: 0}, {name: 'Salted Caramel Gelato', price: 0}] }
+                    ]}
+                ]
+            }
+        ];
 
-    function openItemModal(itemId) {
-        const item = findItemById(itemId);
-        if (!item) return;
+        let cart = [];
+        let currentModalItem = null;
+        let modalQuantity = 1;
+        let selectedOrderMethod = 'Pickup';
+        let selectedPaymentOption = 'online';
 
-        currentModalItem = item;
-        modalQuantity = 1;
-        document.getElementById('modal-qty').innerText = modalQuantity;
-        document.getElementById('modal-instructions').value = '';
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMenu();
+            renderGroupTabs();
+            updateCartUI();
+            lucide.createIcons();
 
-        document.getElementById('modal-item-img').src = item.image;
-        document.getElementById('modal-category-badge').innerText = item.category;
-        document.getElementById('modal-item-name').innerText = item.name;
-        document.getElementById('modal-item-desc').innerText = item.desc;
-
-        const dessertBanner = document.getElementById('modal-dessert-banner');
-        if (item.isDessert) {
-            dessertBanner.classList.remove('hidden');
-        } else {
-            dessertBanner.classList.add('hidden');
-        }
-
-        const optionsContainer = document.getElementById('modal-options-container');
-        let optionsHtml = '';
-
-        if (item.options && item.options.length > 0) {
-            item.options.forEach((optGroup) => {
-                optionsHtml += `
-                    <div class="border-t gold-border-subtle pt-4">
-                        <label class="block text-xs font-bold uppercase tracking-wider text-gold-400 mb-2.5">
-                            ${optGroup.title}
-                        </label>
-                        <div class="grid grid-cols-3 gap-2">
-                `;
-                optGroup.choices.forEach((choice, cIdx) => {
-                    const isSelected = cIdx === 0 ? 'border-gold-500 bg-gold-500/10 text-white' : 'border-zinc-700 bg-obsidian-900 text-zinc-300';
-                    optionsHtml += `
-                        <button type="button" 
-                            onclick="selectModalOption(this, '${optGroup.title}')" 
-                            data-group="${optGroup.title}"
-                            data-name="${choice.name}"
-                            data-price="${choice.price}"
-                            class="option-choice-btn flex flex-col items-center justify-center p-3 rounded-xl border ${isSelected} hover:border-gold-500 transition text-center">
-                            <span class="text-xs font-bold">${choice.name}</span>
-                            <span class="text-[10px] text-gold-400 mt-1">${choice.price > 0 ? `+$${choice.price.toFixed(2)}` : 'Included'}</span>
-                        </button>
-                    `;
-                });
-                optionsHtml += `</div></div>`;
+            document.getElementById('search-input').addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                const clearBtn = document.getElementById('clear-search-btn');
+                if (query.length > 0) {
+                    clearBtn.classList.remove('hidden');
+                    filterMenu(query);
+                } else {
+                    clearBtn.classList.add('hidden');
+                    renderMenu();
+                }
             });
-        }
-        optionsContainer.innerHTML = optionsHtml;
-
-        updateModalTotal();
-        document.getElementById('item-modal').classList.remove('hidden');
-        document.getElementById('item-modal').classList.add('flex');
-        lucide.createIcons();
-    }
-
-    function selectModalOption(btn, groupTitle) {
-        const groupButtons = document.querySelectorAll(`button[data-group="${groupTitle}"]`);
-        groupButtons.forEach(b => {
-            b.className = "option-choice-btn flex flex-col items-center justify-center p-3 rounded-xl border border-zinc-700 bg-obsidian-900 text-zinc-300 hover:border-gold-500 transition text-center";
-        });
-        btn.className = "option-choice-btn flex flex-col items-center justify-center p-3 rounded-xl border border-gold-500 bg-gold-500/10 text-white transition text-center";
-        updateModalTotal();
-    }
-
-    function closeItemModal() {
-        document.getElementById('item-modal').classList.add('hidden');
-        document.getElementById('item-modal').classList.remove('flex');
-        currentModalItem = null;
-    }
-
-    function adjustModalQty(delta) {
-        modalQuantity += delta;
-        if (modalQuantity < 1) modalQuantity = 1;
-        document.getElementById('modal-qty').innerText = modalQuantity;
-        updateModalTotal();
-    }
-
-    function updateModalTotal() {
-        if (!currentModalItem) return;
-        let total = currentModalItem.price;
-
-        const optionsContainer = document.getElementById('modal-options-container');
-        const selectedButtons = optionsContainer.querySelectorAll('.option-choice-btn.border-gold-500');
-        selectedButtons.forEach(btn => {
-            total += parseFloat(btn.getAttribute('data-price') || 0);
         });
 
-        total *= modalQuantity;
-        document.getElementById('modal-total-btn').innerText = `$${total.toFixed(2)}`;
-    }
-
-    function confirmAddToCart() {
-        if (!currentModalItem) return;
-
-        const optionsContainer = document.getElementById('modal-options-container');
-        const selectedChoices = [];
-        let extraTotal = 0;
-
-        const selectedButtons = optionsContainer.querySelectorAll('.option-choice-btn.border-gold-500');
-        selectedButtons.forEach(btn => {
-            extraTotal += parseFloat(btn.getAttribute('data-price') || 0);
-            selectedChoices.push(btn.getAttribute('data-name'));
-        });
-
-        const instructions = document.getElementById('modal-instructions').value.trim();
-        const finalItemPrice = currentModalItem.price + extraTotal;
-
-        cart.push({
-            cartId: Date.now() + Math.random(),
-            id: currentModalItem.id,
-            name: currentModalItem.name,
-            basePrice: finalItemPrice,
-            quantity: modalQuantity,
-            options: selectedChoices,
-            instructions: instructions
-        });
-
-        closeItemModal();
-        updateCartUI();
-        toggleCart(true);
-    }
-
-    function updateCartUI() {
-        const totalCount = cart.reduce((sum, i) => sum + i.quantity, 0);
-        const subtotal = cart.reduce((sum, i) => sum + (i.basePrice * i.quantity), 0);
-        const gst = subtotal / 11;
-        const deliveryFee = selectedOrderMethod === 'Delivery' ? 5.00 : 0.00;
-        const grandTotal = subtotal + deliveryFee;
-
-        document.getElementById('nav-cart-count').innerText = totalCount;
-        document.getElementById('mobile-bar-count').innerText = totalCount;
-        document.getElementById('mobile-bar-total').innerText = `$${grandTotal.toFixed(2)}`;
-
-        const mobileBar = document.getElementById('mobile-cart-bar');
-        if (totalCount > 0) {
-            mobileBar.classList.remove('hidden');
-        } else {
-            mobileBar.classList.add('hidden');
-        }
-
-        const itemsContainer = document.getElementById('cart-items-container');
-        const cartFooter = document.getElementById('cart-footer');
-
-        if (cart.length === 0) {
-            itemsContainer.innerHTML = `
-                <div class="text-center py-16 px-4">
-                    <div class="w-16 h-16 rounded-2xl bg-obsidian-800 border gold-border-subtle text-gold-500 flex items-center justify-center mx-auto mb-4">
-                        <i data-lucide="shopping-bag" class="w-8 h-8"></i>
-                    </div>
-                    <h3 class="font-display text-lg font-bold text-white uppercase">Your cart is empty</h3>
-                    <p class="text-zinc-400 text-xs mt-1">Add burgers, woodfired pizza, or waffles to start your order.</p>
-                </div>
-            `;
-            cartFooter.classList.add('hidden');
-        } else {
-            itemsContainer.innerHTML = cart.map(item => `
-                <div class="bg-obsidian-800 border gold-border-subtle rounded-2xl p-4 space-y-3">
-                    <div class="flex justify-between items-start gap-3">
-                        <div>
-                            <h4 class="font-display font-bold text-white text-sm">${item.name}</h4>
-                            <p class="text-xs font-display font-black text-gold-500 mt-0.5">$${(item.basePrice * item.quantity).toFixed(2)}</p>
-                        </div>
-                        <button onclick="removeFromCart('${item.cartId}')" class="text-zinc-400 hover:text-crimson-600 transition">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                    ${item.options.length > 0 ? `<div class="text-[11px] text-zinc-300 bg-obsidian-900/80 p-2 rounded-xl border gold-border-subtle"><strong>Selections:</strong> ${item.options.join(', ')}</div>` : ''}
-                    ${item.instructions ? `<div class="text-[11px] text-zinc-400 italic">Note: "${item.instructions}"</div>` : ''}
-                    <div class="flex items-center justify-between pt-1">
-                        <div class="flex items-center bg-obsidian-900 border gold-border-subtle rounded-lg">
-                            <button onclick="adjustCartQty('${item.cartId}', -1)" class="w-7 h-7 flex items-center justify-center text-white hover:bg-obsidian-800">-</button>
-                            <span class="w-7 text-center text-xs font-bold text-white">${item.quantity}</span>
-                            <button onclick="adjustCartQty('${item.cartId}', 1)" class="w-7 h-7 flex items-center justify-center text-white hover:bg-obsidian-800">+</button>
-                        </div>
-                    </div>
-                </div>
+        function renderGroupTabs() {
+            const container = document.getElementById('group-tabs');
+            if(!container) return;
+            container.innerHTML = menuData.map(group => `
+                <button onclick="jumpToGroup('${group.groupId}')" class="px-4 py-2 rounded-full bg-obsidian-800 hover:bg-gold-500 text-zinc-300 hover:text-obsidian-950 border gold-border-subtle text-xs font-bold uppercase tracking-wider transition shrink-0">
+                    ${group.groupName}
+                </button>
             `).join('');
-
-            document.getElementById('cart-subtotal').innerText = `$${subtotal.toFixed(2)}`;
-            document.getElementById('cart-gst').innerText = `$${gst.toFixed(2)}`;
-            document.getElementById('cart-total').innerText = `$${grandTotal.toFixed(2)}`;
-            cartFooter.classList.remove('hidden');
         }
-        lucide.createIcons();
-    }
 
-    function toggleCart(isOpen) {
-        const drawer = document.getElementById('cart-drawer');
-        if (isOpen) {
-            drawer.classList.remove('hidden');
-        } else {
-            drawer.classList.add('hidden');
+        function jumpToGroup(groupId) {
+            const el = document.getElementById(`section-${groupId}`);
+            if (el) {
+                const offset = 140;
+                const bodyRect = document.body.getBoundingClientRect().top;
+                const elementRect = el.getBoundingClientRect().top;
+                const elementPosition = elementRect - bodyRect;
+                const offsetPosition = elementPosition - offset;
+                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+            }
         }
-    }
 
-    function adjustCartQty(cartId, delta) {
-        const item = cart.find(i => i.cartId == cartId);
-        if (item) {
-            item.quantity += delta;
-            if (item.quantity <= 0) {
-                cart = cart.filter(i => i.cartId != cartId);
+        function renderMenu() {
+            const container = document.getElementById('menu-container');
+            if(!container) return;
+            document.getElementById('empty-state').classList.add('hidden');
+            container.classList.remove('hidden');
+
+            container.innerHTML = menuData.map(group => `
+                <section id="section-${group.groupId}" class="space-y-6">
+                    <div class="flex items-center gap-4">
+                        <h2 class="font-display text-2xl sm:text-3xl font-black text-white uppercase tracking-wider">${group.groupName}</h2>
+                        <div class="flex-1 h-[1px] bg-gradient-to-r from-gold-500/50 to-transparent"></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        ${group.items.map(item => `
+                            <div onclick="openItemModal('${item.id}')" class="group bg-obsidian-800/80 hover:bg-obsidian-800 border gold-border-subtle hover:border-gold-500/60 rounded-3xl p-4 sm:p-5 flex gap-4 sm:gap-6 cursor-pointer transition shadow-lg relative overflow-hidden">
+                                <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-obsidian-950 overflow-hidden shrink-0 relative">
+                                    <img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                </div>
+                                <div class="flex-1 flex flex-col justify-between">
+                                    <div>
+                                        <span class="text-[10px] font-bold uppercase tracking-widest text-gold-400 mb-1 block">${item.category}</span>
+                                        <h3 class="font-display font-bold text-white text-base sm:text-lg group-hover:text-gold-400 transition line-clamp-1">${item.name}</h3>
+                                        <p class="text-zinc-400 text-xs mt-1 line-clamp-2">${item.desc}</p>
+                                    </div>
+                                    <div class="flex items-center justify-between mt-3">
+                                        <span class="font-display font-black text-gold-500 text-base">$${item.price.toFixed(2)}</span>
+                                        <span class="bg-gold-500/10 text-gold-400 border gold-border-subtle text-[11px] font-bold px-3 py-1 rounded-full group-hover:bg-gold-500 group-hover:text-obsidian-950 transition">
+                                            Customize & Order
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </section>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function filterMenu(query) {
+            const container = document.getElementById('menu-container');
+            if(!container) return;
+            let hasMatches = false;
+            let html = '';
+
+            menuData.forEach(group => {
+                const matchedItems = group.items.filter(item => 
+                    item.name.toLowerCase().includes(query) || 
+                    item.desc.toLowerCase().includes(query) ||
+                    item.category.toLowerCase().includes(query)
+                );
+
+                if (matchedItems.length > 0) {
+                    hasMatches = true;
+                    html += `
+                        <section class="space-y-6">
+                            <div class="flex items-center gap-4">
+                                <h2 class="font-display text-2xl font-black text-white uppercase tracking-wider">${group.groupName}</h2>
+                                <div class="flex-1 h-[1px] bg-gradient-to-r from-gold-500/50 to-transparent"></div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                ${matchedItems.map(item => `
+                                    <div onclick="openItemModal('${item.id}')" class="group bg-obsidian-800/80 hover:bg-obsidian-800 border gold-border-subtle hover:border-gold-500/60 rounded-3xl p-4 sm:p-5 flex gap-4 sm:gap-6 cursor-pointer transition shadow-lg relative overflow-hidden">
+                                        <div class="w-24 h-24 rounded-2xl bg-obsidian-950 overflow-hidden shrink-0">
+                                            <img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                        </div>
+                                        <div class="flex-1 flex flex-col justify-between">
+                                            <div>
+                                                <span class="text-[10px] font-bold uppercase tracking-widest text-gold-400 mb-1 block">${item.category}</span>
+                                                <h3 class="font-display font-bold text-white text-base group-hover:text-gold-400 transition">${item.name}</h3>
+                                                <p class="text-zinc-400 text-xs mt-1 line-clamp-2">${item.desc}</p>
+                                            </div>
+                                            <div class="flex items-center justify-between mt-3">
+                                                <span class="font-display font-black text-gold-500 text-base">$${item.price.toFixed(2)}</span>
+                                                <span class="bg-gold-500/10 text-gold-400 border gold-border-subtle text-[11px] font-bold px-3 py-1 rounded-full group-hover:bg-gold-500 group-hover:text-obsidian-950 transition">Select</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </section>
+                    `;
+                }
+            });
+
+            if (hasMatches) {
+                container.innerHTML = html;
+                container.classList.remove('hidden');
+                document.getElementById('empty-state').classList.add('hidden');
+            } else {
+                container.classList.add('hidden');
+                document.getElementById('empty-state').classList.remove('hidden');
+            }
+            lucide.createIcons();
+        }
+
+        function clearSearch() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('clear-search-btn').classList.add('hidden');
+            renderMenu();
+        }
+
+        function resetAllFilters() {
+            clearSearch();
+        }
+
+        function findItemById(id) {
+            if (id === 'special-combo') {
+                return {
+                    id: 'special-combo',
+                    name: 'Crave House Special Combo',
+                    price: 150.00,
+                    category: 'Signature Feast',
+                    desc: '2 XL Pizzas + 2 Pastas + 2 Burgers + Garlic Bread + 1.5L Drink.',
+                    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80',
+                    options: [
+                        { title: 'Combo Drink Choice', type: 'choice', choices: [{name: '1.5L Coca-Cola Classic', price: 0}, {name: '1.5L Coke No Sugar', price: 0}] }
+                    ]
+                };
+            }
+            for (let group of menuData) {
+                const found = group.items.find(i => i.id === id);
+                if (found) return found;
+            }
+            return null;
+        }
+
+        function openItemModal(itemId) {
+            const item = findItemById(itemId);
+            if (!item) return;
+
+            currentModalItem = item;
+            modalQuantity = 1;
+            document.getElementById('modal-qty').innerText = modalQuantity;
+            document.getElementById('modal-instructions').value = '';
+
+            document.getElementById('modal-item-img').src = item.image;
+            document.getElementById('modal-category-badge').innerText = item.category;
+            document.getElementById('modal-item-name').innerText = item.name;
+            document.getElementById('modal-item-desc').innerText = item.desc;
+
+            const dessertBanner = document.getElementById('modal-dessert-banner');
+            if (item.isDessert) {
+                dessertBanner.classList.remove('hidden');
+            } else {
+                dessertBanner.classList.add('hidden');
+            }
+
+            const optionsContainer = document.getElementById('modal-options-container');
+            let optionsHtml = '';
+
+            if (item.options && item.options.length > 0) {
+                item.options.forEach((optGroup) => {
+                    optionsHtml += `
+                        <div class="border-t gold-border-subtle pt-4">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gold-400 mb-2.5">
+                                ${optGroup.title}
+                            </label>
+                            <div class="grid grid-cols-3 gap-2">
+                    `;
+                    optGroup.choices.forEach((choice, cIdx) => {
+                        const isSelected = cIdx === 0 ? 'border-gold-500 bg-gold-500/10 text-white' : 'border-zinc-700 bg-obsidian-900 text-zinc-300';
+                        optionsHtml += `
+                            <button type="button" 
+                                onclick="selectModalOption(this, '${optGroup.title}')" 
+                                data-group="${optGroup.title}"
+                                data-name="${choice.name}"
+                                data-price="${choice.price}"
+                                class="option-choice-btn flex flex-col items-center justify-center p-3 rounded-xl border ${isSelected} hover:border-gold-500 transition text-center">
+                                <span class="text-xs font-bold">${choice.name}</span>
+                                <span class="text-[10px] text-gold-400 mt-1">${choice.price > 0 ? `+$${choice.price.toFixed(2)}` : 'Included'}</span>
+                            </button>
+                        `;
+                    });
+                    optionsHtml += `</div></div>`;
+                });
+            }
+            optionsContainer.innerHTML = optionsHtml;
+
+            updateModalTotal();
+            document.getElementById('item-modal').classList.remove('hidden');
+            document.getElementById('item-modal').classList.add('flex');
+            lucide.createIcons();
+        }
+
+        function selectModalOption(btn, groupTitle) {
+            const groupButtons = document.querySelectorAll(`button[data-group="${groupTitle}"]`);
+            groupButtons.forEach(b => {
+                b.className = "option-choice-btn flex flex-col items-center justify-center p-3 rounded-xl border border-zinc-700 bg-obsidian-900 text-zinc-300 hover:border-gold-500 transition text-center";
+            });
+            btn.className = "option-choice-btn flex flex-col items-center justify-center p-3 rounded-xl border border-gold-500 bg-gold-500/10 text-white transition text-center";
+            updateModalTotal();
+        }
+
+        function closeItemModal() {
+            document.getElementById('item-modal').classList.add('hidden');
+            document.getElementById('item-modal').classList.remove('flex');
+            currentModalItem = null;
+        }
+
+        function adjustModalQty(delta) {
+            modalQuantity += delta;
+            if (modalQuantity < 1) modalQuantity = 1;
+            document.getElementById('modal-qty').innerText = modalQuantity;
+            updateModalTotal();
+        }
+
+        function updateModalTotal() {
+            if (!currentModalItem) return;
+            let total = currentModalItem.price;
+
+            const optionsContainer = document.getElementById('modal-options-container');
+            const selectedButtons = optionsContainer.querySelectorAll('.option-choice-btn.border-gold-500');
+            selectedButtons.forEach(btn => {
+                total += parseFloat(btn.getAttribute('data-price') || 0);
+            });
+
+            total *= modalQuantity;
+            document.getElementById('modal-total-btn').innerText = `$${total.toFixed(2)}`;
+        }
+
+        function confirmAddToCart() {
+            if (!currentModalItem) return;
+
+            const optionsContainer = document.getElementById('modal-options-container');
+            const selectedChoices = [];
+            let extraTotal = 0;
+
+            const selectedButtons = optionsContainer.querySelectorAll('.option-choice-btn.border-gold-500');
+            selectedButtons.forEach(btn => {
+                extraTotal += parseFloat(btn.getAttribute('data-price') || 0);
+                selectedChoices.push(btn.getAttribute('data-name'));
+            });
+
+            const instructions = document.getElementById('modal-instructions').value.trim();
+            const finalItemPrice = currentModalItem.price + extraTotal;
+
+            cart.push({
+                cartId: Date.now() + Math.random(),
+                id: currentModalItem.id,
+                name: currentModalItem.name,
+                basePrice: finalItemPrice,
+                quantity: modalQuantity,
+                options: selectedChoices,
+                instructions: instructions
+            });
+
+            closeItemModal();
+            updateCartUI();
+            toggleCart(true);
+        }
+
+        function updateCartUI() {
+            const totalCount = cart.reduce((sum, i) => sum + i.quantity, 0);
+            const subtotal = cart.reduce((sum, i) => sum + (i.basePrice * i.quantity), 0);
+            const gst = subtotal / 11;
+            const deliveryFee = selectedOrderMethod === 'Delivery' ? 5.00 : 0.00;
+            const grandTotal = subtotal + deliveryFee;
+
+            document.getElementById('nav-cart-count').innerText = totalCount;
+            document.getElementById('mobile-bar-count').innerText = totalCount;
+            document.getElementById('mobile-bar-total').innerText = `$${grandTotal.toFixed(2)}`;
+
+            const mobileBar = document.getElementById('mobile-cart-bar');
+            if (totalCount > 0) {
+                mobileBar.classList.remove('hidden');
+            } else {
+                mobileBar.classList.add('hidden');
+            }
+
+            const itemsContainer = document.getElementById('cart-items-container');
+            const cartFooter = document.getElementById('cart-footer');
+
+            if (cart.length === 0) {
+                itemsContainer.innerHTML = `
+                    <div class="text-center py-16 px-4">
+                        <div class="w-16 h-16 rounded-2xl bg-obsidian-800 border gold-border-subtle text-gold-500 flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="shopping-bag" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-white uppercase">Your cart is empty</h3>
+                        <p class="text-zinc-400 text-xs mt-1">Add burgers, woodfired pizza, or waffles to start your order.</p>
+                    </div>
+                `;
+                cartFooter.classList.add('hidden');
+            } else {
+                itemsContainer.innerHTML = cart.map(item => `
+                    <div class="bg-obsidian-800 border gold-border-subtle rounded-2xl p-4 space-y-3">
+                        <div class="flex justify-between items-start gap-3">
+                            <div>
+                                <h4 class="font-display font-bold text-white text-sm">${item.name}</h4>
+                                <p class="text-xs font-display font-black text-gold-500 mt-0.5">$${(item.basePrice * item.quantity).toFixed(2)}</p>
+                            </div>
+                            <button onclick="removeFromCart('${item.cartId}')" class="text-zinc-400 hover:text-crimson-600 transition">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        ${item.options.length > 0 ? `<div class="text-[11px] text-zinc-300 bg-obsidian-900/80 p-2 rounded-xl border gold-border-subtle"><strong>Selections:</strong> ${item.options.join(', ')}</div>` : ''}
+                        ${item.instructions ? `<div class="text-[11px] text-zinc-400 italic">Note: "${item.instructions}"</div>` : ''}
+                        <div class="flex items-center justify-between pt-1">
+                            <div class="flex items-center bg-obsidian-900 border gold-border-subtle rounded-lg">
+                                <button onclick="adjustCartQty('${item.cartId}', -1)" class="w-7 h-7 flex items-center justify-center text-white hover:bg-obsidian-800">-</button>
+                                <span class="w-7 text-center text-xs font-bold text-white">${item.quantity}</span>
+                                <button onclick="adjustCartQty('${item.cartId}', 1)" class="w-7 h-7 flex items-center justify-center text-white hover:bg-obsidian-800">+</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                document.getElementById('cart-subtotal').innerText = `$${subtotal.toFixed(2)}`;
+                document.getElementById('cart-gst').innerText = `$${gst.toFixed(2)}`;
+                document.getElementById('cart-total').innerText = `$${grandTotal.toFixed(2)}`;
+                cartFooter.classList.remove('hidden');
+            }
+            lucide.createIcons();
+        }
+
+        function toggleCart(isOpen) {
+            const drawer = document.getElementById('cart-drawer');
+            if (isOpen) {
+                drawer.classList.remove('hidden');
+            } else {
+                drawer.classList.add('hidden');
+            }
+        }
+
+        function adjustCartQty(cartId, delta) {
+            const item = cart.find(i => i.cartId == cartId);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.cartId != cartId);
+                }
+                updateCartUI();
+            }
+        }
+
+        function removeFromCart(cartId) {
+            cart = cart.filter(i => i.cartId != cartId);
+            updateCartUI();
+        }
+
+        function setOrderMethod(method) {
+            selectedOrderMethod = method;
+            const btnPickup = document.getElementById('btn-pickup');
+            const btnDelivery = document.getElementById('btn-delivery');
+            const addrGroup = document.getElementById('delivery-address-group');
+
+            if (method === 'Pickup') {
+                btnPickup.className = "py-2.5 px-4 rounded-lg text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 transition";
+                btnDelivery.className = "py-2.5 px-4 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 text-zinc-400 hover:text-white transition";
+                addrGroup.classList.add('hidden');
+                document.getElementById('cust-address').removeAttribute('required');
+            } else {
+                btnDelivery.className = "py-2.5 px-4 rounded-lg text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 transition";
+                btnPickup.className = "py-2.5 px-4 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 text-zinc-400 hover:text-white transition";
+                addrGroup.classList.remove('hidden');
+                document.getElementById('cust-address').setAttribute('required', 'true');
             }
             updateCartUI();
         }
-    }
 
-    function removeFromCart(cartId) {
-        cart = cart.filter(i => i.cartId != cartId);
-        updateCartUI();
-    }
-
-    function setOrderMethod(method) {
-        selectedOrderMethod = method;
-        const btnPickup = document.getElementById('btn-pickup');
-        const btnDelivery = document.getElementById('btn-delivery');
-        const addrGroup = document.getElementById('delivery-address-group');
-
-        if (method === 'Pickup') {
-            btnPickup.className = "py-2.5 px-4 rounded-lg text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 transition";
-            btnDelivery.className = "py-2.5 px-4 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 text-zinc-400 hover:text-white transition";
-            addrGroup.classList.add('hidden');
-            document.getElementById('cust-address').removeAttribute('required');
-        } else {
-            btnDelivery.className = "py-2.5 px-4 rounded-lg text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 transition";
-            btnPickup.className = "py-2.5 px-4 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 text-zinc-400 hover:text-white transition";
-            addrGroup.classList.remove('hidden');
-            document.getElementById('cust-address').setAttribute('required', 'true');
+        function openCheckoutModal() {
+            if (cart.length === 0) return;
+            toggleCart(false);
+            document.getElementById('checkout-modal').classList.remove('hidden');
+            document.getElementById('checkout-modal').classList.add('flex');
+            lucide.createIcons();
         }
-        updateCartUI();
-    }
 
-    function openCheckoutModal() {
-        if (cart.length === 0) return;
-        toggleCart(false);
-        document.getElementById('checkout-modal').classList.remove('hidden');
-        document.getElementById('checkout-modal').classList.add('flex');
-        lucide.createIcons();
-    }
+        function closeCheckoutModal() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+            document.getElementById('checkout-modal').classList.remove('flex');
+        }
 
-    function closeCheckoutModal() {
-        document.getElementById('checkout-modal').classList.add('hidden');
-        document.getElementById('checkout-modal').classList.remove('flex');
-    }
+        async function submitOrder(e) {
+            e.preventDefault();
+            const name = document.getElementById('cust-name').value;
+            const phone = document.getElementById('cust-phone').value;
+            const address = document.getElementById('cust-address').value || 'Pickup at Shop 12/108 Dangar St';
+            const notes = document.getElementById('cust-notes').value;
 
-    async function submitOrder(e) {
-        e.preventDefault();
-        const name = document.getElementById('cust-name').value;
-        const phone = document.getElementById('cust-phone').value;
-        const address = document.getElementById('cust-address').value || 'Pickup at Shop 12/108 Dangar St';
-        const notes = document.getElementById('cust-notes').value;
+            const subtotal = cart.reduce((sum, i) => sum + (i.basePrice * i.quantity), 0);
+            const deliveryFee = selectedOrderMethod === 'Delivery' ? 5.00 : 0.00;
+            const totalAmount = subtotal + deliveryFee;
 
-        const subtotal = cart.reduce((sum, i) => sum + (i.basePrice * i.quantity), 0);
-        const deliveryFee = selectedOrderMethod === 'Delivery' ? 5.00 : 0.00;
-        const totalAmount = subtotal + deliveryFee;
+            try {
+                const response = await fetch('/create-square-checkout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        amount: Math.round(totalAmount * 100),
+                        customerName: name,
+                        customerPhone: phone,
+                        orderType: selectedOrderMethod,
+                        deliveryAddress: address,
+                        notes: notes,
+                        items: cart
+                    })
+                });
 
-        try {
-            const response = await fetch('/create-square-checkout', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    amount: Math.round(totalAmount * 100),
-                    customerName: name,
-                    customerPhone: phone,
-                    orderType: selectedOrderMethod,
-                    deliveryAddress: address,
-                    notes: notes,
-                    items: cart
-                })
-            });
-
-            const data = await response.json();
-            if (data.checkoutUrl) {
-                window.location.href = data.checkoutUrl;
-            } else {
-                alert('Could not initiate Square Checkout: ' + (data.error || 'Unknown error'));
+                const data = await response.json();
+                if (data.checkoutUrl) {
+                    window.location.href = data.checkoutUrl;
+                } else {
+                    alert('Could not initiate Square Checkout: ' + (data.error || 'Unknown error'));
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Payment connection error. Please try again.');
             }
-        } catch (err) {
-            console.error(err);
-            alert('Payment connection error. Please try again.');
         }
-    }
-</script>
+    </script>
 </body>
 </html>
