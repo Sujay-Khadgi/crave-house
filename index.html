@@ -705,8 +705,6 @@
         let activeGroup = 'ALL';
         let activeModalItem = null;
         let activeModalQty = 1;
-        let selectedPizzaSize = 'Small';
-        let selectedPizzaPrice = 15;
 
         // Initialize App
         document.addEventListener('DOMContentLoaded', () => {
@@ -901,6 +899,7 @@
                     </div>
                 `;
             } else if (item.prices) {
+                // Initialize default selection to Small
                 selectedPizzaSize = 'Small';
                 selectedPizzaPrice = item.prices.Small;
 
@@ -989,10 +988,13 @@
             document.getElementById('item-modal').classList.add('flex');
         }
 
+        let selectedPizzaSize = 'Small';
+        let selectedPizzaPrice = 15;
         function selectPizzaSize(size, price, btnElement) {
             selectedPizzaSize = size;
             selectedPizzaPrice = price;
 
+            // Remove highlight from all size buttons and add to clicked button
             const buttons = document.querySelectorAll('.pizza-size-btn');
             buttons.forEach(b => {
                 b.className = "pizza-size-btn p-3 rounded-xl bg-obsidian-900 border gold-border-subtle flex flex-col items-center justify-center cursor-pointer text-center transition";
@@ -1266,7 +1268,8 @@
                             customerAddress: address,
                             orderType: orderMethod,
                             totalAmount: totalAmount,
-                            orderNotes: notes, items: cart
+                            orderNotes: notes,
+                            items: cart
                         })
                     });
 
@@ -1278,8 +1281,12 @@
                         throw new Error(data.error || 'Failed to initialize Square checkout.');
                     }
                 } catch (err) {
-                    console.warn('Square gateway fallback:', err);
-                    alert('Could not connect to online payment gateway. Falling back to counter payment confirmation.');
+                    console.error('Square checkout failed:', err);
+                    alert('Online payment could not be started. No payment has been taken. Please try again or select Pay at Counter.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = `<i data-lucide="lock" class="w-4 h-4"></i><span>Confirm Order & Pay via Square</span>`;
+                    lucide.createIcons();
+                    return;
                 }
             }
 
@@ -1293,12 +1300,12 @@
                     <p><strong>Order #CH-${Math.floor(1000 + Math.random() * 9000)}</strong></p>
                     <p><strong>Customer:</strong> ${name} (${phone})</p>
                     <p><strong>Type:</strong> ${orderMethod} ${orderMethod === 'Delivery' ? 'to ' + address : ''}</p>
-                    <p><strong>Payment:</strong> ${paymentOption === 'online' ? 'Paid via Square Online' : 'Pay at Counter / On Delivery'}</p>
+                    <p><strong>Payment:</strong> Pay at Counter / On Delivery (not yet paid)</p>
                     <div style="border-top: 1px dashed #444; margin: 8px 0; padding-top: 8px;">
                         ${cart.map(i => `<div>• ${i.qty}x ${i.name} ${i.variant ? '(' + i.variant + ')' : ''} — $${(i.unitPrice * i.qty).toFixed(2)}</div>`).join('')}
                     </div>
                     <div style="border-top: 1px dashed #444; margin: 8px 0; padding-top: 8px; font-weight: bold;">
-                        Total Paid: $${totalAmount.toFixed(2)} (Incl. GST)
+                        Total Due: $${totalAmount.toFixed(2)} (Incl. GST)
                     </div>
                     <p class="text-[10px] text-zinc-400 mt-2">CRAVE HOUSE Kitchen • Shop 12/108 Dangar St, Armidale NSW</p>
                 `;
