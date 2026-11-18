@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crave House Kitchen | Burgers, Woodfired Pizza & Pasta in Armidale</title>
     <meta name="description" content="Order fresh gourmet burgers, woodfired pizzas, pastas, and waffles online for pickup or delivery from Crave House Kitchen at Shop 12/108 Dangar St, Armidale NSW." />
-    <meta name="keywords" content="Crave House Armidale, restaurants Dangar Street Armidale, burger delivery Armidale, woodfired pizza Armidale" />
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -51,38 +50,18 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #09090B;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #27272a;
-            border-radius: 9999px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #D4AF37;
-        }
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #09090B; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .gold-text-shimmer {
             background: linear-gradient(135deg, #F3D06B 0%, #D4AF37 50%, #B8860B 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .gold-border-subtle {
-            border-color: rgba(212, 175, 55, 0.22);
-        }
-        .gold-border-hover:hover {
-            border-color: rgba(212, 175, 55, 0.58);
-        }
+        .gold-border-subtle { border-color: rgba(212, 175, 55, 0.22); }
     </style>
 </head>
 <body class="bg-obsidian-900 text-zinc-100 min-h-screen flex flex-col selection:bg-gold-500 selection:text-obsidian-950 font-sans">
@@ -93,13 +72,13 @@
         <span>Shop 12/108 Dangar St, Armidale • Freshly Prepared Favourites • Order Online for Pickup or Delivery</span>
     </div>
 
-    <!-- Sticky Glassmorphic Top Header -->
+    <!-- Sticky Header -->
     <header class="sticky top-0 z-40 bg-obsidian-900/90 backdrop-blur-xl border-b gold-border-subtle">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <a href="#" class="flex items-center gap-3.5 group">
                     <div class="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#F8F6F1] p-0.5 ring-2 ring-gold-500/70 group-hover:ring-gold-400 shadow-[0_0_20px_rgba(212,175,55,0.25)] overflow-hidden shrink-0 transition-transform duration-300 group-hover:scale-105">
-                        <img src="logo.jpeg" alt="Crave House Kitchen Logo" onerror="this.style.display='none'" class="w-full h-full object-cover rounded-full">
+                        <img src="logo.jpeg" alt="Logo" onerror="this.style.display='none'" class="w-full h-full object-cover rounded-full">
                     </div>
                     <div class="flex flex-col">
                         <div class="font-display text-lg sm:text-2xl font-black tracking-[0.12em] leading-none flex items-center gap-1.5">
@@ -383,6 +362,9 @@
                     ]},
                     { id: 'b2', name: 'The Truffle Melt Burger', price: 19.50, category: 'Burgers', desc: 'Smashed beef patty, Swiss cheese, sauteed wild mushrooms, truffle butter spread, rocket leaves.', image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=800&q=80', options: [
                         { title: 'Extras', type: 'choice', choices: [{name: 'Extra Swiss Cheese', price: 2.00}, {name: 'Extra Wild Mushrooms', price: 3.00}, {name: 'Gluten-Free Bun', price: 2.50}] }
+                    ]},
+                    { id: 'b3', name: 'Crispy Southern Fried Chicken Burger', price: 18.00, category: 'Burgers', desc: 'Buttermilk fried chicken breast, spicy slaw, American cheese, and chipotle mayo.', image: 'https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=800&q=80', options: [
+                        { title: 'Add-ons', type: 'choice', choices: [{name: 'Extra Bacon', price: 3.50}, {name: 'Jalapeños', price: 1.50}] }
                     ]}
                 ]
             },
@@ -401,6 +383,10 @@
                     { id: 'p3', name: 'Margherita D.O.P.', price: 21.00, category: 'Woodfired Pizza', desc: 'San Marzano D.O.P. tomatoes, fresh buffalo mozzarella, basil leaves, extra virgin olive oil.', image: 'https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=800&q=80', options: [
                         { title: 'Select Pizza Size', type: 'choice', choices: [{name: 'Small (11")', price: 0}, {name: 'Large (13")', price: 5.00}, {name: 'XL (Family)', price: 9.00}] },
                         { title: 'Crust Preference', type: 'choice', choices: [{name: 'Traditional Hand-Stretched', price: 0}, {name: 'Gluten-Free Base', price: 4.00}] }
+                    ]},
+                    { id: 'p4', name: 'Diavola Spicy Salami Pizza', price: 23.00, category: 'Woodfired Pizza', desc: 'San Marzano tomato base, fior di latte, hot sopressa salami, roasted capsicum, and chilli honey drizzle.', image: 'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=800&q=80', options: [
+                        { title: 'Select Pizza Size', type: 'choice', choices: [{name: 'Small (11")', price: 0}, {name: 'Large (13")', price: 5.00}, {name: 'XL (Family)', price: 9.00}] },
+                        { title: 'Crust Preference', type: 'choice', choices: [{name: 'Traditional Hand-Stretched', price: 0}, {name: 'Gluten-Free Base', price: 4.00}] }
                     ]}
                 ]
             },
@@ -411,6 +397,9 @@
                     { id: 'pa1', name: 'Creamy Truffle Carbonara', price: 23.00, category: 'Pasta & Risotto', desc: 'Fettuccine tossed with crispy pancetta, garlic, free-range egg yolk, pecorino cheese, and black truffle cream.', image: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=800&q=80', options: [
                         { title: 'Pasta Type', type: 'choice', choices: [{name: 'Fettuccine (Standard)', price: 0}, {name: 'Penne', price: 0}, {name: 'Gluten-Free Penne', price: 3.00}] },
                         { title: 'Add-ons', type: 'choice', choices: [{name: 'Grilled Chicken Breast', price: 5.00}, {name: 'Tiger Prawns (4pcs)', price: 7.00}] }
+                    ]},
+                    { id: 'pa2', name: 'Traditional Bolognese Rigatoni', price: 22.00, category: 'Pasta & Risotto', desc: 'Slow-cooked wagyu beef ragu tossed with rigatoni pasta and finished with aged parmesan.', image: 'https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=800&q=80', options: [
+                        { title: 'Pasta Type', type: 'choice', choices: [{name: 'Rigatoni (Standard)', price: 0}, {name: 'Gluten-Free Penne', price: 3.00}] }
                     ]}
                 ]
             },
@@ -423,7 +412,8 @@
                     ]},
                     { id: 'm2', name: 'Loaded Truffle Fries', price: 13.50, category: 'Mains & Sides', desc: 'Hand-cut golden fries tossed in truffle oil, grated parmesan cheese, and fresh parsley.', image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80', options: [
                         { title: 'Add-ons', type: 'choice', choices: [{name: 'Crispy Bacon Bits', price: 3.00}, {name: 'Melted Cheddar Cheese Sauce', price: 3.00}] }
-                    ]}
+                    ]},
+                    { id: 'm3', name: 'Woodfired Garlic & Herb Focaccia', price: 10.00, category: 'Mains & Sides', desc: 'Fresh dough brushed with house garlic herb butter and mozzarella.', image: 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=800&q=80', options: [] }
                 ]
             },
             {
@@ -432,6 +422,9 @@
                 items: [
                     { id: 'd1', name: 'Belgian Chocolate Luxury Waffle', price: 16.00, category: 'Waffles & Crepes', desc: 'Golden crispy Belgian waffle drenched in warm Belgian milk chocolate, fresh strawberries, and vanilla bean gelato.', image: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80', isDessert: true, options: [
                         { title: 'Gelato Flavor', type: 'choice', choices: [{name: 'Vanilla Bean Gelato', price: 0}, {name: 'Belgian Chocolate Gelato', price: 0}, {name: 'Salted Caramel Gelato', price: 0}] }
+                    ]},
+                    { id: 'd2', name: 'Nutella Crepe Supreme', price: 15.50, category: 'Waffles & Crepes', desc: 'Folded French crepe filled with generous Nutella spread, banana slices, and crushed hazelnuts.', image: 'https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=800&q=80', isDessert: true, options: [
+                        { title: 'Gelato Flavor', type: 'choice', choices: [{name: 'Vanilla Bean Gelato', price: 0}, {name: 'Salted Caramel Gelato', price: 0}] }
                     ]}
                 ]
             },
@@ -440,7 +433,8 @@
                 groupName: 'Drinks & Beverages',
                 items: [
                     { id: 'dr1', name: 'Coca-Cola Classic (Can)', price: 4.50, category: 'Drinks', desc: 'Chilled 375ml can.', image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=800&q=80', options: [] },
-                    { id: 'dr2', name: 'San Pellegrino Sparkling Mineral Water', price: 6.00, category: 'Drinks', desc: '500ml glass bottle.', image: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=800&q=80', options: [] }
+                    { id: 'dr2', name: 'Coke No Sugar (Can)', price: 4.50, category: 'Drinks', desc: 'Chilled 375ml can.', image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=800&q=80', options: [] },
+                    { id: 'dr3', name: 'San Pellegrino Sparkling Mineral Water', price: 6.00, category: 'Drinks', desc: '500ml glass bottle.', image: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=800&q=80', options: [] }
                 ]
             }
         ];
@@ -589,9 +583,7 @@
             renderMenu();
         }
 
-        function resetAllFilters() {
-            clearSearch();
-        }
+        function resetAllFilters() { clearSearch(); }
 
         function findItemById(id) {
             if (id === 'special-combo') {
