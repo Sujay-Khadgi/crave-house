@@ -3,6 +3,30 @@ export async function onRequestPost(context) {
     const { request, env } = context;
     const body = await request.json();
 
+    // 1. Map your frontend cart items into Square's line_items format
+    const lineItems = (body.items || []).map(item => ({
+      name: `${item.name}${item.variant ? ' (' + item.variant + ')' : ''}`,
+      quantity: String(item.qty || 1),
+      base_price_money: {
+        amount: Math.round(item.unitPrice * 100), // Convert dollars to cents
+        currency: 'AUD'
+      },
+      note: item.addons && item.addons.length > 0 ? `Addons: ${item.addons.join(', ')}` : (item.instructions || undefined)
+    }));
+
+    // 2. Add delivery fee as a separate line item if selected
+    if (body.orderType === 'Delivery') {
+      lineItems.push({
+        name: 'Delivery Fee',
+        quantity: '1',
+        base_price_money: {
+          amount: 500, // $5.00 in cents
+          currency: 'AUD'
+        }
+      });
+    }
+
+    // 3. Send request to Square using full order line items instead of quick_pay
     const response = await fetch('https://connect.squareup.com/v2/online-checkout/payment-links', {
       method: 'POST',
       headers: {
@@ -12,13 +36,18 @@ export async function onRequestPost(context) {
       },
       body: JSON.stringify({
         idempotency_key: crypto.randomUUID(),
-        quick_pay: {
-          name: `Crave House Order - ${body.customerName || 'Online Guest'} (${body.orderType})`,
-          price_money: {
-            amount: Math.round(body.totalAmount * 100),
-            currency: 'AUD'
-          },
-          location_id: env.SQUARE_LOCATION_ID
+        order: {
+          location_id: env.SQUARE_LOCATION_ID,
+          line_items: lineItems,
+          metadata: {
+            customerName: body.customerName || 'Guest',
+            customerPhone: body.customerPhone || '',
+            orderType: body.orderType || 'Pickup',
+            deliveryAddress: body.customerAddress || ''
+          }
+        },
+        checkout_options: {
+          redirect_url: 'https://' + new URL(request.url).host + '/index.html?success=true'
         }
       })
     });
