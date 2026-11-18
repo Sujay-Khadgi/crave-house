@@ -83,23 +83,6 @@
         .gold-border-hover:hover {
             border-color: rgba(212, 175, 55, 0.58);
         }
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            #printable-receipt, #printable-receipt * {
-                visibility: visible;
-            }
-            #printable-receipt {
-                position: fixed;
-                left: 0;
-                top: 0;
-                width: 100%;
-                background: #ffffff !important;
-                color: #000000 !important;
-                padding: 20px;
-            }
-        }
     </style>
 </head>
 <body class="bg-obsidian-900 text-zinc-100 min-h-screen flex flex-col selection:bg-gold-500 selection:text-obsidian-950 font-sans">
@@ -114,15 +97,9 @@
     <header class="sticky top-0 z-40 bg-obsidian-900/90 backdrop-blur-xl border-b gold-border-subtle">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <!-- Crave House Kitchen Circular Emblem + Brand Wordmark -->
                 <a href="#" class="flex items-center gap-3.5 group">
                     <div class="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#F8F6F1] p-0.5 ring-2 ring-gold-500/70 group-hover:ring-gold-400 shadow-[0_0_20px_rgba(212,175,55,0.25)] overflow-hidden shrink-0 transition-transform duration-300 group-hover:scale-105">
-                        <img 
-                            src="logo.jpeg" 
-                            alt="Crave House Kitchen Logo" 
-                            onerror="this.style.display='none'"
-                            class="w-full h-full object-cover rounded-full"
-                        >
+                        <img src="logo.jpeg" alt="Crave House Kitchen Logo" onerror="this.style.display='none'" class="w-full h-full object-cover rounded-full">
                     </div>
                     <div class="flex flex-col">
                         <div class="font-display text-lg sm:text-2xl font-black tracking-[0.12em] leading-none flex items-center gap-1.5">
@@ -131,15 +108,12 @@
                         </div>
                         <div class="flex items-center gap-1.5 mt-1">
                             <span class="w-3 h-[1.5px] bg-crimson-700 rounded-full"></span>
-                            <span class="text-[9px] sm:text-[10px] font-sans font-bold tracking-[0.32em] text-gold-400 uppercase">
-                                Kitchen
-                            </span>
+                            <span class="text-[9px] sm:text-[10px] font-sans font-bold tracking-[0.32em] text-gold-400 uppercase">Kitchen</span>
                             <span class="w-3 h-[1.5px] bg-crimson-700 rounded-full"></span>
                         </div>
                     </div>
                 </a>
 
-                <!-- Right Status & Glowing Cart Trigger -->
                 <div class="flex items-center gap-3 sm:gap-5">
                     <div class="hidden md:flex items-center gap-2.5 text-xs text-zinc-300 bg-obsidian-800/90 border gold-border-subtle px-4 py-2 rounded-full">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -156,17 +130,11 @@
         </div>
     </header>
 
-    <!-- Cinematic Full-Width Gourmet Hero Section -->
+    <!-- Hero Section -->
     <section class="relative bg-obsidian-950 border-b gold-border-subtle overflow-hidden">
         <div class="absolute inset-0">
-            <img 
-                src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1920&q=85" 
-                alt="CRAVE HOUSE Gourmet Feast" 
-                onerror="this.style.display='none'"
-                class="w-full h-full object-cover object-center opacity-35 scale-105"
-            >
+            <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1920&q=85" alt="Feast" onerror="this.style.display='none'" class="w-full h-full object-cover object-center opacity-35 scale-105">
             <div class="absolute inset-0 bg-gradient-to-r from-obsidian-900 via-obsidian-900/90 to-obsidian-900/65"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900 via-transparent to-obsidian-950/80"></div>
         </div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 relative z-10">
@@ -174,39 +142,24 @@
                 <div class="max-w-2xl">
                     <div class="flex flex-col sm:flex-row sm:items-center gap-6 mb-6">
                         <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#F8F6F1] p-1 ring-2 ring-gold-500/80 shadow-[0_12px_40px_rgba(212,175,55,0.28)] overflow-hidden shrink-0">
-                            <img 
-                                src="logo.jpeg" 
-                                alt="Crave House Kitchen Official Crest" 
-                                onerror="this.style.display='none'"
-                                class="w-full h-full object-cover rounded-full"
-                            >
+                            <img src="logo.jpeg" alt="Logo" onerror="this.style.display='none'" class="w-full h-full object-cover rounded-full">
                         </div>
-
                         <div>
-                            <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-obsidian-800/90 backdrop-blur-md border gold-border-subtle text-gold-400 text-xs font-semibold uppercase tracking-widest mb-3 shadow-lg">
+                            <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-obsidian-800/90 border gold-border-subtle text-gold-400 text-xs font-semibold uppercase tracking-widest mb-3 shadow-lg">
                                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
                                 <span>Armidale NSW • Pickup & Delivery</span>
                             </div>
-
                             <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-black tracking-wider text-white uppercase leading-[1.05]">
                                 CRAVE <span class="gold-text-shimmer">HOUSE</span>
                             </h1>
-                            <div class="flex items-center gap-2.5 mt-2">
-                                <span class="w-6 h-[2px] bg-crimson-700 rounded-full"></span>
-                                <span class="font-sans text-xs sm:text-sm font-bold tracking-[0.38em] text-gold-400 uppercase">Kitchen</span>
-                                <span class="w-6 h-[2px] bg-crimson-700 rounded-full"></span>
-                            </div>
                         </div>
                     </div>
 
-                    <p class="font-editorial italic text-lg sm:text-2xl text-gold-400 mb-3">
-                        Your Cravings, Our Calling — Freshly Prepared Favourites
-                    </p>
+                    <p class="font-editorial italic text-lg sm:text-2xl text-gold-400 mb-3">Your Cravings, Our Calling — Freshly Prepared Favourites</p>
                     <p class="text-zinc-300 text-sm sm:text-base leading-relaxed max-w-xl">
                         Indulge in smashed double-beef burgers, crispy golden chicken, stone-baked pizzas, velvety pastas, loaded fries, and artisanal waffles & crepes crafted fresh to order at Shop 12/108 Dangar St.
                     </p>
 
-                    <!-- Quick-Jump Category Pills -->
                     <div class="mt-7 flex flex-wrap items-center gap-2">
                         <span class="text-[11px] uppercase tracking-widest text-zinc-400 font-semibold mr-1">Explore:</span>
                         <button onclick="jumpToGroup('BURGERS')" class="px-3.5 py-1.5 rounded-full bg-obsidian-800/90 hover:bg-gold-500 text-zinc-200 hover:text-obsidian-950 border gold-border-subtle text-xs font-semibold transition">Burgers</button>
@@ -214,56 +167,36 @@
                         <button onclick="jumpToGroup('PASTA_RISOTTO')" class="px-3.5 py-1.5 rounded-full bg-obsidian-800/90 hover:bg-gold-500 text-zinc-200 hover:text-obsidian-950 border gold-border-subtle text-xs font-semibold transition">Pasta & Risotto</button>
                         <button onclick="jumpToGroup('MAINS_SIDES')" class="px-3.5 py-1.5 rounded-full bg-obsidian-800/90 hover:bg-gold-500 text-zinc-200 hover:text-obsidian-950 border gold-border-subtle text-xs font-semibold transition">Mains & Sides</button>
                         <button onclick="jumpToGroup('DESSERTS')" class="px-3.5 py-1.5 rounded-full bg-obsidian-800/90 hover:bg-gold-500 text-zinc-200 hover:text-obsidian-950 border gold-border-subtle text-xs font-semibold transition">Waffles & Crepes</button>
+                        <button onclick="jumpToGroup('DRINKS')" class="px-3.5 py-1.5 rounded-full bg-obsidian-800/90 hover:bg-gold-500 text-zinc-200 hover:text-obsidian-950 border gold-border-subtle text-xs font-semibold transition">Drinks</button>
                     </div>
                 </div>
 
-                <!-- Featured Luxury Feast Bundle Card -->
+                <!-- Featured Special Combo Card -->
                 <div class="lg:w-[400px] bg-obsidian-800/85 backdrop-blur-xl border border-gold-500/35 rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.75)] group">
                     <div class="relative h-40 overflow-hidden bg-obsidian-950">
-                        <img 
-                            src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80" 
-                            alt="Crave House Special Combo" 
-                            onerror="this.style.display='none'"
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        >
+                        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80" alt="Combo" onerror="this.style.display='none'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-obsidian-800 via-obsidian-900/30 to-transparent"></div>
-                        <div class="absolute top-3 left-3 bg-crimson-700/95 backdrop-blur-md border border-gold-500/40 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow">
-                            Signature Feast Deal
-                        </div>
-                        <div class="absolute bottom-3 right-3 bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 font-display font-black text-sm px-3.5 py-1 rounded-full shadow-lg">
-                            $150.00
-                        </div>
+                        <div class="absolute top-3 left-3 bg-crimson-700/95 border border-gold-500/40 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow">Signature Feast Deal</div>
+                        <div class="absolute bottom-3 right-3 bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 font-display font-black text-sm px-3.5 py-1 rounded-full shadow-lg">$150.00</div>
                     </div>
                     <div class="p-5">
                         <h2 class="font-display font-bold text-white text-lg tracking-wide uppercase">Crave House Special Combo</h2>
-                        <p class="text-xs text-zinc-300 mt-1.5 leading-relaxed">
-                            2 XL Pizzas + 2 Pastas + 2 Burgers + Garlic Bread + 1.5L Drink. Customize every single dish in your bundle!
-                        </p>
-                        <button onclick="openItemModal('special-combo')" class="mt-4 w-full bg-gradient-to-r from-gold-500/20 to-gold-600/20 hover:from-gold-400 hover:to-gold-600 text-gold-400 hover:text-obsidian-950 border border-gold-500/50 font-sans font-bold text-xs uppercase tracking-wider py-3 rounded-xl transition shadow-md">
-                            Customize Combo Bundle
-                        </button>
+                        <p class="text-xs text-zinc-300 mt-1.5 leading-relaxed">2 XL Pizzas + 2 Pastas + 2 Burgers + Garlic Bread + 1.5L Drink. Customize every single dish in your bundle!</p>
+                        <button onclick="openItemModal('special-combo')" class="mt-4 w-full bg-gradient-to-r from-gold-500/20 to-gold-600/20 hover:from-gold-400 hover:to-gold-600 text-gold-400 hover:text-obsidian-950 border border-gold-500/50 font-sans font-bold text-xs uppercase tracking-wider py-3 rounded-xl transition shadow-md">Customize Combo Bundle</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Sticky Glassmorphic Category Tabs & Search Bar -->
+    <!-- Category Tabs & Search Bar -->
     <div id="menu-nav-bar" class="sticky top-20 z-30 bg-obsidian-900/90 backdrop-blur-xl border-b gold-border-subtle py-3.5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
-                <div id="group-tabs" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 md:pb-0">
-                    <!-- Rendered dynamically -->
-                </div>
-
+                <div id="group-tabs" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 md:pb-0"></div>
                 <div class="relative w-full md:w-72 shrink-0">
                     <i data-lucide="search" class="w-4 h-4 text-gold-500/70 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-                    <input 
-                        type="text" 
-                        id="search-input" 
-                        placeholder="Search burgers, pizza, waffles..." 
-                        class="w-full pl-10 pr-8 py-2 bg-obsidian-800/95 border gold-border-subtle focus:border-gold-500 rounded-xl text-sm text-white placeholder-zinc-500 outline-none transition"
-                    >
+                    <input type="text" id="search-input" placeholder="Search menu..." class="w-full pl-10 pr-8 py-2 bg-obsidian-800/95 border gold-border-subtle focus:border-gold-500 rounded-xl text-sm text-white placeholder-zinc-500 outline-none transition">
                     <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
@@ -272,10 +205,8 @@
         </div>
     </div>
 
-    <!-- Main Menu Sections Container -->
-    <main id="menu-container" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-14">
-        <!-- Menu sections rendered here -->
-    </main>
+    <!-- Main Menu Container -->
+    <main id="menu-container" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-14"></main>
 
     <!-- Empty Search State -->
     <div id="empty-state" class="hidden max-w-lg mx-auto px-4 py-16 text-center">
@@ -284,9 +215,7 @@
         </div>
         <h3 class="font-display text-xl font-bold text-white uppercase">No Cravings Matched</h3>
         <p class="text-zinc-400 text-sm mt-1 mb-6">We couldn't find any menu items matching your search.</p>
-        <button onclick="resetAllFilters()" class="bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 font-sans font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition">
-            Show Full Menu
-        </button>
+        <button onclick="resetAllFilters()" class="bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 font-sans font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition">Show Full Menu</button>
     </div>
 
     <!-- Footer -->
@@ -294,17 +223,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-6">
             <div class="flex items-center gap-4">
                 <div class="w-14 h-14 rounded-full bg-[#F8F6F1] p-0.5 ring-2 ring-gold-500/60 overflow-hidden shrink-0 shadow-lg">
-                    <img 
-                        src="logo.jpeg" 
-                        alt="Crave House Kitchen Logo" 
-                        onerror="this.style.display='none'"
-                        class="w-full h-full object-cover rounded-full"
-                    >
+                    <img src="logo.jpeg" alt="Logo" onerror="this.style.display='none'" class="w-full h-full object-cover rounded-full">
                 </div>
                 <div>
-                    <div class="font-display text-xl font-black tracking-[0.12em]">
-                        <span class="text-white">CRAVE</span> <span class="gold-text-shimmer">HOUSE</span>
-                    </div>
+                    <div class="font-display text-xl font-black tracking-[0.12em]"><span class="text-white">CRAVE</span> <span class="gold-text-shimmer">HOUSE</span></div>
                     <p class="text-[10px] font-bold tracking-[0.28em] text-crimson-600 uppercase mt-0.5">Kitchen</p>
                     <p class="font-editorial italic text-sm text-gold-500/80 mt-1">Shop 12/108 Dangar St, Armidale NSW</p>
                 </div>
@@ -316,7 +238,7 @@
         </div>
     </footer>
 
-    <!-- Floating Mobile Bottom Cart Bar -->
+    <!-- Mobile Bottom Cart Bar -->
     <div id="mobile-cart-bar" class="fixed bottom-4 left-4 right-4 z-30 md:hidden hidden">
         <button onclick="toggleCart(true)" class="w-full bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 text-obsidian-950 p-4 rounded-2xl shadow-[0_10px_30px_rgba(245,197,24,0.35)] flex items-center justify-between font-sans font-extrabold">
             <div class="flex items-center gap-3">
@@ -331,13 +253,7 @@
     <div id="item-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md">
         <div class="bg-obsidian-800 border border-gold-500/30 rounded-3xl max-w-xl w-full max-h-[92vh] overflow-hidden flex flex-col shadow-2xl">
             <div class="relative h-48 sm:h-56 bg-obsidian-950 shrink-0 overflow-hidden">
-                <img 
-                    id="modal-item-img" 
-                    src="" 
-                    alt="" 
-                    onerror="this.style.opacity='0'"
-                    class="w-full h-full object-cover"
-                >
+                <img id="modal-item-img" src="" alt="" onerror="this.style.opacity='0'" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-obsidian-800 via-obsidian-900/45 to-black/30"></div>
                 <button onclick="closeItemModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-obsidian-950/80 hover:bg-gold-500 text-white hover:text-obsidian-950 border gold-border-subtle flex items-center justify-center transition">
                     <i data-lucide="x" class="w-5 h-5"></i>
@@ -355,27 +271,16 @@
                 </div>
                 <div id="modal-options-container" class="space-y-4"></div>
                 <div>
-                    <label for="modal-instructions" class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">
-                        Special Kitchen Notes <span class="text-zinc-500 font-normal lowercase">(optional)</span>
-                    </label>
-                    <textarea 
-                        id="modal-instructions" 
-                        rows="2" 
-                        placeholder="E.g., no onions, extra crispy, sauce on the side..." 
-                        class="w-full rounded-xl bg-obsidian-900 border gold-border-subtle p-3 text-sm text-white placeholder-zinc-500 focus:border-gold-500 outline-none transition"
-                    ></textarea>
+                    <label for="modal-instructions" class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">Special Kitchen Notes <span class="text-zinc-500 font-normal lowercase">(optional)</span></label>
+                    <textarea id="modal-instructions" rows="2" placeholder="E.g., no onions, extra crispy, sauce on the side..." class="w-full rounded-xl bg-obsidian-900 border gold-border-subtle p-3 text-sm text-white placeholder-zinc-500 focus:border-gold-500 outline-none transition"></textarea>
                 </div>
             </div>
 
             <div class="p-4 sm:p-5 bg-obsidian-900 border-t gold-border-subtle flex items-center gap-3 sm:gap-4 shrink-0">
                 <div class="flex items-center bg-obsidian-800 border gold-border-subtle rounded-xl p-1">
-                    <button type="button" onclick="adjustModalQty(-1)" class="w-9 h-9 rounded-lg hover:bg-obsidian-700 flex items-center justify-center text-white transition">
-                        <i data-lucide="minus" class="w-4 h-4"></i>
-                    </button>
+                    <button type="button" onclick="adjustModalQty(-1)" class="w-9 h-9 rounded-lg hover:bg-obsidian-700 flex items-center justify-center text-white transition"><i data-lucide="minus" class="w-4 h-4"></i></button>
                     <span id="modal-qty" class="w-9 text-center font-bold text-sm text-white">1</span>
-                    <button type="button" onclick="adjustModalQty(1)" class="w-9 h-9 rounded-lg hover:bg-obsidian-700 flex items-center justify-center text-white transition">
-                        <i data-lucide="plus" class="w-4 h-4"></i>
-                    </button>
+                    <button type="button" onclick="adjustModalQty(1)" class="w-9 h-9 rounded-lg hover:bg-obsidian-700 flex items-center justify-center text-white transition"><i data-lucide="plus" class="w-4 h-4"></i></button>
                 </div>
                 <button onclick="confirmAddToCart()" class="flex-1 bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:brightness-110 text-obsidian-950 font-sans font-extrabold text-xs sm:text-sm uppercase tracking-wider py-3.5 px-5 rounded-xl shadow-[0_0_20px_rgba(245,197,24,0.25)] transition flex items-center justify-between active:scale-[0.99]">
                     <span>Add to Order</span>
@@ -385,7 +290,7 @@
         </div>
     </div>
 
-    <!-- SLIDE-OUT SHOPPING CART DRAWER -->
+    <!-- CART DRAWER -->
     <div id="cart-drawer" class="fixed inset-0 z-50 hidden">
         <div onclick="toggleCart(false)" class="absolute inset-0 bg-black/80 backdrop-blur-xs"></div>
         <div class="absolute inset-y-0 right-0 max-w-md w-full bg-obsidian-900 border-l gold-border-subtle shadow-2xl flex flex-col">
@@ -401,28 +306,18 @@
             <div id="cart-items-container" class="flex-1 overflow-y-auto p-5 space-y-3.5"></div>
             <div id="cart-footer" class="p-6 bg-obsidian-950 border-t gold-border-subtle space-y-4 hidden">
                 <div class="space-y-2 text-sm">
-                    <div class="flex justify-between text-zinc-400">
-                        <span>Subtotal</span>
-                        <span id="cart-subtotal" class="font-semibold text-white">$0.00</span>
-                    </div>
-                    <div class="flex justify-between text-zinc-400 text-xs">
-                        <span>GST (Included)</span>
-                        <span id="cart-gst">$0.00</span>
-                    </div>
-                    <div class="flex justify-between text-base font-display font-extrabold text-white pt-2.5 border-t border-zinc-800">
-                        <span>Total</span>
-                        <span id="cart-total" class="text-gold-500">$0.00</span>
-                    </div>
+                    <div class="flex justify-between text-zinc-400"><span>Subtotal</span><span id="cart-subtotal" class="font-semibold text-white">$0.00</span></div>
+                    <div class="flex justify-between text-zinc-400 text-xs"><span>GST (Included)</span><span id="cart-gst">$0.00</span></div>
+                    <div class="flex justify-between text-base font-display font-extrabold text-white pt-2.5 border-t border-zinc-800"><span>Total</span><span id="cart-total" class="text-gold-500">$0.00</span></div>
                 </div>
                 <button onclick="openCheckoutModal()" class="w-full bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:brightness-110 text-obsidian-950 font-sans font-extrabold text-sm uppercase tracking-wider py-4 px-6 rounded-xl shadow-[0_0_25px_rgba(245,197,24,0.25)] transition flex items-center justify-center gap-2">
-                    <span>Proceed to Checkout</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    <span>Proceed to Checkout</span><i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- CHECKOUT & SQUARE PAYMENT MODAL -->
+    <!-- CHECKOUT MODAL -->
     <div id="checkout-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md">
         <div class="bg-obsidian-800 border border-gold-500/30 rounded-3xl max-w-xl w-full max-h-[92vh] overflow-hidden flex flex-col shadow-2xl">
             <div id="checkout-form-view" class="flex flex-col max-h-[92vh]">
@@ -439,36 +334,19 @@
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-gold-500 mb-2">Order Type</label>
                         <div class="grid grid-cols-2 gap-2.5 p-1.5 bg-obsidian-900 border gold-border-subtle rounded-xl">
-                            <button type="button" id="btn-pickup" onclick="setOrderMethod('Pickup')" class="py-2.5 px-4 rounded-lg text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 transition">
-                                <i data-lucide="store" class="w-4 h-4"></i> Pickup
-                            </button>
-                            <button type="button" id="btn-delivery" onclick="setOrderMethod('Delivery')" class="py-2.5 px-4 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 text-zinc-400 hover:text-white transition">
-                                <i data-lucide="bike" class="w-4 h-4"></i> Delivery (+$5.00)
-                            </button>
+                            <button type="button" id="btn-pickup" onclick="setOrderMethod('Pickup')" class="py-2.5 px-4 rounded-lg text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 transition"><i data-lucide="store" class="w-4 h-4"></i> Pickup</button>
+                            <button type="button" id="btn-delivery" onclick="setOrderMethod('Delivery')" class="py-2.5 px-4 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 text-zinc-400 hover:text-white transition"><i data-lucide="bike" class="w-4 h-4"></i> Delivery (+$5.00)</button>
                         </div>
                     </div>
-
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Your Name *</label>
-                            <input type="text" id="cust-name" required placeholder="Full Name" class="w-full rounded-xl bg-obsidian-900 border gold-border-subtle px-3.5 py-2.5 text-sm text-white focus:border-gold-500 outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Mobile Number *</label>
-                            <input type="tel" id="cust-phone" required placeholder="04XX XXX XXX" class="w-full rounded-xl bg-obsidian-900 border gold-border-subtle px-3.5 py-2.5 text-sm text-white focus:border-gold-500 outline-none">
-                        </div>
+                        <div><label class="block text-xs font-semibold text-zinc-300 mb-1.5">Your Name *</label><input type="text" id="cust-name" required placeholder="Full Name" class="w-full rounded-xl bg-obsidian-900 border gold-border-subtle px-3.5 py-2.5 text-sm text-white focus:border-gold-500 outline-none"></div>
+                        <div><label class="block text-xs font-semibold text-zinc-300 mb-1.5">Mobile Number *</label><input type="tel" id="cust-phone" required placeholder="04XX XXX XXX" class="w-full rounded-xl bg-obsidian-900 border gold-border-subtle px-3.5 py-2.5 text-sm text-white focus:border-gold-500 outline-none"></div>
                     </div>
-
                     <div id="delivery-address-group" class="hidden space-y-2">
                         <label class="block text-xs font-semibold text-zinc-300">Delivery Address *</label>
                         <input type="text" id="cust-address" placeholder="Armidale Street Address" class="w-full rounded-xl bg-obsidian-900 border gold-border-subtle px-3.5 py-2.5 text-sm text-white focus:border-gold-500 outline-none">
                     </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Order Notes <span class="text-zinc-500 font-normal">(optional)</span></label>
-                        <input type="text" id="cust-notes" placeholder="Pickup time, cutlery..." class="w-full rounded-xl bg-obsidian-900 border gold-border-subtle px-3.5 py-2.5 text-sm text-white focus:border-gold-500 outline-none">
-                    </div>
-
+                    <div><label class="block text-xs font-semibold text-zinc-300 mb-1.5">Order Notes <span class="text-zinc-500 font-normal">(optional)</span></label><input type="text" id="cust-notes" placeholder="Pickup time, cutlery..." class="w-full rounded-xl bg-obsidian-900 border gold-border-subtle px-3.5 py-2.5 text-sm text-white focus:border-gold-500 outline-none"></div>
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-gold-500 mb-2">Payment Option</label>
                         <div class="space-y-2.5">
@@ -484,17 +362,15 @@
                             </label>
                         </div>
                     </div>
-
                     <button type="submit" id="checkout-submit-btn" class="w-full bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:brightness-110 text-obsidian-950 font-sans font-extrabold text-sm uppercase tracking-wider py-4 px-6 rounded-xl shadow-[0_0_25px_rgba(245,197,24,0.25)] transition flex items-center justify-center gap-2">
-                        <span>Proceed to Secure Payment</span>
-                        <i data-lucide="lock" class="w-4 h-4"></i>
+                        <span>Proceed to Secure Payment</span><i data-lucide="lock" class="w-4 h-4"></i>
                     </button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- JAVASCRIPT: Full Menu Data & Size Selection Logic -->
+    <!-- FULL MENU DATA & SCRIPT -->
     <script>
         const menuData = [
             {
@@ -558,6 +434,14 @@
                         { title: 'Gelato Flavor', type: 'choice', choices: [{name: 'Vanilla Bean Gelato', price: 0}, {name: 'Belgian Chocolate Gelato', price: 0}, {name: 'Salted Caramel Gelato', price: 0}] }
                     ]}
                 ]
+            },
+            {
+                groupId: 'DRINKS',
+                groupName: 'Drinks & Beverages',
+                items: [
+                    { id: 'dr1', name: 'Coca-Cola Classic (Can)', price: 4.50, category: 'Drinks', desc: 'Chilled 375ml can.', image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=800&q=80', options: [] },
+                    { id: 'dr2', name: 'San Pellegrino Sparkling Mineral Water', price: 6.00, category: 'Drinks', desc: '500ml glass bottle.', image: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=800&q=80', options: [] }
+                ]
             }
         ];
 
@@ -600,11 +484,8 @@
             const el = document.getElementById(`section-${groupId}`);
             if (el) {
                 const offset = 140;
-                const bodyRect = document.body.getBoundingClientRect().top;
-                const elementRect = el.getBoundingClientRect().top;
-                const elementPosition = elementRect - bodyRect;
-                const offsetPosition = elementPosition - offset;
-                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                const elementPosition = el.getBoundingClientRect().top - document.body.getBoundingClientRect().top;
+                window.scrollTo({ top: elementPosition - offset, behavior: 'smooth' });
             }
         }
 
@@ -634,9 +515,7 @@
                                     </div>
                                     <div class="flex items-center justify-between mt-3">
                                         <span class="font-display font-black text-gold-500 text-base">$${item.price.toFixed(2)}</span>
-                                        <span class="bg-gold-500/10 text-gold-400 border gold-border-subtle text-[11px] font-bold px-3 py-1 rounded-full group-hover:bg-gold-500 group-hover:text-obsidian-950 transition">
-                                            Customize & Order
-                                        </span>
+                                        <span class="bg-gold-500/10 text-gold-400 border gold-border-subtle text-[11px] font-bold px-3 py-1 rounded-full group-hover:bg-gold-500 group-hover:text-obsidian-950 transition">Customize & Order</span>
                                     </div>
                                 </div>
                             </div>
@@ -763,20 +642,13 @@
                 item.options.forEach((optGroup) => {
                     optionsHtml += `
                         <div class="border-t gold-border-subtle pt-4">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-gold-400 mb-2.5">
-                                ${optGroup.title}
-                            </label>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gold-400 mb-2.5">${optGroup.title}</label>
                             <div class="grid grid-cols-3 gap-2">
                     `;
                     optGroup.choices.forEach((choice, cIdx) => {
                         const isSelected = cIdx === 0 ? 'border-gold-500 bg-gold-500/10 text-white' : 'border-zinc-700 bg-obsidian-900 text-zinc-300';
                         optionsHtml += `
-                            <button type="button" 
-                                onclick="selectModalOption(this, '${optGroup.title}')" 
-                                data-group="${optGroup.title}"
-                                data-name="${choice.name}"
-                                data-price="${choice.price}"
-                                class="option-choice-btn flex flex-col items-center justify-center p-3 rounded-xl border ${isSelected} hover:border-gold-500 transition text-center">
+                            <button type="button" onclick="selectModalOption(this, '${optGroup.title}')" data-group="${optGroup.title}" data-name="${choice.name}" data-price="${choice.price}" class="option-choice-btn flex flex-col items-center justify-center p-3 rounded-xl border ${isSelected} hover:border-gold-500 transition text-center">
                                 <span class="text-xs font-bold">${choice.name}</span>
                                 <span class="text-[10px] text-gold-400 mt-1">${choice.price > 0 ? `+$${choice.price.toFixed(2)}` : 'Included'}</span>
                             </button>
@@ -900,9 +772,7 @@
                                 <h4 class="font-display font-bold text-white text-sm">${item.name}</h4>
                                 <p class="text-xs font-display font-black text-gold-500 mt-0.5">$${(item.basePrice * item.quantity).toFixed(2)}</p>
                             </div>
-                            <button onclick="removeFromCart('${item.cartId}')" class="text-zinc-400 hover:text-crimson-600 transition">
-                                <i data-lucide="trash-2" class="w-4 h-4"></i>
-                            </button>
+                            <button onclick="removeFromCart('${item.cartId}')" class="text-zinc-400 hover:text-crimson-600 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                         </div>
                         ${item.options.length > 0 ? `<div class="text-[11px] text-zinc-300 bg-obsidian-900/80 p-2 rounded-xl border gold-border-subtle"><strong>Selections:</strong> ${item.options.join(', ')}</div>` : ''}
                         ${item.instructions ? `<div class="text-[11px] text-zinc-400 italic">Note: "${item.instructions}"</div>` : ''}
