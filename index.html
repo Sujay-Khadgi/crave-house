@@ -881,122 +881,75 @@
             return null;
         }
 
-        function openItemModal(itemId) {
-            const item = findItemById(itemId);
-            if (!item) return;
+       function openItemModal(itemId) {
+    const item = findItemById(itemId);
+    if (!item) return;
 
-            activeModalItem = item;
-            activeModalQty = 1;
-            document.getElementById('modal-qty').innerText = '1';
-            document.getElementById('modal-item-name').innerText = item.name;
-            document.getElementById('modal-item-desc').innerText = item.desc;
-            document.getElementById('modal-item-img').src = item.image;
-            document.getElementById('modal-instructions').value = '';
+    currentModalItem = item;
+    modalQuantity = 1;
+    document.getElementById('modal-qty').innerText = modalQuantity;
+    document.getElementById('modal-instructions').value = '';
 
-            const badge = document.getElementById('modal-category-badge');
-            const dessertBanner = document.getElementById('modal-dessert-banner');
-            const optionsContainer = document.getElementById('modal-options-container');
+    document.getElementById('modal-item-img').src = item.image;
+    document.getElementById('modal-category-badge').innerText = item.category;
+    document.getElementById('modal-item-name').innerText = item.name;
+    document.getElementById('modal-item-desc').innerText = item.desc;
 
-            dessertBanner.classList.add('hidden');
-            badge.innerText = item.isSpecialCombo ? 'Signature Feast Deal' : 'Customize Item';
-            optionsContainer.innerHTML = '';
+    const dessertBanner = document.getElementById('modal-dessert-banner');
+    if (item.isDessert) {
+        dessertBanner.classList.remove('hidden');
+    } else {
+        dessertBanner.classList.add('hidden');
+    }
 
-            if (item.isSpecialCombo) {
-                optionsContainer.innerHTML = `
-                    <div class="space-y-3">
-                        <label class="block text-xs font-bold uppercase text-gold-400">Combo Customization</label>
-                        <p class="text-xs text-zinc-300">Our team will call or include standard favourites (2x Margherita/Pepperoni, 2x Bolognese/Carbonara, 2x Crave Classic Burgers, Garlic Bread, 1.5L Coke). You can also type specific flavor requests below!</p>
-                    </div>
-                `;
-            } else if (item.prices) {
-                // Pizza sizes
-                optionsContainer.innerHTML = `
-                    <div class="space-y-2">
-                        <label class="block text-xs font-bold uppercase text-gold-400">Select Pizza Size *</label>
-                        <div class="grid grid-cols-3 gap-2">
-                            <label class="p-3 rounded-xl bg-obsidian-900 border-2 border-gold-500 flex flex-col items-center justify-center cursor-pointer text-center" onclick="selectPizzaSize('Small', 15)">
-                                <span class="font-bold text-white text-xs">Small</span>
-                                <span class="text-gold-400 text-xs mt-1">$${(item.prices.Small || 15).toFixed(2)}</span>
-                                <input type="radio" name="pizza-size" value="Small" checked class="hidden">
-                            </label>
-                            <label class="p-3 rounded-xl bg-obsidian-900 border gold-border-subtle flex flex-col items-center justify-center cursor-pointer text-center" onclick="selectPizzaSize('Large', 19)">
-                                <span class="font-bold text-white text-xs">Large</span>
-                                <span class="text-gold-400 text-xs mt-1">$${(item.prices.Large || 19).toFixed(2)}</span>
-                                <input type="radio" name="pizza-size" value="Large" class="hidden">
-                            </label>
-                            <label class="p-3 rounded-xl bg-obsidian-900 border gold-border-subtle flex flex-col items-center justify-center cursor-pointer text-center" onclick="selectPizzaSize('XL', 26)">
-                                <span class="font-bold text-white text-xs">XL (Family)</span>
-                                <span class="text-gold-400 text-xs mt-1">$${(item.prices.XL || 26).toFixed(2)}</span>
-                                <input type="radio" name="pizza-size" value="XL" class="hidden">
-                            </label>
-                        </div>
-                    </div>
-                `;
-            } else if (item.pastaOptions) {
-                optionsContainer.innerHTML = `
-                    <div class="space-y-2">
-                        <label class="block text-xs font-bold uppercase text-gold-400">Select Pasta Type *</label>
-                        <div class="grid grid-cols-2 gap-2">
-                            <label class="p-3 rounded-xl bg-obsidian-900 border-2 border-gold-500 flex items-center justify-between cursor-pointer" onclick="selectPastaType('Spaghetti')">
-                                <span class="font-bold text-white text-xs">Spaghetti</span>
-                                <input type="radio" name="pasta-type" value="Spaghetti" checked class="accent-gold-500">
-                            </label>
-                            <label class="p-3 rounded-xl bg-obsidian-900 border gold-border-subtle flex items-center justify-between cursor-pointer" onclick="selectPastaType('Penne')">
-                                <span class="font-bold text-white text-xs">Penne</span>
-                                <input type="radio" name="pasta-type" value="Penne" class="accent-gold-500">
-                            </label>
-                        </div>
-                    </div>
-                `;
-            } else if (item.dessertOptions) {
-                dessertBanner.classList.remove('hidden');
-                optionsContainer.innerHTML = `
-                    <div class="space-y-2">
-                        <label class="block text-xs font-bold uppercase text-gold-400">Choose Complimentary Ice Cream Flavor *</label>
-                        <select id="modal-icecream-flavor" class="w-full rounded-xl bg-obsidian-900 border gold-border-subtle p-3 text-sm text-white focus:border-gold-500 outline-none">
-                            <option value="Vanilla Bean Ice Cream">Vanilla Bean Ice Cream</option>
-                            <option value="Chocolate Ice Cream">Chocolate Ice Cream</option>
-                            <option value="Strawberry Ice Cream">Strawberry Ice Cream</option>
-                            <option value="Cookies & Cream Ice Cream">Cookies & Cream Ice Cream</option>
-                            <option value="No Ice Cream">No Ice Cream</option>
-                        </select>
-                    </div>
-                `;
-            } else if (item.options) {
-                optionsContainer.innerHTML = `
-                    <div class="space-y-3">
-                        <label class="block text-xs font-bold uppercase text-gold-400">Customizations & Upgrades</label>
-                        <div class="space-y-2 text-xs">
-                            <label class="flex items-center justify-between p-3 rounded-xl bg-obsidian-900 border gold-border-subtle cursor-pointer">
-                                <span class="font-medium text-white">Add Extra Cheese</span>
-                                <div class="flex items-center gap-2">
-                                    <span class="text-gold-400">+$2.00</span>
-                                    <input type="checkbox" value="Extra Cheese" data-price="2.00" class="modal-addon accent-gold-500 w-4 h-4" onchange="updateModalTotal()">
-                                </div>
-                            </label>
-                            <label class="flex items-center justify-between p-3 rounded-xl bg-obsidian-900 border gold-border-subtle cursor-pointer">
-                                <span class="font-medium text-white">Add Crispy Bacon Rasher</span>
-                                <div class="flex items-center gap-2">
-                                    <span class="text-gold-400">+$3.50</span>
-                                    <input type="checkbox" value="Extra Bacon" data-price="3.50" class="modal-addon accent-gold-500 w-4 h-4" onchange="updateModalTotal()">
-                                </div>
-                            </label>
-                            <label class="flex items-center justify-between p-3 rounded-xl bg-obsidian-900 border gold-border-subtle cursor-pointer">
-                                <span class="font-medium text-white">Add Avocado</span>
-                                <div class="flex items-center gap-2">
-                                    <span class="text-gold-400">+$3.00</span>
-                                    <input type="checkbox" value="Avocado" data-price="3.00" class="modal-addon accent-gold-500 w-4 h-4" onchange="updateModalTotal()">
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-                `;
-            }
+    const optionsContainer = document.getElementById('modal-options-container');
+    let optionsHtml = '';
 
-            updateModalTotal();
-            document.getElementById('item-modal').classList.remove('hidden');
-            document.getElementById('item-modal').classList.add('flex');
-        }
+    if (item.options && item.options.length > 0) {
+        item.options.forEach((optGroup, gIdx) => {
+            optionsHtml += `
+                <div class="border-t gold-border-subtle pt-4">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gold-400 mb-2.5">
+                        ${optGroup.title} ${optGroup.required ? '<span class="text-crimson-600">*</span>' : '<span class="text-zinc-500 lowercase">(optional)</span>'}
+                    </label>
+                    <div class="grid grid-cols-3 gap-2">
+            `;
+            optGroup.choices.forEach((choice, cIdx) => {
+                const isSelected = cIdx === 0 ? 'border-gold-500 bg-gold-500/10 text-white' : 'border-zinc-700 bg-obsidian-900 text-zinc-300';
+                optionsHtml += `
+                    <button type="button" 
+                        onclick="selectModalOption(this, '${optGroup.title}', '${choice.name}', ${choice.price})" 
+                        data-group="${optGroup.title}"
+                        data-name="${choice.name}"
+                        data-price="${choice.price}"
+                        class="option-choice-btn flex flex-col items-center justify-center p-3 rounded-xl border ${isSelected} hover:border-gold-500 transition text-center">
+                        <span class="text-xs font-bold">${choice.name}</span>
+                        <span class="text-[10px] text-gold-400 mt-1">${choice.price > 0 ? `+$${choice.price.toFixed(2)}` : 'Included'}</span>
+                    </button>
+                `;
+            });
+            optionsHtml += `</div></div>`;
+        });
+    }
+    optionsContainer.innerHTML = optionsHtml;
+
+    updateModalTotal();
+    document.getElementById('item-modal').classList.remove('hidden');
+    document.getElementById('item-modal').classList.add('flex');
+    lucide.createIcons();
+}
+
+function selectModalOption(btn, groupTitle, choiceName, price) {
+    // Find all buttons in the same group and reset their styling
+    const groupButtons = document.querySelectorAll(`button[data-group="${groupTitle}"]`);
+    groupButtons.forEach(b => {
+        b.className = "option-choice-btn flex flex-col items-center justify-center p-3 rounded-xl border border-zinc-700 bg-obsidian-900 text-zinc-300 hover:border-gold-500 transition text-center";
+    });
+    
+    // Highlight the clicked button
+    btn.className = "option-choice-btn flex flex-col items-center justify-center p-3 rounded-xl border border-gold-500 bg-gold-500/10 text-white transition text-center";
+    updateModalTotal();
+}
 
         let selectedPizzaSize = 'Small';
         let selectedPizzaPrice = 15;
@@ -1039,47 +992,37 @@
             activeModalItem = null;
         }
 
-        function confirmAddToCart() {
-            if (!activeModalItem) return;
+     function confirmAddToCart() {
+    if (!currentModalItem) return;
 
-            let unitPrice = activeModalItem.price || 0;
-            let variantName = '';
+    const optionsContainer = document.getElementById('modal-options-container');
+    const selectedChoices = [];
+    let extraTotal = 0;
 
-            if (activeModalItem.prices) {
-                unitPrice = selectedPizzaPrice;
-                variantName = `Size: ${selectedPizzaSize}`;
-            } else if (activeModalItem.pastaOptions) {
-                variantName = `Pasta: ${selectedPastaType}`;
-            } else if (activeModalItem.dessertOptions) {
-                const iceCreamSelect = document.getElementById('modal-icecream-flavor');
-                variantName = `Side: ${iceCreamSelect ? iceCreamSelect.value : 'Vanilla'}`;
-            }
+    const selectedButtons = optionsContainer.querySelectorAll('.option-choice-btn.border-gold-500');
+    selectedButtons.forEach(btn => {
+        const p = parseFloat(btn.getAttribute('data-price') || 0);
+        extraTotal += p;
+        selectedChoices.push(btn.getAttribute('data-name'));
+    });
 
-            const selectedAddons = [];
-            const addons = document.querySelectorAll('.modal-addon:checked');
-            addons.forEach(addon => {
-                unitPrice += parseFloat(addon.getAttribute('data-price') || 0);
-                selectedAddons.push(addon.value);
-            });
+    const instructions = document.getElementById('modal-instructions').value.trim();
+    const finalItemPrice = currentModalItem.price + extraTotal;
 
-            const instructions = document.getElementById('modal-instructions').value.trim();
+    cart.push({
+        cartId: Date.now() + Math.random(),
+        id: currentModalItem.id,
+        name: currentModalItem.name,
+        basePrice: finalItemPrice,
+        quantity: modalQuantity,
+        options: selectedChoices,
+        instructions: instructions
+    });
 
-            cart.push({
-                cartId: Date.now() + Math.random(),
-                itemId: activeModalItem.id,
-                name: activeModalItem.name,
-                variant: variantName,
-                addons: selectedAddons,
-                instructions: instructions,
-                unitPrice: unitPrice,
-                qty: activeModalQty,
-                image: activeModalItem.image
-            });
-
-            closeItemModal();
-            updateCartUI();
-            toggleCart(true);
-        }
+    closeItemModal();
+    updateCartUI();
+    toggleCart(true);
+}
 
         function removeFromCart(cartId) {
             cart = cart.filter(item => item.cartId !== cartId);
