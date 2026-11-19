@@ -201,7 +201,7 @@
                         Your Cravings, Our Calling — Freshly Prepared Favourites
                     </p>
                     <p class="text-zinc-300 text-sm sm:text-base leading-relaxed max-w-xl">
-                        Indulge in smashed double-beef burgers, crispy golden chicken, stone-baked pizzas, velvety pastas, loaded fries, and artisanal waffles & crepes crafted fresh to order at Shop 12/108 Dangar St.
+                        Indulge in smashed double-beef burgers, crispy golden chicken, pizzas, velvety pastas, loaded fries, and artisanal waffles & crepes crafted fresh to order at Shop 12/108 Dangar St.
                     </p>
                 </div>
 
@@ -212,7 +212,7 @@
                             src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80" 
                             alt="Crave House Special Combo" 
                             onerror="this.style.display='none'"
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            class="w-full h-full object-contain bg-white group-hover:scale-105 transition-transform duration-500"
                         >
                         <div class="absolute inset-0 bg-gradient-to-t from-obsidian-800 via-obsidian-900/30 to-transparent"></div>
                         <div class="absolute top-3 left-3 bg-crimson-700/95 backdrop-blur-md border border-gold-500/40 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow">
@@ -303,6 +303,19 @@
             </div>
         </div>
     </footer>
+
+
+    <!-- Restaurant location: Google Maps -->
+    <section aria-label="Find Crave House Kitchen" class="bg-obsidian-950 border-t gold-border-subtle py-10 px-4">
+      <div class="max-w-7xl mx-auto">
+        <h2 class="font-display text-2xl font-bold text-gold-400 mb-2">Find Us in Armidale</h2>
+        <p class="text-zinc-300 mb-5">Shop 12, 108 Dangar Street, Armidale NSW 2350, Australia</p>
+        <iframe title="Google Map — Crave House Kitchen" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          class="w-full rounded-2xl border border-gold-500/30 bg-white" style="height:360px"
+          src="https://www.google.com/maps?q=Shop%2012%2C%20108%20Dangar%20Street%2C%20Armidale%20NSW%202350%2C%20Australia&amp;output=embed"></iframe>
+        <a class="inline-block mt-4 text-gold-400 underline" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/search/?api=1&amp;query=Shop%2012%2C%20108%20Dangar%20Street%2C%20Armidale%20NSW%202350%2C%20Australia">Open directions in Google Maps</a>
+      </div>
+    </section>
 
     <!-- Floating Mobile Bottom Cart Bar -->
     <div id="mobile-cart-bar" class="fixed bottom-4 left-4 right-4 z-30 md:hidden hidden">
@@ -515,164 +528,164 @@
                 group: "BURGERS",
                 categoryName: "Beef Burgers",
                 categoryDesc: "Smoky, smashed, and crafted with 100% Australian beef patties and melted American cheese.",
-                bgImage: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=80",
+                bgImage: "images/b1.webp",
                 items: [
-                    { id: 'b1', name: 'The Crave Classic', desc: '2 beef patties, 2 American cheese, diced onions, pickles and burger sauce.', price: 22.90, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
-                    { id: 'b2', name: 'Golden Cheese Smash', desc: '2 beef patties, American cheese, lettuce, red onion, tomato and mayo.', price: 19.90, image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
-                    { id: 'b3', name: 'The Big Boss', desc: '3 beef patties, 2 crispy bacon rashers, 2 American cheese, lettuce, tomato, caramelised onion, smokey BBQ sauce and mayo.', price: 26.90, image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
-                    { id: 'b4', name: 'Jalapeño Chipotle Beef', desc: 'Beef patty, Swiss cheese, jalapeños, lettuce, tomato, red onion and chipotle mayo.', price: 18.90, image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
-                    { id: 'b5', name: 'Truffle Mushroom Royale', desc: 'Beef patty, Swiss cheese, rocket, sautéed mushroom, caramelised onion and truffle aioli.', price: 21.90, image: 'https://images.unsplash.com/photo-1583542225758-7d453c518065?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
-                    { id: 'b6', name: 'Swiss Rocket Smash', desc: 'Smashed beef patty, Swiss cheese, rocket, tomato, red onion and mayo.', price: 18.90, image: 'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
-                    { id: 'b7', name: 'Little Craver', desc: 'Smashed beef patty, American cheese, lettuce and tomato sauce.', price: 16.90, image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true }
+                    { id: 'b1', name: 'The Crave Classic', desc: '2 beef patties, 2 American cheese, diced onions, pickles and burger sauce.', price: 22.90, image: 'images/b1.webp', options: true, buns: true, combos: true },
+                    { id: 'b2', name: 'Golden Cheese Smash', desc: '2 beef patties, American cheese, lettuce, red onion, tomato and mayo.', price: 19.90, image: 'images/b2.webp', options: true, buns: true, combos: true },
+                    { id: 'b3', name: 'The Big Boss', desc: '3 beef patties, 2 crispy bacon rashers, 2 American cheese, lettuce, tomato, caramelised onion, smokey BBQ sauce and mayo.', price: 26.90, image: 'images/b3.webp', options: true, buns: true, combos: true },
+                    { id: 'b4', name: 'Jalapeño Chipotle Beef', desc: 'Beef patty, Swiss cheese, jalapeños, lettuce, tomato, red onion and chipotle mayo.', price: 18.90, image: 'images/b4.webp', options: true, buns: true, combos: true },
+                    { id: 'b5', name: 'Truffle Mushroom Royale', desc: 'Beef patty, Swiss cheese, rocket, sautéed mushroom, caramelised onion and truffle aioli.', price: 21.90, image: 'images/b5.webp', options: true, buns: true, combos: true },
+                    { id: 'b6', name: 'Swiss Rocket Smash', desc: 'Smashed beef patty, Swiss cheese, rocket, tomato, red onion and mayo.', price: 18.90, image: 'images/b6.webp', options: true, buns: true, combos: true },
+                    { id: 'b7', name: 'Little Craver', desc: 'Smashed beef patty, American cheese, lettuce and tomato sauce.', price: 16.90, image: 'images/b7.webp', options: true, buns: true, combos: true }
                 ]
             },
             {
                 group: "BURGERS",
                 categoryName: "Fried Chicken Burgers",
                 categoryDesc: "Crispy, golden-fried chicken fillets with signature house sauces and fresh crunch.",
-                bgImage: "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=1200&q=80",
+                bgImage: "images/b1.webp",
                 items: [
-                    { id: 'fc1', name: 'Golden Crunch', desc: 'Crispy chicken fillet, American cheese, lettuce, tomato and garlic aioli.', price: 19.90, image: 'https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
-                    { id: 'fc2', name: 'Truffle Chicken Deluxe', desc: 'Crispy chicken fillet, Swiss cheese, rocket, caramelised onion and truffle aioli.', price: 19.90, image: 'https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
-                    { id: 'fc3', name: 'Southern Slaw Crunch', desc: 'Southern-style crispy chicken, creamy cabbage and carrot slaw, pickles and garlic aioli.', price: 18.90, image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
-                    { id: 'fc4', name: 'BBQ Bacon Crunch', desc: 'Crispy chicken fillet, bacon, American cheese, lettuce, tomato and smoky BBQ mayo.', price: 20.90, image: 'https://images.unsplash.com/photo-1625813507185-17c385966373?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true }
+                    { id: 'fc1', name: 'Golden Crunch', desc: 'Crispy chicken fillet, American cheese, lettuce, tomato and garlic aioli.', price: 19.90, image: 'images/fc1.webp', options: true, buns: true, combos: true },
+                    { id: 'fc2', name: 'Truffle Chicken Deluxe', desc: 'Crispy chicken fillet, Swiss cheese, rocket, caramelised onion and truffle aioli.', price: 19.90, image: 'images/fc2.webp', options: true, buns: true, combos: true },
+                    { id: 'fc3', name: 'Southern Slaw Crunch', desc: 'Southern-style crispy chicken, creamy cabbage and carrot slaw, pickles and garlic aioli.', price: 18.90, image: 'images/fc3.webp', options: true, buns: true, combos: true },
+                    { id: 'fc4', name: 'BBQ Bacon Crunch', desc: 'Crispy chicken fillet, bacon, American cheese, lettuce, tomato and smoky BBQ mayo.', price: 20.90, image: 'images/fc4.webp', options: true, buns: true, combos: true }
                 ]
             },
             {
                 group: "BURGERS",
                 categoryName: "Grilled Chicken Burgers",
                 categoryDesc: "Tender grilled chicken breasts loaded with avocado, peri-peri, or smoky seasonings.",
-                bgImage: "https://images.unsplash.com/photo-1521305916504-4a1121188589?auto=format&fit=crop&w=1200&q=80",
+                bgImage: "images/b1.webp",
                 items: [
-                    { id: 'gc1', name: 'Avocado Chicken Supreme', desc: 'Grilled chicken breast, bacon, avocado, American cheese, lettuce, tomato and garlic aioli.', price: 20.90, image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
-                    { id: 'gc2', name: 'Flame Peri-Peri', desc: 'Peri-peri grilled chicken, American cheese, lettuce, tomato, red onion, peri-peri sauce and mayo.', price: 15.90, image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
-                    { id: 'gc3', name: 'Chipotle Avocado Slaw', desc: 'Grilled chicken breast, avocado, crunchy cabbage and carrot slaw, pickled jalapeños and chipotle mayo.', price: 16.90, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
-                    { id: 'gc4', name: 'Crispy Onion Chicken', desc: 'Grilled chicken breast, American cheese, crispy onion pieces, lettuce, tomato and garlic aioli.', price: 20.90, image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true }
+                    { id: 'gc1', name: 'Avocado Chicken Supreme', desc: 'Grilled chicken breast, bacon, avocado, American cheese, lettuce, tomato and garlic aioli.', price: 20.90, image: 'images/gc1.webp', options: true, buns: true, combos: true },
+                    { id: 'gc2', name: 'Flame Peri-Peri', desc: 'Peri-peri grilled chicken, American cheese, lettuce, tomato, red onion, peri-peri sauce and mayo.', price: 15.90, image: 'images/gc2.webp', options: true, buns: true, combos: true },
+                    { id: 'gc3', name: 'Chipotle Avocado Slaw', desc: 'Grilled chicken breast, avocado, crunchy cabbage and carrot slaw, pickled jalapeños and chipotle mayo.', price: 16.90, image: 'images/gc3.webp', options: true, buns: true, combos: true },
+                    { id: 'gc4', name: 'Crispy Onion Chicken', desc: 'Grilled chicken breast, American cheese, crispy onion pieces, lettuce, tomato and garlic aioli.', price: 20.90, image: 'images/gc4.webp', options: true, buns: true, combos: true }
                 ]
             },
             {
                 group: "BURGERS",
                 categoryName: "Vegetarian & Vegan Burgers",
                 categoryDesc: "Plant-powered excellence featuring crispy halloumi, chickpea patties, and vegan cheese.",
-                bgImage: "https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=1200&q=80",
+                bgImage: "images/b1.webp",
                 items: [
-                    { id: 'vg1', name: 'Golden Garden Crunch', desc: 'Chickpea and vegetable patty, American cheese, lettuce, tomato, pickles and garlic aioli.', price: 17.90, image: 'https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
-                    { id: 'vg2', name: 'The Halloumi Royale', desc: 'Grilled halloumi, avocado, lettuce, tomato, red onion and garlic aioli.', price: 17.90, image: 'https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
-                    { id: 'vn1', name: 'Smoky Plant Deluxe (Vegan)', desc: 'Plant-based patty, vegan cheese, caramelised onion, pickles, lettuce, tomato and smoky BBQ sauce.', price: 17.90, image: 'https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true },
-                    { id: 'vn2', name: 'The Vegan Rebel', desc: 'Plant-based patty, vegan cheese, lettuce, tomato, pickles, red onion and vegan aioli.', price: 16.90, image: 'https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=800&q=80', options: true, buns: true, combos: true }
+                    { id: 'vg1', name: 'Golden Garden Crunch', desc: 'Chickpea and vegetable patty, American cheese, lettuce, tomato, pickles and garlic aioli.', price: 17.90, image: 'images/vg1.webp', options: true, buns: true, combos: true },
+                    { id: 'vg2', name: 'The Halloumi Royale', desc: 'Grilled halloumi, avocado, lettuce, tomato, red onion and garlic aioli.', price: 17.90, image: 'images/vg2.webp', options: true, buns: true, combos: true },
+                    { id: 'vn1', name: 'Smoky Plant Deluxe (Vegan)', desc: 'Plant-based patty, vegan cheese, caramelised onion, pickles, lettuce, tomato and smoky BBQ sauce.', price: 17.90, image: 'images/vn1.webp', options: true, buns: true, combos: true },
+                    { id: 'vn2', name: 'The Vegan Rebel', desc: 'Plant-based patty, vegan cheese, lettuce, tomato, pickles, red onion and vegan aioli.', price: 16.90, image: 'images/vn2.webp', options: true, buns: true, combos: true }
                 ]
             },
             {
                 group: "PIZZA",
-                categoryName: "Wood-Fired Style Pizzas (Small / Large / XL)",
-                categoryDesc: "Stone-baked crusts loaded with premium fior di latte mozzarella and rich artisanal toppings.",
-                bgImage: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80",
+                categoryName: "Pizzas (Small / Large / XL)",
+                categoryDesc: "Freshly baked crusts loaded with premium fior di latte mozzarella and rich artisanal toppings.",
+                bgImage: "images/p3.webp",
                 isPizza: true,
                 items: [
-                    { id: 'p1', name: 'Margherita', desc: 'Tomato base and fior di latte cheese', image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80', prices: { Small: 15, Large: 19, XL: 26 } },
-                    { id: 'p2', name: 'Hawaiian', desc: 'Tomato base, cheese, smoked ham and juicy pineapple', image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80', prices: { Small: 15, Large: 19, XL: 26 } },
-                    { id: 'p3', name: 'Pepperoni', desc: 'Tomato base, cheese and double pepperoni', image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=800&q=80', prices: { Small: 15, Large: 19, XL: 26 } },
-                    { id: 'p4', name: 'BBQ Chicken', desc: 'BBQ base, seasoned chicken, onion and mushrooms', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80', prices: { Small: 15, Large: 19, XL: 26 } },
-                    { id: 'p5', name: 'Garlic Pizza', desc: 'Rich garlic butter base and melted cheese', image: 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=800&q=80', prices: { Small: 15, Large: 19, XL: 26 } },
-                    { id: 'p6', name: 'Garlic Prawn', desc: 'Garlic base, baby spinach, capsicum, onion and succulent prawns', image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80', prices: { Small: 17, Large: 22, XL: 28 } },
-                    { id: 'p7', name: 'Veggie Pizza', desc: 'Tomato base, mushrooms, onion, capsicum, olives and pineapple', image: 'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=800&q=80', prices: { Small: 17, Large: 22, XL: 28 } },
-                    { id: 'p8', name: 'Mediterranean Lamb', desc: 'Tomato base, baby spinach, onion, capsicum and tender spiced lamb', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80', prices: { Small: 17, Large: 22, XL: 28 } },
-                    { id: 'p9', name: 'Meat Lovers', desc: 'BBQ base, pepperoni, ham, bacon and spicy sausage', image: 'https://images.unsplash.com/photo-1544982503-9f984c14501a?auto=format&fit=crop&w=800&q=80', prices: { Small: 17, Large: 22, XL: 28 } },
-                    { id: 'p10', name: 'Supreme', desc: 'Tomato base, mushrooms, onion, spinach, capsicum, olives and ham', image: 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=800&q=80', prices: { Small: 15, Large: 19, XL: 26 } },
-                    { id: 'p11', name: 'Aussie', desc: 'Tomato base, smoked ham, bacon and fresh free-range egg', image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80', prices: { Small: 15, Large: 19, XL: 26 } },
-                    { id: 'p12', name: 'Capricciosa', desc: 'Tomato base, pepperoni, spinach, onion, olives and mushrooms', image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80', prices: { Small: 15, Large: 19, XL: 26 } },
-                    { id: 'p13', name: 'Crave House Special Pizza', desc: 'Tomato base, cheese, baby spinach, onion, roasted capsicum, spicy chorizo and prawns', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80', prices: { Small: 17, Large: 22, XL: 28 } }
+                    { id: 'p1', name: 'Margherita', desc: 'Tomato base and fior di latte cheese', image: 'images/p1.webp', prices: { Small: 15, Large: 19, XL: 26 } },
+                    { id: 'p2', name: 'Hawaiian', desc: 'Tomato base, cheese, smoked ham and juicy pineapple', image: 'images/p2.webp', prices: { Small: 15, Large: 19, XL: 26 } },
+                    { id: 'p3', name: 'Pepperoni', desc: 'Tomato base, cheese and double pepperoni', image: 'images/p3.webp', prices: { Small: 15, Large: 19, XL: 26 } },
+                    { id: 'p4', name: 'BBQ Chicken', desc: 'BBQ base, seasoned chicken, onion and mushrooms', image: 'images/p4.webp', prices: { Small: 15, Large: 19, XL: 26 } },
+                    { id: 'p5', name: 'Garlic Pizza', desc: 'Rich garlic butter base and melted cheese', image: 'images/p5.webp', prices: { Small: 15, Large: 19, XL: 26 } },
+                    { id: 'p6', name: 'Garlic Prawn', desc: 'Garlic base, baby spinach, capsicum, onion and succulent prawns', image: 'images/p6.webp', prices: { Small: 17, Large: 22, XL: 28 } },
+                    { id: 'p7', name: 'Veggie Pizza', desc: 'Tomato base, mushrooms, onion, capsicum, olives and pineapple', image: 'images/p7.webp', prices: { Small: 17, Large: 22, XL: 28 } },
+                    { id: 'p8', name: 'Mediterranean Lamb', desc: 'Tomato base, baby spinach, onion, capsicum and tender spiced lamb', image: 'images/p8.webp', prices: { Small: 17, Large: 22, XL: 28 } },
+                    { id: 'p9', name: 'Meat Lovers', desc: 'BBQ base, pepperoni, ham, bacon and spicy sausage', image: 'images/p9.webp', prices: { Small: 17, Large: 22, XL: 28 } },
+                    { id: 'p10', name: 'Supreme', desc: 'Tomato base, mushrooms, onion, spinach, capsicum, olives and ham', image: 'images/p10.webp', prices: { Small: 15, Large: 19, XL: 26 } },
+                    { id: 'p11', name: 'Aussie', desc: 'Tomato base, smoked ham, bacon and fresh free-range egg', image: 'images/p11.webp', prices: { Small: 15, Large: 19, XL: 26 } },
+                    { id: 'p12', name: 'Capricciosa', desc: 'Tomato base, pepperoni, spinach, onion, olives and mushrooms', image: 'images/p12.webp', prices: { Small: 15, Large: 19, XL: 26 } },
+                    { id: 'p13', name: 'Crave House Special Pizza', desc: 'Tomato base, cheese, baby spinach, onion, roasted capsicum, spicy chorizo and prawns', image: 'images/p13.webp', prices: { Small: 17, Large: 22, XL: 28 } }
                 ]
             },
             {
                 group: "PASTA_RISOTTO",
                 categoryName: "Pasta",
                 categoryDesc: "Rich, slow-simmered Italian pasta dishes tossed with creamy sauces and grated Parmesan.",
-                bgImage: "https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=1200&q=80",
+                bgImage: "images/pas4.webp",
                 items: [
-                    { id: 'pas1', name: 'Bolognese', desc: 'Minced beef, onions, garlic, herbs, rich napoli and Parmesan.', price: 23.00, image: 'https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=800&q=80', pastaOptions: true },
-                    { id: 'pas2', name: 'Carbonara', desc: 'Creamy garlic sauce, smoked bacon and Parmesan.', price: 25.00, image: 'https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&w=800&q=80', pastaOptions: true },
-                    { id: 'pas3', name: 'Veggie Pasta', desc: 'Mushroom, onion, capsicum, baby spinach, Napoli sauce, beans, peas, cauliflower and broccoli.', price: 25.00, image: 'https://images.unsplash.com/photo-1556761223-4c4282c73f77?auto=format&fit=crop&w=800&q=80', pastaOptions: true },
-                    { id: 'pas4', name: 'Chicken & Mushroom Pasta', desc: 'Tender chicken and sautéed mushrooms in a rich creamy sauce with Parmesan.', price: 25.00, image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80', pastaOptions: true },
-                    { id: 'pas5', name: 'Creamy Prawn Pasta', desc: 'Creamy garlic sauce, succulent prawns and melted cheese.', price: 26.00, image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80', pastaOptions: true },
-                    { id: 'pas6', name: 'Crave House Special Pasta', desc: 'Creamy sauce, mushrooms, prawns and spicy chorizo.', price: 26.00, image: 'https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=800&q=80', pastaOptions: true }
+                    { id: 'pas1', name: 'Bolognese', desc: 'Minced beef, onions, garlic, herbs, rich napoli and Parmesan.', price: 23.00, image: 'images/pas1.webp', pastaOptions: true },
+                    { id: 'pas2', name: 'Carbonara', desc: 'Creamy garlic sauce, smoked bacon and Parmesan.', price: 25.00, image: 'images/pas2.webp', pastaOptions: true },
+                    { id: 'pas3', name: 'Veggie Pasta', desc: 'Mushroom, onion, capsicum, baby spinach, Napoli sauce, beans, peas, cauliflower and broccoli.', price: 25.00, image: 'images/pas3.webp', pastaOptions: true },
+                    { id: 'pas4', name: 'Chicken & Mushroom Pasta', desc: 'Tender chicken and sautéed mushrooms in a rich creamy sauce with Parmesan.', price: 25.00, image: 'images/pas4.webp', pastaOptions: true },
+                    { id: 'pas5', name: 'Creamy Prawn Pasta', desc: 'Creamy garlic sauce, succulent prawns and melted cheese.', price: 26.00, image: 'images/pas5.webp', pastaOptions: true },
+                    { id: 'pas6', name: 'Crave House Special Pasta', desc: 'Creamy sauce, mushrooms, prawns and spicy chorizo.', price: 26.00, image: 'images/pas6.webp', pastaOptions: true }
                 ]
             },
             {
                 group: "PASTA_RISOTTO",
                 categoryName: "Risotto",
                 categoryDesc: "Creamy Italian arborio rice slow-cooked to perfection with premium ingredients.",
-                bgImage: "https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?auto=format&fit=crop&w=1200&q=80",
+                bgImage: "images/ris1.webp",
                 items: [
-                    { id: 'ris1', name: 'Chicken & Mushroom Risotto', desc: 'Creamy Italian-style risotto with chicken, sautéed mushrooms and Parmesan.', price: 26.00, image: 'https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'ris2', name: 'Veggie Risotto', desc: 'Mushroom, onion, capsicum, baby spinach, beans, peas, cauliflower and broccoli.', price: 26.00, image: 'https://images.unsplash.com/photo-1546549032-9571cd6b27df?auto=format&fit=crop&w=800&q=80' }
+                    { id: 'ris1', name: 'Chicken & Mushroom Risotto', desc: 'Creamy Italian-style risotto with chicken, sautéed mushrooms and Parmesan.', price: 26.00, image: 'images/ris1.webp' },
+                    { id: 'ris2', name: 'Veggie Risotto', desc: 'Mushroom, onion, capsicum, baby spinach, beans, peas, cauliflower and broccoli.', price: 26.00, image: 'images/ris2.webp' }
                 ]
             },
             {
                 group: "MAINS_SIDES",
                 categoryName: "Parmigiana & Mains",
                 categoryDesc: "Golden crispy schnitzels and loaded parmigianas served with chips and fresh salad.",
-                bgImage: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=1200&q=80",
+                bgImage: "images/pm1.webp",
                 items: [
-                    { id: 'pm1', name: 'Chicken Schnitzel', desc: 'Golden crumbed chicken breast served with chips, salad and lemon.', price: 24.00, image: 'https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'pm2', name: 'Chicken Parmigiana', desc: 'Napoli sauce and melted cheese, served with chips and salad.', price: 26.00, image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'pm3', name: 'Hawaiian Parmigiana', desc: 'Napoli sauce, smoked ham and pineapple, served with chips and salad.', price: 27.00, image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'pm4', name: 'The Lot Parmigiana', desc: 'Napoli sauce, ham, salami and bacon, served with chips and salad.', price: 27.00, image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'pm5', name: 'Aussie Parmigiana', desc: 'Napoli sauce, ham, bacon and free-range egg, served with chips and salad.', price: 28.00, image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'pm6', name: 'Fish & Chips', desc: 'Crispy battered fish fillets served with chips, salad and tartare sauce.', price: 25.00, image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80' }
+                    { id: 'pm1', name: 'Chicken Schnitzel', desc: 'Golden crumbed chicken breast served with chips, salad and lemon.', price: 24.00, image: 'images/pm1.webp' },
+                    { id: 'pm2', name: 'Chicken Parmigiana', desc: 'Napoli sauce and melted cheese, served with chips and salad.', price: 26.00, image: 'images/pm2.webp' },
+                    { id: 'pm3', name: 'Hawaiian Parmigiana', desc: 'Napoli sauce, smoked ham and pineapple, served with chips and salad.', price: 27.00, image: 'images/pm3.webp' },
+                    { id: 'pm4', name: 'The Lot Parmigiana', desc: 'Napoli sauce, ham, salami and bacon, served with chips and salad.', price: 27.00, image: 'images/pm4.webp' },
+                    { id: 'pm5', name: 'Aussie Parmigiana', desc: 'Napoli sauce, ham, bacon and free-range egg, served with chips and salad.', price: 28.00, image: 'images/pm5.webp' },
+                    { id: 'pm6', name: 'Fish & Chips', desc: 'Crispy battered fish fillets served with chips, salad and tartare sauce.', price: 25.00, image: 'images/pm6.webp' }
                 ]
             },
             {
                 group: "MAINS_SIDES",
                 categoryName: "Garlic Bread & Snacks",
                 categoryDesc: "Crispy garlic breads, chicken nuggets, tender wings, and seasoned potato chips.",
-                bgImage: "https://images.unsplash.com/photo-1619531003657-31034f598007?auto=format&fit=crop&w=1200&q=80",
+                bgImage: "images/ch3.webp",
                 items: [
-                    { id: 'gb1', name: 'Garlic Bread', desc: 'Traditional crispy oven-baked garlic bread.', price: 5.90, image: 'https://images.unsplash.com/photo-1619531003657-31034f598007?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'gb2', name: 'Cheesy Garlic Bread', desc: 'Garlic bread loaded with melted mozzarella cheese.', price: 7.90, image: 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'cs1', name: 'Chicken Nuggets (6 pcs)', desc: 'Crispy golden chicken breast nuggets with dipping sauce.', price: 9.90, image: 'https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'cs2', name: 'Chicken Nuggets (12 pcs)', desc: 'Large portion of crispy golden chicken nuggets.', price: 16.90, image: 'https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'cs3', name: 'Chicken Wings (6 pcs)', desc: 'Juicy spiced chicken wings with smoky BBQ or buffalo sauce.', price: 12.90, image: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'cs4', name: 'Chicken Wings (12 pcs)', desc: 'Generous serving of crispy wings.', price: 21.90, image: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'ch1', name: 'Golden Chips (Small)', desc: 'Crispy seasoned potato chips.', price: 6.90, image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'ch2', name: 'Golden Chips (Large)', desc: 'Large portion of crispy seasoned potato chips.', price: 9.90, image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'ch3', name: 'Loaded Bacon & Cheese Chips', desc: 'Chips loaded with melted cheese and crispy bacon bits.', price: 14.90, image: 'https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'ch4', name: 'Loaded Gravy & Cheese Chips', desc: 'Chips smothered in rich savory gravy and melted cheese.', price: 13.90, image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80' }
+                    { id: 'gb1', name: 'Garlic Bread', desc: 'Traditional crispy oven-baked garlic bread.', price: 5.90, image: 'images/gb1.webp' },
+                    { id: 'gb2', name: 'Cheesy Garlic Bread', desc: 'Garlic bread loaded with melted mozzarella cheese.', price: 7.90, image: 'images/gb2.webp' },
+                    { id: 'cs1', name: 'Chicken Nuggets (6 pcs)', desc: 'Crispy golden chicken breast nuggets with dipping sauce.', price: 9.90, image: 'images/cs1.webp' },
+                    { id: 'cs2', name: 'Chicken Nuggets (12 pcs)', desc: 'Large portion of crispy golden chicken nuggets.', price: 16.90, image: 'images/cs2.webp' },
+                    { id: 'cs3', name: 'Chicken Wings (6 pcs)', desc: 'Juicy spiced chicken wings with smoky BBQ or buffalo sauce.', price: 12.90, image: 'images/cs3.webp' },
+                    { id: 'cs4', name: 'Chicken Wings (12 pcs)', desc: 'Generous serving of crispy wings.', price: 21.90, image: 'images/cs4.webp' },
+                    { id: 'ch1', name: 'Golden Chips (Small)', desc: 'Crispy seasoned potato chips.', price: 6.90, image: 'images/ch1.webp' },
+                    { id: 'ch2', name: 'Golden Chips (Large)', desc: 'Large portion of crispy seasoned potato chips.', price: 9.90, image: 'images/ch2.webp' },
+                    { id: 'ch3', name: 'Loaded Bacon & Cheese Chips', desc: 'Chips loaded with melted cheese and crispy bacon bits.', price: 14.90, image: 'images/ch3.webp' },
+                    { id: 'ch4', name: 'Loaded Gravy & Cheese Chips', desc: 'Chips smothered in rich savory gravy and melted cheese.', price: 13.90, image: 'images/ch4.webp' }
                 ]
             },
             {
                 group: "DESSERTS",
                 categoryName: "Waffles & Crepes (Includes Side Ice Cream)",
                 categoryDesc: "Decadent golden waffles and delicate crepes served with a complimentary side of creamy ice cream.",
-                bgImage: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=1200&q=80",
+                bgImage: "images/d1.webp",
                 isDessert: true,
                 items: [
-                    { id: 'd1', name: 'Nutella Supreme Waffle', desc: 'Warm golden waffle drenched in Belgian Nutella, strawberries and crushed hazelnuts.', price: 18.90, image: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=800&q=80', dessertOptions: true },
-                    { id: 'd2', name: 'Berry White Chocolate Waffle', desc: 'Waffle loaded with white chocolate drizzle, mixed berries and icing sugar.', price: 18.90, image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80', dessertOptions: true },
-                    { id: 'd3', name: 'Banana Caramel Waffle', desc: 'Waffle topped with fresh banana slices, sticky butterscotch caramel and pecans.', price: 17.90, image: 'https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=800&q=80', dessertOptions: true },
-                    { id: 'd4', name: 'Classic Maple Waffle', desc: 'Traditional golden waffle with butter and pure Canadian maple syrup.', price: 14.90, image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80', dessertOptions: true },
-                    { id: 'd5', name: 'Nutella Crepe', desc: 'Delicate folded crepe filled and drizzled with warm Nutella.', price: 17.90, image: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80', dessertOptions: true },
-                    { id: 'd6', name: 'Strawberry & Chocolate Crepe', desc: 'Crepe loaded with fresh strawberries, milk chocolate and cream.', price: 18.90, image: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80', dessertOptions: true },
-                    { id: 'd7', name: 'Banana & Toffee Crepe', desc: 'Crepe with sliced bananas and rich toffee sauce.', price: 17.90, image: 'https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=800&q=80', dessertOptions: true },
-                    { id: 'd8', name: 'Lemon Sugar Crepe', desc: 'Classic French crepe with fresh lemon juice and caster sugar.', price: 13.90, image: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80', dessertOptions: true }
+                    { id: 'd1', name: 'Nutella Supreme Waffle', desc: 'Warm golden waffle drenched in Belgian Nutella, strawberries and crushed hazelnuts.', price: 18.90, image: 'images/d1.webp', dessertOptions: true },
+                    { id: 'd2', name: 'Berry White Chocolate Waffle', desc: 'Waffle loaded with white chocolate drizzle, mixed berries and icing sugar.', price: 18.90, image: 'images/d2.webp', dessertOptions: true },
+                    { id: 'd3', name: 'Banana Caramel Waffle', desc: 'Waffle topped with fresh banana slices, sticky butterscotch caramel and pecans.', price: 17.90, image: 'images/d3.webp', dessertOptions: true },
+                    { id: 'd4', name: 'Classic Maple Waffle', desc: 'Traditional golden waffle with butter and pure Canadian maple syrup.', price: 14.90, image: 'images/d4.webp', dessertOptions: true },
+                    { id: 'd5', name: 'Nutella Crepe', desc: 'Delicate folded crepe filled and drizzled with warm Nutella.', price: 17.90, image: 'images/d5.webp', dessertOptions: true },
+                    { id: 'd6', name: 'Strawberry & Chocolate Crepe', desc: 'Crepe loaded with fresh strawberries, milk chocolate and cream.', price: 18.90, image: 'images/d6.webp', dessertOptions: true },
+                    { id: 'd7', name: 'Banana & Toffee Crepe', desc: 'Crepe with sliced bananas and rich toffee sauce.', price: 17.90, image: 'images/d7.webp', dessertOptions: true },
+                    { id: 'd8', name: 'Lemon Sugar Crepe', desc: 'Classic French crepe with fresh lemon juice and caster sugar.', price: 13.90, image: 'images/d8.webp', dessertOptions: true }
                 ]
             },
             {
                 group: "DRINKS",
                 categoryName: "Milkshakes & Drinks",
                 categoryDesc: "Thick, creamy gourmet milkshakes and refreshing chilled beverages.",
-                bgImage: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=1200&q=80",
+                bgImage: "images/dr1.webp",
                 items: [
-                    { id: 'dr1', name: 'Classic Chocolate Thickshake', desc: 'Rich Belgian chocolate thickshake topped with whipped cream.', price: 9.50, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'dr2', name: 'Vanilla Bean Thickshake', desc: 'Smooth vanilla bean thickshake with whipped cream.', price: 9.50, image: 'https://images.unsplash.com/photo-1541658016709-82535e94bc69?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'dr3', name: 'Strawberry Thickshake', desc: 'Sweet strawberry thickshake with whipped cream.', price: 9.50, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'dr4', name: 'Caramel Fudge Thickshake', desc: 'Golden caramel fudge thickshake.', price: 9.50, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'dr5', name: 'Nutella Shake', desc: 'Thickshake blended with genuine Nutella and chocolate drizzle.', price: 10.90, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'dr6', name: 'Coca-Cola (375ml Can)', desc: 'Chilled can of classic Coca-Cola.', price: 4.50, image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'dr7', name: 'Diet Coke (375ml Can)', desc: 'Chilled can of Diet Coke.', price: 4.50, image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'dr8', name: 'Sprite (375ml Can)', desc: 'Chilled lemon-lime Sprite.', price: 4.50, image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'dr9', name: 'Lift Hard Lemon (375ml Can)', desc: 'Refreshing lemon soft drink.', price: 4.50, image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=800&q=80' },
-                    { id: 'dr10', name: 'Mount Franklin Spring Water (600ml)', desc: 'Pure Australian spring water.', price: 4.50, image: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=800&q=80' }
+                    { id: 'dr1', name: 'Classic Chocolate Thickshake', desc: 'Rich Belgian chocolate thickshake topped with whipped cream.', price: 9.50, image: 'images/dr1.webp' },
+                    { id: 'dr2', name: 'Vanilla Bean Thickshake', desc: 'Smooth vanilla bean thickshake with whipped cream.', price: 9.50, image: 'images/dr2.webp' },
+                    { id: 'dr3', name: 'Strawberry Thickshake', desc: 'Sweet strawberry thickshake with whipped cream.', price: 9.50, image: 'images/dr3.webp' },
+                    { id: 'dr4', name: 'Caramel Fudge Thickshake', desc: 'Golden caramel fudge thickshake.', price: 9.50, image: 'images/dr4.webp' },
+                    { id: 'dr5', name: 'Nutella Shake', desc: 'Thickshake blended with genuine Nutella and chocolate drizzle.', price: 10.90, image: 'images/dr5.webp' },
+                    { id: 'dr6', name: 'Coca-Cola (375ml Can)', desc: 'Chilled can of classic Coca-Cola.', price: 4.50, image: 'images/dr6.webp' },
+                    { id: 'dr7', name: 'Diet Coke (375ml Can)', desc: 'Chilled can of Diet Coke.', price: 4.50, image: 'images/dr7.webp' },
+                    { id: 'dr8', name: 'Sprite (375ml Can)', desc: 'Chilled lemon-lime Sprite.', price: 4.50, image: 'images/dr8.webp' },
+                    { id: 'dr9', name: 'Lift Hard Lemon (375ml Can)', desc: 'Refreshing lemon soft drink.', price: 4.50, image: 'images/dr9.webp' },
+                    { id: 'dr10', name: 'Mount Franklin Spring Water (600ml)', desc: 'Pure Australian spring water.', price: 4.50, image: 'images/dr10.webp' }
                 ]
             }
         ];
@@ -706,7 +719,7 @@
             const groups = [
                 { id: 'ALL', label: 'Full Menu' },
                 { id: 'BURGERS', label: 'Burgers' },
-                { id: 'PIZZA', label: 'Woodfired Pizza' },
+                { id: 'PIZZA', label: 'Pizza' },
                 { id: 'PASTA_RISOTTO', label: 'Pasta & Risotto' },
                 { id: 'MAINS_SIDES', label: 'Mains & Sides' },
                 { id: 'DESSERTS', label: 'Waffles & Crepes' },
@@ -803,7 +816,7 @@
                                 <div class="bg-obsidian-800/90 border gold-border-subtle rounded-3xl overflow-hidden flex flex-col justify-between group hover:border-gold-500/50 transition duration-300 shadow-lg">
                                     <div>
                                         <div class="relative h-48 overflow-hidden bg-obsidian-950">
-                                            <img src="${item.image}" alt="${item.name}" onerror="this.style.opacity='0'" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                            <img src="${item.image}" alt="${item.name}" onerror="this.style.opacity='0'" class="w-full h-full object-contain bg-white group-hover:scale-105 transition duration-500">
                                             <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900 via-transparent to-transparent"></div>
                                             <div class="absolute bottom-3 right-3 bg-obsidian-950/90 backdrop-blur-md border gold-border-subtle px-3 py-1 rounded-full text-gold-400 font-display font-black text-xs shadow">
                                                 ${displayPrice}
