@@ -212,7 +212,7 @@
                             src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80" 
                             alt="Crave House Special Combo" 
                             onerror="this.style.display='none'"
-                            class="w-full h-full object-contain bg-white group-hover:scale-105 transition-transform duration-500"
+                            class="w-full h-full object-contain bg-black group-hover:scale-105 transition-transform duration-500"
                         >
                         <div class="absolute inset-0 bg-gradient-to-t from-obsidian-800 via-obsidian-900/30 to-transparent"></div>
                         <div class="absolute top-3 left-3 bg-crimson-700/95 backdrop-blur-md border border-gold-500/40 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow">
@@ -307,13 +307,15 @@
 
     <!-- Restaurant location: Google Maps -->
     <section aria-label="Find Crave House Kitchen" class="bg-obsidian-950 border-t gold-border-subtle py-10 px-4">
-      <div class="max-w-7xl mx-auto">
-        <h2 class="font-display text-2xl font-bold text-gold-400 mb-2">Find Us in Armidale</h2>
+      <div class="max-w-7xl mx-auto flex justify-end">
+        <div class="w-full sm:w-[380px]">
+        <h2 class="font-display text-xl font-bold text-gold-400 mb-2">Find Us in Armidale</h2>
         <p class="text-zinc-300 mb-5">Shop 12, 108 Dangar Street, Armidale NSW 2350, Australia</p>
         <iframe title="Google Map — Crave House Kitchen" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-          class="w-full rounded-2xl border border-gold-500/30 bg-white" style="height:360px"
+          class="w-full rounded-2xl border border-gold-500/30 bg-obsidian-950" style="height:220px"
           src="https://www.google.com/maps?q=Shop%2012%2C%20108%20Dangar%20Street%2C%20Armidale%20NSW%202350%2C%20Australia&amp;output=embed"></iframe>
         <a class="inline-block mt-4 text-gold-400 underline" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/search/?api=1&amp;query=Shop%2012%2C%20108%20Dangar%20Street%2C%20Armidale%20NSW%202350%2C%20Australia">Open directions in Google Maps</a>
+        </div>
       </div>
     </section>
 
@@ -816,7 +818,7 @@
                                 <div class="bg-obsidian-800/90 border gold-border-subtle rounded-3xl overflow-hidden flex flex-col justify-between group hover:border-gold-500/50 transition duration-300 shadow-lg">
                                     <div>
                                         <div class="relative h-48 overflow-hidden bg-obsidian-950">
-                                            <img src="${item.image}" alt="${item.name}" onerror="this.style.opacity='0'" class="w-full h-full object-contain bg-white group-hover:scale-105 transition duration-500">
+                                            <img src="${item.image}" alt="${item.name}" onerror="this.style.opacity='0'" class="w-full h-full object-contain bg-black group-hover:scale-105 transition duration-500">
                                             <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900 via-transparent to-transparent"></div>
                                             <div class="absolute bottom-3 right-3 bg-obsidian-950/90 backdrop-blur-md border gold-border-subtle px-3 py-1 rounded-full text-gold-400 font-display font-black text-xs shadow">
                                                 ${displayPrice}
