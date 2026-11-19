@@ -218,7 +218,7 @@
                             src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80" 
                             alt="Crave House Special Combo" 
                             onerror="this.style.display='none'"
-                            class="w-full h-full object-contain bg-black group-hover:scale-105 transition-transform duration-500"
+                            class="w-full h-full object-cover bg-black group-hover:scale-105 transition-transform duration-500"
                         >
                         <div class="absolute inset-0 bg-gradient-to-t from-obsidian-800 via-obsidian-900/30 to-transparent"></div>
                         <div class="absolute top-3 left-3 bg-crimson-700/95 backdrop-blur-md border border-gold-500/40 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow">
@@ -283,22 +283,24 @@
         </button>
     </div>
 
-    <!-- Footer: compact map in place of the former opening-hours/payment text -->
+    <!-- Footer: map directly below Crave House Kitchen Armidale address -->
     <footer class="bg-obsidian-950 border-t gold-border-subtle py-10 mt-16">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center sm:items-start gap-7">
-        <div class="flex items-center gap-4">
-          <div class="w-14 h-14 rounded-full bg-[#F8F6F1] p-0.5 ring-2 ring-gold-500/60 overflow-hidden shrink-0 shadow-lg">
-            <img src="logo.jpeg" alt="Crave House Kitchen Logo" onerror="this.style.display='none'" class="w-full h-full object-cover rounded-full">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col items-start gap-4 max-w-[380px]">
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 rounded-full bg-[#F8F6F1] p-0.5 ring-2 ring-gold-500/60 overflow-hidden shrink-0 shadow-lg">
+              <img src="logo.jpeg" alt="Crave House Kitchen Logo" onerror="this.style.display='none'" class="w-full h-full object-cover rounded-full">
+            </div>
+            <div>
+              <div class="font-display text-xl font-black tracking-[0.12em]"><span class="text-white">CRAVE</span> <span class="gold-text-shimmer">HOUSE</span></div>
+              <p class="text-[10px] font-bold tracking-[0.28em] text-crimson-600 uppercase mt-0.5">Kitchen</p>
+              <p class="font-editorial italic text-sm text-gold-500/80 mt-1">Shop 12/108 Dangar St, Armidale NSW</p>
+            </div>
           </div>
-          <div>
-            <div class="font-display text-xl font-black tracking-[0.12em]"><span class="text-white">CRAVE</span> <span class="gold-text-shimmer">HOUSE</span></div>
-            <p class="text-[10px] font-bold tracking-[0.28em] text-crimson-600 uppercase mt-0.5">Kitchen</p>
-            <p class="font-editorial italic text-sm text-gold-500/80 mt-1">Shop 12/108 Dangar St, Armidale NSW</p>
+          <div class="w-full">
+            <iframe title="Google Map — Crave House Kitchen" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full rounded-xl border border-gold-500/30 bg-black" style="height:180px" src="https://www.google.com/maps?q=Shop%2012%2C%20108%20Dangar%20Street%2C%20Armidale%20NSW%202350%2C%20Australia&amp;output=embed"></iframe>
+            <a class="block text-left text-xs text-gold-400 underline mt-2" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/search/?api=1&amp;query=Shop%2012%2C%20108%20Dangar%20Street%2C%20Armidale%20NSW%202350%2C%20Australia">Open directions in Google Maps</a>
           </div>
-        </div>
-        <div class="w-full sm:w-[340px] sm:ml-auto">
-          <iframe title="Google Map — Crave House Kitchen" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full rounded-xl border border-gold-500/30 bg-black" style="height:180px" src="https://www.google.com/maps?q=Shop%2012%2C%20108%20Dangar%20Street%2C%20Armidale%20NSW%202350%2C%20Australia&amp;output=embed"></iframe>
-          <a class="block text-right text-xs text-gold-400 underline mt-2" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/search/?api=1&amp;query=Shop%2012%2C%20108%20Dangar%20Street%2C%20Armidale%20NSW%202350%2C%20Australia">Open directions in Google Maps</a>
         </div>
       </div>
     </footer>
@@ -802,7 +804,7 @@
                                 <div class="bg-obsidian-800/90 border gold-border-subtle rounded-3xl overflow-hidden flex flex-col justify-between group hover:border-gold-500/50 transition duration-300 shadow-lg">
                                     <div>
                                         <div class="relative h-48 overflow-hidden bg-obsidian-950">
-                                            <img src="${item.image}" alt="${item.name}" onerror="this.style.opacity='0'" class="w-full h-full object-contain bg-black group-hover:scale-105 transition duration-500">
+                                            <img src="${item.image}" alt="${item.name}" onerror="this.style.opacity='0'" class="w-full h-full object-cover bg-black group-hover:scale-105 transition duration-500">
                                             <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900 via-transparent to-transparent"></div>
                                             <div class="absolute bottom-3 right-3 bg-obsidian-950/90 backdrop-blur-md border gold-border-subtle px-3 py-1 rounded-full text-gold-400 font-display font-black text-xs shadow">
                                                 ${displayPrice}
