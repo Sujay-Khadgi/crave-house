@@ -99,6 +99,12 @@
             }
         }
     </style>
+
+<style id="menu-photo-black-fix">
+/* Keep menu photos on a seamless black backdrop with no white letterboxing. */
+.menu-card img, .menu-item img { background:#000 !important; object-fit:cover !important; }
+.menu-card .image-container, .menu-item .image-container { background:#000 !important; }
+</style>
 </head>
 <body class="bg-obsidian-900 text-zinc-100 min-h-screen flex flex-col selection:bg-gold-500 selection:text-obsidian-950 font-sans">
 
@@ -277,47 +283,25 @@
         </button>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-obsidian-950 border-t gold-border-subtle py-12 mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-6">
-            <div class="flex items-center gap-4">
-                <div class="w-14 h-14 rounded-full bg-[#F8F6F1] p-0.5 ring-2 ring-gold-500/60 overflow-hidden shrink-0 shadow-lg">
-                    <img 
-                        src="logo.jpeg" 
-                        alt="Crave House Kitchen Logo" 
-                        onerror="this.style.display='none'"
-                        class="w-full h-full object-cover rounded-full"
-                    >
-                </div>
-                <div>
-                    <div class="font-display text-xl font-black tracking-[0.12em]">
-                        <span class="text-white">CRAVE</span> <span class="gold-text-shimmer">HOUSE</span>
-                    </div>
-                    <p class="text-[10px] font-bold tracking-[0.28em] text-crimson-600 uppercase mt-0.5">Kitchen</p>
-                    <p class="font-editorial italic text-sm text-gold-500/80 mt-1">Shop 12/108 Dangar St, Armidale NSW</p>
-                </div>
-            </div>
-            <div class="text-xs text-zinc-400 text-center sm:text-right space-y-1">
-                <p class="text-zinc-200 font-semibold">Open 7 Days • Pickup & Local Delivery</p>
-                <p class="text-zinc-500">All prices in AUD • GST Included • Powered by Square</p>
-            </div>
+    <!-- Footer: compact map in place of the former opening-hours/payment text -->
+    <footer class="bg-obsidian-950 border-t gold-border-subtle py-10 mt-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center sm:items-start gap-7">
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-full bg-[#F8F6F1] p-0.5 ring-2 ring-gold-500/60 overflow-hidden shrink-0 shadow-lg">
+            <img src="logo.jpeg" alt="Crave House Kitchen Logo" onerror="this.style.display='none'" class="w-full h-full object-cover rounded-full">
+          </div>
+          <div>
+            <div class="font-display text-xl font-black tracking-[0.12em]"><span class="text-white">CRAVE</span> <span class="gold-text-shimmer">HOUSE</span></div>
+            <p class="text-[10px] font-bold tracking-[0.28em] text-crimson-600 uppercase mt-0.5">Kitchen</p>
+            <p class="font-editorial italic text-sm text-gold-500/80 mt-1">Shop 12/108 Dangar St, Armidale NSW</p>
+          </div>
         </div>
-    </footer>
-
-
-    <!-- Restaurant location: Google Maps -->
-    <section aria-label="Find Crave House Kitchen" class="bg-obsidian-950 border-t gold-border-subtle py-10 px-4">
-      <div class="max-w-7xl mx-auto flex justify-end">
-        <div class="w-full sm:w-[380px]">
-        <h2 class="font-display text-xl font-bold text-gold-400 mb-2">Find Us in Armidale</h2>
-        <p class="text-zinc-300 mb-5">Shop 12, 108 Dangar Street, Armidale NSW 2350, Australia</p>
-        <iframe title="Google Map — Crave House Kitchen" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-          class="w-full rounded-2xl border border-gold-500/30 bg-obsidian-950" style="height:220px"
-          src="https://www.google.com/maps?q=Shop%2012%2C%20108%20Dangar%20Street%2C%20Armidale%20NSW%202350%2C%20Australia&amp;output=embed"></iframe>
-        <a class="inline-block mt-4 text-gold-400 underline" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/search/?api=1&amp;query=Shop%2012%2C%20108%20Dangar%20Street%2C%20Armidale%20NSW%202350%2C%20Australia">Open directions in Google Maps</a>
+        <div class="w-full sm:w-[340px] sm:ml-auto">
+          <iframe title="Google Map — Crave House Kitchen" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full rounded-xl border border-gold-500/30 bg-black" style="height:180px" src="https://www.google.com/maps?q=Shop%2012%2C%20108%20Dangar%20Street%2C%20Armidale%20NSW%202350%2C%20Australia&amp;output=embed"></iframe>
+          <a class="block text-right text-xs text-gold-400 underline mt-2" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/search/?api=1&amp;query=Shop%2012%2C%20108%20Dangar%20Street%2C%20Armidale%20NSW%202350%2C%20Australia">Open directions in Google Maps</a>
         </div>
       </div>
-    </section>
+    </footer>
 
     <!-- Floating Mobile Bottom Cart Bar -->
     <div id="mobile-cart-bar" class="fixed bottom-4 left-4 right-4 z-30 md:hidden hidden">
