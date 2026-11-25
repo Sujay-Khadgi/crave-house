@@ -442,6 +442,14 @@
                         </div>
                     </div>
 
+                    <div class="rounded-xl border gold-border-subtle bg-obsidian-900 p-4" role="status" aria-live="polite">
+                        <div class="flex items-center gap-2 text-sm font-bold text-gold-400">
+                            <i data-lucide="clock" class="w-4 h-4" aria-hidden="true"></i>
+                            <span id="checkout-wait-time">Estimated pickup time: 15–20 mins</span>
+                        </div>
+                        <p class="text-xs text-white mt-1">After order confirmation. Estimated times may vary during busy periods.</p>
+                    </div>
+
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-semibold text-white mb-1.5">Your Name *</label>
@@ -1406,6 +1414,9 @@
         }
 
         function updateCheckoutTotals() {
+            document.getElementById('checkout-wait-time').textContent = orderMethod === 'Delivery'
+                ? 'Estimated delivery time: 35–40 mins'
+                : 'Estimated pickup time: 15–20 mins';
             const subtotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
             const deliveryFee = orderMethod === 'Delivery' ? 5.99 : 0.00;
             const total = subtotal - lunchDiscount(subtotal) - dailyDiscount() + deliveryFee;
