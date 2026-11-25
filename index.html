@@ -244,6 +244,7 @@
         </div>
     </section>
 
+<section class="max-w-7xl mx-auto w-full px-4 py-6"><h2 class="font-display text-gold-400 text-xl font-bold text-center">7 DAY SPECIALS</h2><p id="today-special" class="text-center text-white text-sm mt-2"></p><div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 mt-4"><div class="rounded-xl border border-gold-500/40 bg-obsidian-800 p-3 text-center"><p class="text-gold-400 text-xs font-bold uppercase">Monday</p><p class="font-bold text-white text-sm mt-1">Burger Madness</p><p class="text-gold-400 font-black text-xl mt-2">10% OFF</p><p class="text-xs text-white">All burgers</p></div><div class="rounded-xl border border-gold-500/40 bg-obsidian-800 p-3 text-center"><p class="text-gold-400 text-xs font-bold uppercase">Tuesday</p><p class="font-bold text-white text-sm mt-1">Pizza Tuesday</p><p class="text-gold-400 font-black text-xl mt-2">10% OFF</p><p class="text-xs text-white">All pizzas</p></div><div class="rounded-xl border border-gold-500/40 bg-obsidian-800 p-3 text-center"><p class="text-gold-400 text-xs font-bold uppercase">Wednesday</p><p class="font-bold text-white text-sm mt-1">Pasta Wednesday</p><p class="text-gold-400 font-black text-xl mt-2">10% OFF</p><p class="text-xs text-white">All pastas</p></div><div class="rounded-xl border border-gold-500/40 bg-obsidian-800 p-3 text-center"><p class="text-gold-400 text-xs font-bold uppercase">Thursday</p><p class="font-bold text-white text-sm mt-1">Parmi Night</p><p class="text-gold-400 font-black text-xl mt-2">10% OFF</p><p class="text-xs text-white">Parmigiana & mains</p></div><div class="rounded-xl border border-gold-500/40 bg-obsidian-800 p-3 text-center"><p class="text-gold-400 text-xs font-bold uppercase">Friday</p><p class="font-bold text-white text-sm mt-1">Friday Feast</p><p class="text-gold-400 font-black text-xl mt-2">10% OFF</p><p class="text-xs text-white">All menu items</p></div><div class="rounded-xl border border-gold-500/40 bg-obsidian-800 p-3 text-center"><p class="text-gold-400 text-xs font-bold uppercase">Saturday</p><p class="font-bold text-white text-sm mt-1">Weekend Family Feast</p><p class="text-gold-400 font-black text-xl mt-2">10% OFF</p><p class="text-xs text-white">All menu items</p></div><div class="rounded-xl border border-gold-500/40 bg-obsidian-800 p-3 text-center"><p class="text-gold-400 text-xs font-bold uppercase">Sunday</p><p class="font-bold text-white text-sm mt-1">Sweet Sunday</p><p class="text-gold-400 font-black text-xl mt-2">10% OFF</p><p class="text-xs text-white">All desserts</p></div></div><p class="text-center text-xs text-zinc-300 mt-3">Daily specials apply outside lunch hours. Lunch special: 15% off all menu items, 11 AM–2 PM. Discounts cannot be combined.</p></section>
     <!-- Sticky Glassmorphic Category Tabs & Search Bar -->
     <div id="menu-nav-bar" class="sticky top-20 z-30 bg-obsidian-900/90 backdrop-blur-xl border-b gold-border-subtle py-3.5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -401,6 +402,7 @@
                         <span id="cart-gst">$0.00</span>
                     </div>
                     <div class="flex justify-between text-amber-300 text-sm"><span>Lunch special (11 AM–2 PM, 15%)</span><span id="cart-lunch-discount">$0.00</span></div>
+<div class="flex justify-between text-amber-300 text-sm"><span>Daily special (10%)</span><span id="cart-daily-discount">$0.00</span></div>
                         <div class="flex justify-between text-base font-display font-extrabold text-white pt-2.5 border-t border-zinc-800">
                         <span>Total</span>
                         <span id="cart-total" class="text-gold-500">$0.00</span>
@@ -476,6 +478,7 @@
                             <span class="text-white">$6.00</span>
                         </div>
                         <div class="flex justify-between text-amber-300 text-sm"><span>Lunch special (11 AM–2 PM, 15%)</span><span id="checkout-lunch-discount">$0.00</span></div>
+<div class="flex justify-between text-amber-300 text-sm"><span>Daily special (10%)</span><span id="checkout-daily-discount">$0.00</span></div>
                         <div class="flex justify-between font-display font-extrabold text-base text-white pt-2 border-t border-zinc-800">
                             <span>Total Due</span>
                             <span id="checkout-total" class="text-gold-500">$0.00</span>
@@ -1248,10 +1251,29 @@
         }
         function lunchDiscount(subtotal) { return isLunchSpecial() ? Math.round(subtotal * 15) / 100 : 0; }
 
+
+        const weeklySpecials = [["Monday", "Burger Madness", "All burgers", "BURGERS"], ["Tuesday", "Pizza Tuesday", "All pizzas", "PIZZA"], ["Wednesday", "Pasta Wednesday", "All pastas", "Pasta"], ["Thursday", "Parmi Night", "Parmigiana & mains", "Parmigiana & Mains"], ["Friday", "Friday Feast", "All menu items", "*"], ["Saturday", "Weekend Family Feast", "All menu items", "*"], ["Sunday", "Sweet Sunday", "All desserts", "DESSERTS"]];
+        function dailySpecial(date = new Date()) {
+            const day = new Intl.DateTimeFormat('en-AU', {timeZone:'Australia/Sydney', weekday:'long'}).format(date);
+            return weeklySpecials.find(row => row[0] === day);
+        }
+        function dailyDiscount() {
+            if (isLunchSpecial()) return 0;
+            const rule = dailySpecial()[3];
+            const eligible = cart.filter(item => rule === '*' || menuData.some(cat => (cat.group === rule || cat.categoryName === rule) && cat.items.some(entry => entry.id === item.itemId)));
+            return Math.round(eligible.reduce((sum,item) => sum + item.unitPrice * item.qty, 0) * 10) / 100;
+        }
+        function refreshSpecialBanner() {
+            const special = dailySpecial();
+            document.getElementById('today-special').textContent = isLunchSpecial() ? 'Lunch special active now: 15% off all menu items' : `Today: ${special[1]} — 10% off ${special[2].toLowerCase()}`;
+        }
+        refreshSpecialBanner();
+        setInterval(() => { refreshSpecialBanner(); updateCartUI(); if (!document.getElementById('checkout-modal').classList.contains('hidden')) updateCheckoutTotals(); }, 30000);
+
         function updateCartUI() {
             const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
             const subtotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
-            const gst = subtotal / 11;
+            const gst = (subtotal - lunchDiscount(subtotal) - dailyDiscount()) / 11;
 
             document.getElementById('nav-cart-count').innerText = totalCount;
             
@@ -1259,7 +1281,7 @@
             if (totalCount > 0) {
                 mobileBar.classList.remove('hidden');
                 document.getElementById('mobile-bar-count').innerText = totalCount;
-                document.getElementById('mobile-bar-total').innerText = `$${(subtotal - lunchDiscount(subtotal)).toFixed(2)}`;
+                document.getElementById('mobile-bar-total').innerText = `$${(subtotal - lunchDiscount(subtotal) - dailyDiscount()).toFixed(2)}`;
             } else {
                 mobileBar.classList.add('hidden');
             }
@@ -1286,7 +1308,8 @@
             document.getElementById('cart-subtotal').innerText = `$${subtotal.toFixed(2)}`;
             document.getElementById('cart-gst').innerText = `$${gst.toFixed(2)}`;
             document.getElementById('cart-lunch-discount').innerText = isLunchSpecial() ? `-$${lunchDiscount(subtotal).toFixed(2)}` : '$0.00';
-            document.getElementById('cart-total').innerText = `$${(subtotal - lunchDiscount(subtotal)).toFixed(2)}`;
+            document.getElementById('cart-daily-discount').innerText = dailyDiscount() ? `-${ '$' + dailyDiscount().toFixed(2) }` : '$0.00';
+            document.getElementById('cart-total').innerText = `$${(subtotal - lunchDiscount(subtotal) - dailyDiscount()).toFixed(2)}`;
 
             container.innerHTML = cart.map(item => `
                 <div class="bg-obsidian-800 border gold-border-subtle rounded-2xl p-4 flex gap-3.5 items-center">
@@ -1360,10 +1383,11 @@
         function updateCheckoutTotals() {
             const subtotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
             const deliveryFee = orderMethod === 'Delivery' ? 6.00 : 0.00;
-            const total = subtotal - lunchDiscount(subtotal) + deliveryFee;
+            const total = subtotal - lunchDiscount(subtotal) - dailyDiscount() + deliveryFee;
 
             document.getElementById('checkout-subtotal').innerText = `$${subtotal.toFixed(2)}`;
             document.getElementById('checkout-lunch-discount').innerText = isLunchSpecial() ? `-$${lunchDiscount(subtotal).toFixed(2)}` : '$0.00';
+            document.getElementById('checkout-daily-discount').innerText = dailyDiscount() ? `-${ '$' + dailyDiscount().toFixed(2) }` : '$0.00';
             document.getElementById('checkout-total').innerText = `$${total.toFixed(2)}`;
         }
 
@@ -1397,7 +1421,7 @@
 
             const subtotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
             const deliveryFee = orderMethod === 'Delivery' ? 6.00 : 0.00;
-            const totalAmount = subtotal - lunchDiscount(subtotal) + deliveryFee;
+            const totalAmount = subtotal - lunchDiscount(subtotal) - dailyDiscount() + deliveryFee;
 
             const submitBtn = document.getElementById('checkout-submit-btn');
             submitBtn.disabled = true;
