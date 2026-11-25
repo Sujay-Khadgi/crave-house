@@ -437,7 +437,7 @@
                                 <i data-lucide="store" class="w-4 h-4"></i> Pickup
                             </button>
                             <button type="button" id="btn-delivery" onclick="setOrderMethod('Delivery')" class="py-2.5 px-4 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 text-white hover:text-white transition">
-                                <i data-lucide="bike" class="w-4 h-4"></i> Delivery (+$5.00)
+                                <i data-lucide="bike" class="w-4 h-4"></i> Delivery (+$5.99)
                             </button>
                         </div>
                     </div>
@@ -475,7 +475,7 @@
                         </div>
                         <div id="checkout-delivery-row" class="hidden flex justify-between text-white">
                             <span>Delivery Fee</span>
-                            <span class="text-white">$6.00</span>
+                            <span class="text-white">$5.99</span>
                         </div>
                         <div class="flex justify-between text-amber-300 text-sm"><span>Lunch special (11 AM–2 PM, 15%)</span><span id="checkout-lunch-discount">$0.00</span></div>
 <div class="flex justify-between text-amber-300 text-sm"><span>Daily special (10%)</span><span id="checkout-daily-discount">$0.00</span></div>
@@ -1407,7 +1407,7 @@
 
         function updateCheckoutTotals() {
             const subtotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
-            const deliveryFee = orderMethod === 'Delivery' ? 6.00 : 0.00;
+            const deliveryFee = orderMethod === 'Delivery' ? 5.99 : 0.00;
             const total = subtotal - lunchDiscount(subtotal) - dailyDiscount() + deliveryFee;
 
             document.getElementById('checkout-subtotal').innerText = `$${subtotal.toFixed(2)}`;
@@ -1445,7 +1445,7 @@
             const notes = document.getElementById('cust-notes').value.trim();
 
             const subtotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
-            const deliveryFee = orderMethod === 'Delivery' ? 6.00 : 0.00;
+            const deliveryFee = orderMethod === 'Delivery' ? 5.99 : 0.00;
             const totalAmount = subtotal - lunchDiscount(subtotal) - dailyDiscount() + deliveryFee;
 
             const submitBtn = document.getElementById('checkout-submit-btn');
