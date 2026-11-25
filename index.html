@@ -986,18 +986,28 @@
                 const pastaInputs = Array.from({length: item.deal.pastaCount || 0}, (_, i) => `
                     <label class="block text-sm font-semibold text-white mb-1">Pasta ${i+1}</label>
                     <select class="deal-selection w-full bg-obsidian-900 border gold-border-subtle rounded-lg p-3 mb-2 text-white" data-label="Pasta ${i+1}">${opts(pastas)}</select>
-                    <select class="deal-selection w-full bg-obsidian-900 border gold-border-subtle rounded-lg p-3 mb-3 text-white" data-label="Pasta ${i+1} type"><option>Spaghetti</option><option>Penne</option></select>`).join('');
+                    <select class="deal-selection w-full bg-obsidian-900 border gold-border-subtle rounded-lg p-3 mb-3 text-white" data-label="Pasta ${i+1} type"><option>Spaghetti</option><option>Penne</option><option>Linguine</option></select>`).join('');
                 const drinks = item.deal.drink === 'can' ? ['Coca-Cola','Sprite','Fanta','Solo'] : ['Coca-Cola','Sprite','Fanta','Other 1.25L drink — confirm availability'];
                 optionsContainer.innerHTML = `${pizzaInputs}${pastaInputs}<label class="block text-sm font-semibold text-white mb-1">${item.deal.drink === 'can' ? '375ml Can' : '1.25L Bottle'}</label>
                     <select class="deal-selection w-full bg-obsidian-900 border gold-border-subtle rounded-lg p-3 text-white" data-label="Drink">${drinks.map(d=>`<option>${d}</option>`).join('')}</select>
                     <p class="text-xs text-white mt-3">Garlic bread included. Premium pizza choices included at advertised deal price; please confirm any restrictions with the restaurant.</p>`;
             } else if (item.isSpecialCombo) {
-                optionsContainer.innerHTML = `
-                    <div class="space-y-3">
-                        <label class="block text-xs font-bold uppercase text-gold-400">Combo Customization</label>
-                        <p class="text-xs text-white">Our team will call or include standard favourites (2x Margherita/Pepperoni, 2x Bolognese/Carbonara, 2x Crave Classic Burgers, Garlic Bread, 1.5L Coke). You can also type specific flavor requests below!</p>
-                    </div>
-                `;
+                const pizzas = menuData.find(c => c.isPizza).items.map(p => p.name);
+                const pastas = menuData.find(c => c.categoryName === 'Pasta').items.map(p => p.name);
+                const burgers = menuData.filter(c => c.group === 'BURGERS').flatMap(c => c.items.map(p => p.name));
+                const select = (label, choices) => `<label class="block text-sm font-semibold text-white mb-1">${label}<select class="deal-selection block w-full bg-obsidian-900 border gold-border-subtle rounded-lg p-3 mt-2 text-white" data-label="${label}">${choices.map(choice => `<option value="${escapeHtml(choice)}">${escapeHtml(choice)}</option>`).join('')}</select></label>`;
+                optionsContainer.innerHTML = `<div class="space-y-4">
+                    ${select('Pizza 1 (XL)', pizzas)}
+                    ${select('Pizza 2 (XL)', pizzas)}
+                    ${select('Pasta 1', pastas)}
+                    ${select('Pasta 1 type', ['Spaghetti', 'Penne', 'Linguine'])}
+                    ${select('Pasta 2', pastas)}
+                    ${select('Pasta 2 type', ['Spaghetti', 'Penne', 'Linguine'])}
+                    ${select('Burger 1', burgers)}
+                    ${select('Burger 2', burgers)}
+                    ${select('Drink (1.5L)', ['Coca-Cola', 'Sprite', 'Fanta'])}
+                    <p class="text-sm text-gold-400">Garlic bread included. All listed choices included in the $150 base price.</p>
+                </div>`;
             } else if (item.prices) {
                 // Initialize default selection to Small
                 selectedPizzaSize = 'Small';
@@ -1035,6 +1045,10 @@
                             <label class="p-3 rounded-xl bg-obsidian-900 border gold-border-subtle flex items-center justify-between cursor-pointer" onclick="selectPastaType('Penne')">
                                 <span class="font-bold text-white text-xs">Penne</span>
                                 <input type="radio" name="pasta-type" value="Penne" class="accent-gold-500">
+                            </label>
+                            <label class="p-3 rounded-xl bg-obsidian-900 border gold-border-subtle flex items-center justify-between cursor-pointer" onclick="selectPastaType('Linguine')">
+                                <span class="font-bold text-white text-xs">Linguine</span>
+                                <input type="radio" name="pasta-type" value="Linguine" class="accent-gold-500">
                             </label>
                         </div>
                     </div>
@@ -1181,7 +1195,7 @@
             let unitPrice = activeModalItem.price || 0;
             let variantName = '';
 
-            if (activeModalItem.deal) {
+            if (activeModalItem.deal || activeModalItem.isSpecialCombo) {
                 variantName = Array.from(document.querySelectorAll('.deal-selection')).map(el => `${el.dataset.label}: ${el.value}`).join(' | ');
             } else if (activeModalItem.prices) {
                 unitPrice = selectedPizzaPrice;
