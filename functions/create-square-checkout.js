@@ -798,6 +798,16 @@ export async function onRequestPost({request,env}) {
       const note=[item.variant,...(item.addons||[]),item.instructions?'Kitchen: '+item.instructions:null].filter(Boolean).join(' | ');
       lines.push({uid:'item-'+lines.length,name:menu.name,quantity:String(qty),base_price_money:{amount,currency:'AUD'},...(note?{note:note.slice(0,500)}:{})});
     }
+    // Include customer contact details on the order ticket via the first item note.
+    const clean = value => typeof value === 'string' ? value.trim().replace(/[\r\n]+/g,' ') : '';
+    const customerName = clean(body.customerName || body.customer?.name);
+    const customerPhone = clean(body.customerPhone || body.phone || body.phoneNumber || body.customer?.phone);
+    const rawAddress = body.deliveryAddress || body.customerAddress || body.address || body.customer?.address;
+    const customerAddress = typeof rawAddress === 'object' && rawAddress !== null
+      ? [rawAddress.address_line_1 || rawAddress.street, rawAddress.address_line_2, rawAddress.locality || rawAddress.suburb, rawAddress.administrative_district_level_1 || rawAddress.state, rawAddress.postal_code || rawAddress.postcode].map(clean).filter(Boolean).join(', ')
+      : clean(rawAddress);
+    const contactNote = [body.orderType, customerName && 'Customer: '+customerName, customerPhone && 'Phone: '+customerPhone, body.orderType==='Delivery' && customerAddress && 'Address: '+customerAddress].filter(Boolean).join(' | ');
+    lines[0].note = [contactNote, lines[0].note].filter(Boolean).join(' | ').slice(0,500);
     const discount=Math.round(eligible*(lunch?15:10)/100);
     const fee=body.orderType==='Delivery'?599:0;
     if(fee) lines.push({name:'Delivery Fee',quantity:'1',base_price_money:{amount:fee,currency:'AUD'}});
