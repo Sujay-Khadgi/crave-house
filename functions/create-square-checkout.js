@@ -798,7 +798,7 @@ export async function onRequestPost({request,env}) {
       const note=[item.variant,...(item.addons||[]),item.instructions?'Kitchen: '+item.instructions:null].filter(Boolean).join(' | ');
       lines.push({uid:'item-'+lines.length,name:menu.name,quantity:String(qty),base_price_money:{amount,currency:'AUD'},...(note?{note:note.slice(0,500)}:{})});
     }
-    // Include customer contact details on the order ticket via the first item note.
+    // Attach contact details to the delivery fee, or the final food item for pickup.
     const clean = value => typeof value === 'string' ? value.trim().replace(/[\r\n]+/g,' ') : '';
     const customerName = clean(body.customerName || body.customer?.name);
     const customerPhone = clean(body.customerPhone || body.phone || body.phoneNumber || body.customer?.phone);
@@ -806,11 +806,14 @@ export async function onRequestPost({request,env}) {
     const customerAddress = typeof rawAddress === 'object' && rawAddress !== null
       ? [rawAddress.address_line_1 || rawAddress.street, rawAddress.address_line_2, rawAddress.locality || rawAddress.suburb, rawAddress.administrative_district_level_1 || rawAddress.state, rawAddress.postal_code || rawAddress.postcode].map(clean).filter(Boolean).join(', ')
       : clean(rawAddress);
-    const contactNote = [body.orderType, customerName && 'Customer: '+customerName, customerPhone && 'Phone: '+customerPhone, body.orderType==='Delivery' && customerAddress && 'Address: '+customerAddress].filter(Boolean).join(' | ');
-    lines[0].note = [contactNote, lines[0].note].filter(Boolean).join(' | ').slice(0,500);
+    const contactNote = [body.orderType==='Delivery'?'DELIVERY DETAILS':'PICKUP DETAILS', customerName && 'Customer: '+customerName, customerPhone && 'Phone: '+customerPhone, body.orderType==='Delivery' && customerAddress && 'Address: '+customerAddress].filter(Boolean).join('\n');
     const discount=Math.round(eligible*(lunch?15:10)/100);
     const fee=body.orderType==='Delivery'?599:0;
-    if(fee) lines.push({name:'Delivery Fee',quantity:'1',base_price_money:{amount:fee,currency:'AUD'}});
+    if(fee) lines.push({name:'Delivery Fee',quantity:'1',base_price_money:{amount:fee,currency:'AUD'},note:contactNote.slice(0,500)});
+    else {
+      const last = lines[lines.length-1];
+      last.note = [last.note, contactNote].filter(Boolean).join('\n').slice(0,500);
+    }
     const total=subtotal-discount+fee;
     if(!Number.isFinite(Number(body.totalAmount))||total!==cents(Number(body.totalAmount))) return json({error:'Order total mismatch',calculatedTotal:total/100},400);
     const order={location_id:env.SQUARE_LOCATION_ID,reference_id:crypto.randomUUID(),line_items:lines,...(discount?{discounts:[{uid:'special',name:lunch?'Lunch special 15%':'Daily special 10%',type:'FIXED_AMOUNT',scope:'ORDER',amount_money:{amount:discount,currency:'AUD'}}]}:{})};
